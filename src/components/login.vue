@@ -1,2 +1,75 @@
-// temporary
+<template>
+    <div>
+      <h1>海纳音乐</h1>
+      <!-- 登录 -->
+      <div class="login">
+        <el-card class="box-card">
+          <form action="">
+            <el-input placeholder="请输入用户名" v-model="input" prefix-icon="el-icon-user-solid" ></el-input><br><br>
+            <el-input placeholder="请输入密码" v-model="input" prefix-icon="el-icon-lock" show-password="true"></el-input><br><br>
+            <el-checkbox v-model="checked">记住我</el-checkbox>   <br><br> 
+           <el-button style="width:100%;margin-bottom:15px;" native-type="submit" >登录</el-button>   
+          </form> <br>
+         
+        <!-- 第三方登录 -->
+        <p> 第三方登录 </p>
+        <a href="https://github.com/login/oauth/authorize?client_id=cecc9bc83bd8cff1bfb0&redirect_uri=http://localhost:8080/oauth/redirect"> <img src="../assets/github.png" width="30px" alt="">  </a> 
+        </el-card>
 
+      </div>
+    </div>
+</template> 
+
+<script>
+
+
+  export default {
+    data() {
+      return {
+        input: ''
+      }
+    },
+    method:{
+      // go() {
+      //   this.$router.push('/HelloWorld')
+      // },
+  
+    },
+  }
+</script>
+
+
+<style scoped>
+  .login{
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .text {
+    font-size: 14px;
+  }
+
+  .item {
+    padding: 18px 0;
+  }
+
+  .box-card {
+    width: 480px;
+  
+  }
+  p{
+    font-size:2px;
+  }
+  h1{
+    text-align:center;
+    font-size:2.5em;
+  }
+ 
+  img:hover{
+    cursor: pointer; 
+  }
+
+</style>

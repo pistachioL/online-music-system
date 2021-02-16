@@ -4,8 +4,6 @@
   <el-container>
     <el-header>
         <NavMenu />    
-        <!-- <Input />
-        <Login /> -->
 
     </el-header>
     <el-main>
@@ -25,15 +23,12 @@
 <script>
 import NavMenu from './NavMenu.vue'
 import Carousel from './Carousel.vue'
-// import Input from './Input.vue'
-// import Login from './Login.vue'
+
 export default {
   name: 'HelloWorld',
   components: {
     NavMenu,
     Carousel,
-    // Input,
-    // Login,
   },
 }
 </script>
