@@ -13,28 +13,38 @@
          
         <!-- 第三方登录 -->
         <p> 第三方登录 </p>
-        <a href="https://github.com/login/oauth/authorize?client_id=cecc9bc83bd8cff1bfb0&redirect_uri=http://localhost:8080/oauth/redirect"> <img src="../assets/github.png" width="30px" alt="">  </a> 
+        <a v-on:click="signWithGithub"><img src="../assets/github.png" width="30px" alt="">  </a>
+     
         </el-card>
 
+  
       </div>
     </div>
+
 </template> 
 
 <script>
 
+  // const axios = require('axios').default;
+  let oauth_url = 'https://github.com/login/oauth/authorize'
+  let client_id = 'cecc9bc83bd8cff1bfb0' 
+  let redirect_uri = 'http://localhost:8080/oauth/redirect'
 
   export default {
     data() {
       return {
-        input: ''
+        input: '',
       }
     },
-    method:{
-      // go() {
-      //   this.$router.push('/HelloWorld')
-      // },
-  
+    methods: {
+      signWithGithub() {
+        window.location.href = `${oauth_url}?client_id=${client_id}&redirect_uri=${redirect_uri}`
+      },
+     
+
     },
+    
+    
   }
 </script>
 
