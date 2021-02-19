@@ -6,6 +6,7 @@
 
 <script>
 import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -16,10 +17,19 @@ export default {
     let code = this.$route.query.code;
     axios
     .get(`http://localhost:9090/oauth/redirect?code=${code}`)
-
+    .then(response => {
+        if (response.data) {
+            this.githubUser = response.data.name;
+            this.$router.push('/HelloWorld')  //登录成功，返回主页
+        }
+       
+    })
+    .catch(function(err) {
+        console.log(err)
+    });
 
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

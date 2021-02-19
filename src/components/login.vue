@@ -14,7 +14,6 @@
         <!-- 第三方登录 -->
         <p> 第三方登录 </p>
         <a v-on:click="signWithGithub"><img src="../assets/github.png" width="30px" alt="">  </a>
-     
         </el-card>
 
   
@@ -25,7 +24,6 @@
 
 <script>
 
-  // const axios = require('axios').default;
   let oauth_url = 'https://github.com/login/oauth/authorize'
   let client_id = 'cecc9bc83bd8cff1bfb0' 
   let redirect_uri = 'http://localhost:8080/oauth/redirect'
