@@ -13,7 +13,7 @@
          
         <!-- 第三方登录 -->
         <p> 第三方登录 </p>
-        <a v-on:click="signWithGithub"><img src="../assets/github.png" width="30px" alt="">  </a>
+        <a v-on:click="loginWithGithub"><img src="../assets/github.png" width="30px"  alt="">  </a>
         </el-card>
 
   
@@ -32,14 +32,16 @@
     data() {
       return {
         input: '',
+        seen:false,
+        current:0
       }
     },
     methods: {
-      signWithGithub() {
+      loginWithGithub() {
         window.location.href = `${oauth_url}?client_id=${client_id}&redirect_uri=${redirect_uri}`
       },
      
-
+      
     },
     
     

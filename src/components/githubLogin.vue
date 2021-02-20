@@ -1,6 +1,8 @@
 <template>
   <div>
     <div>{{githubUser}}</div>
+
+    
   </div>
 </template>
 
@@ -10,7 +12,8 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      githubUser: "github登陆中..."
+      githubUser: "github登陆中...",
+
     };
   },
   mounted() {
