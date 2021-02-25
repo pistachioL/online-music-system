@@ -5,17 +5,12 @@
     <el-menu :default-active="this.$route.path" router mode="horizontal" @select="handleSelect">
       <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
          {{item.navItem}}
-           </el-menu-item>
-      <!-- <el-menu-item index="1">天籁之音</el-menu-item>
-      <el-menu-item index="2">好歌推荐</el-menu-item>
-      <el-menu-item index="音乐榜单" >音乐榜单</el-menu-item>
-      <el-menu-item index="4">个人歌单</el-menu-item> -->
+      </el-menu-item>
 
     <div class="nav">
     <!-- 搜索框 -->
         <el-input style="width: 250px" v-model="input" placeholder="搜索你想要听的歌曲" prefix-icon='el-icon-search'></el-input>
-
-  </div>
+    </div>
   </el-menu>  
 
 
@@ -57,7 +52,7 @@
 
 <style scoped>
 .nav {
-  padding-left: 700px;
+  padding-left: 1000px;
   padding-top: 15px;
 }
 

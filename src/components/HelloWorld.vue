@@ -1,13 +1,11 @@
-// 主页
 <template>
 <div>  
-  <el-container>
+  <!-- <el-container> -->
  
     <NavMenu />    
-
-  
-    <el-main>
+    <!-- <el-main> -->
     <Carousel />
+
     <!-- 榜单 -->
     <h2>榜单 </h2>
     <el-row :gutter="12">
@@ -27,21 +25,21 @@
         </el-card>
       </el-col>
     </el-row>
-    </el-main>
+    <!-- </el-main> -->
 
-    <el-footer height="90px">
+    <!-- <el-footer height="70px"> -->
       <aplayer autoplay :music="{
         title: 'Preparation',
         author: 'Hans Zimmer/Richard Harvey',
-        url: 'https://www.kugou.com/song/#hash=217A80C30C4F3DE6F68567A1173453E5&album_id=40725263',
+        url: 'https://webfs.yun.kugou.com/202102201935/bbe088faa126f7b6124f1323e2b23fe3/KGTX/CLTX001/217a80c30c4f3de6f68567a1173453e5.mp3',
         pic: 'http://devtest.qiniudn.com/Preparation.jpg',
         lrc: '[00:00.00]lrc here\n[00:01.00]aplayer',
         theme: '#b7daff'
       }">
     </aplayer>
-    </el-footer>
+    <!-- </el-footer>
   
-  </el-container>
+  </el-container> -->
 </div>
   
 </template>
