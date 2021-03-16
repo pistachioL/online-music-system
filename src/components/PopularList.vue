@@ -1,25 +1,22 @@
 <template>
   <div>
 
-    <NavMenu />  
-  <el-table
-      :data="tableData"
-      style="width: 100%">
-      <el-table-column
-        prop="song"
-        label="歌曲"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="singer"
-        label="歌手"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        label="地址">
-      </el-table-column>
-    </el-table>
+    <NavMenu />
+   
+       <el-image style="width: 200px; height: 200px" :src="this.img" :fit="fit"> </el-image>
+
+  <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
+
+  <el-table :data="popularList" style="width: 100%" >
+      <el-table-column label="歌曲" prop="data.song_name" > </el-table-column>
+ 
+      <el-table-column label="歌手"  prop="data.author_name"  > </el-table-column>
+
+      <el-table-column label="专辑名" prop="data.album_name" > </el-table-column>
+
+    <el-table-column label="播放时长" prop="data.timelength" > </el-table-column>
+       
+  </el-table>
 
 
 
@@ -28,31 +25,38 @@
 
 <script>
 import NavMenu from './NavMenu.vue'
+import axios from 'axios';
+
   export default {
+    headers: { 
+'content-type': 'application/x-www-form-urlencoded；charset=UTF-8'
+ },
     components:{
       NavMenu,
     },
     data() {
-     
       return {
-         tableData: [{
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1516 弄'
-          }]
+        popularList: this.popularList,
+    
+        
+   
       }
+    },
+    methods:{
+        msToMin(ms) {
+          let min = Math.floor((ms/1000/60) << 0),
+          sec = Math.floor((ms/1000) % 60);
+          return min + ':' + sec
+        }
+    },
+    mounted() {
+      axios
+      .get(`http://localhost:9091/popularList`)
+      .then(response => {
+       //   this.popularList = JSON.stringify(response.data).toString().replace(new RegExp("\\\\\"","gm"),"\"")
+          this.popularList = response.data
+          this.img = response.data[0].data.img
+      })
     }
   };
 </script>
