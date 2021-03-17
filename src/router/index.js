@@ -5,7 +5,7 @@ import Login from '@/components/login.vue'  //引入根目录下的登录组件
 import githubLogin from '@/components/githubLogin.vue'  //引入根目录下的登录组件
 import HelloWorld from '@/components/HelloWorld.vue'  //引入根目录下的Hello.vue组件
 import PopularList from '@/components/PopularList.vue'  //引入根目录下的Hello.vue组件
-
+import MyMusic from '@/components/MyMusic.vue'  //引入根目录下的Hello.vue组件
 Vue.use(Router)
 
 const routes = [
@@ -34,6 +34,14 @@ const routes = [
         // meta: {
         //     auth:true
         // },
+    },
+    {
+        path: '/myMusic',
+        name: '我的音乐盒',
+        component: MyMusic,
+        meta: {
+            auth:true
+        },
     },
   ]
 

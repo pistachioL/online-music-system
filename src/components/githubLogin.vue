@@ -21,9 +21,15 @@ export default {
     axios
     .get(`http://localhost:9090/oauth/redirect?code=${code}`)
     .then(response => {
-        if (response.data) {
+        if (response.data.code == 200) {
             this.githubUser = response.data.name;
-            this.$router.push('/HelloWorld')  //登录成功，返回主页
+            // sessionStorage.setItem("userName", response.data.name)
+            // //用户名放入vuex
+            // this.$store.dispatch("setUser",response.data.name)
+            // console.log(1111)
+            // console.log(this.$store.state.isLogin)
+
+         //   this.$router.push('/HelloWorld')  //登录成功，返回主页
         }
        
     })

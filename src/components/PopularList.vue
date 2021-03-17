@@ -8,8 +8,8 @@
   <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
 
   <el-table :data="popularList" style="width: 100%" >
-      <el-table-column label="歌曲" prop="data.song_name" > </el-table-column>
- 
+      <el-table-column label="歌曲" prop="data.song_name" >   </el-table-column>
+     
       <el-table-column label="歌手"  prop="data.author_name"  > </el-table-column>
 
       <el-table-column label="专辑名" prop="data.album_name" > </el-table-column>
@@ -52,8 +52,9 @@ import axios from 'axios';
     mounted() {
       axios
       .get(`http://localhost:9091/popularList`)
+  
       .then(response => {
-       //   this.popularList = JSON.stringify(response.data).toString().replace(new RegExp("\\\\\"","gm"),"\"")
+            console.log(response.data)
           this.popularList = response.data
           this.img = response.data[0].data.img
       })

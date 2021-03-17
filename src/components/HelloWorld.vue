@@ -32,7 +32,7 @@
     <el-row :gutter="12">
       <el-col :span="3">
         <el-card shadow="hover">
-           <el-image  :src="this.img" :fit="fit"> </el-image>
+   
         </el-card>
       </el-col>
       <el-col :span="3">
@@ -93,7 +93,7 @@
 import NavMenu from './NavMenu.vue'
 import Carousel from './Carousel.vue'
 import Aplayer from 'vue-aplayer'
-import axios from 'axios';
+
 
 
 export default {
@@ -105,19 +105,11 @@ export default {
   },
   data() {
      return {
-        popularList: this.popularList,
-        url: this.img,
+       
 
       }
   },
-     mounted() {
-      axios
-      .get(`http://localhost:9091/popularList`)
-      .then(response => {
-          this.img = response.data[0].data.img
-
-      })
-    }
+     
 }
 </script>
 
