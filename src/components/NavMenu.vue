@@ -11,17 +11,13 @@
       <el-menu-item id="el-menu-item-searchinput-container" :disabled="false">
           <el-input style="width: 250px" v-model="input" placeholder="搜索你想要听的歌曲" prefix-icon='el-icon-search'></el-input>
       </el-menu-item>
-      <!-- <el-col :span="12"> -->
-    <!-- <div class="sub-title">输入后匹配输入建议</div>
-    <el-autocomplete
-      class="inline-input"
-      v-model="state2"
-      :fetch-suggestions="querySearch"
-      placeholder="请输入内容"
-      :trigger-on-focus="false"
-      @select="handleSelect"
-    ></el-autocomplete> -->
-  <!-- </el-col> -->
+
+      <!-- 用户未登录 -->
+     <!-- <v-if>
+     <a> 登录/注册</a>
+    <v-else>
+   <v-else/> -->
+    
 
    
   </el-menu>  
