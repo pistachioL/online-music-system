@@ -24,9 +24,9 @@ const routes = [
         path: '/HelloWorld',
         name: 'HelloWorld',
         component: HelloWorld,
-        // meta: {
-        //     auth:true
-        // },
+        meta: {
+            requiresAuth:true
+        },
     },
     {
         path: '/popularList',
@@ -43,7 +43,7 @@ const routes = [
         name: '我的音乐盒',
         component: MyMusic,
         meta: {
-            auth:true
+            requiresAuth:true
         },
     },
   ]

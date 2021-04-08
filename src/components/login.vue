@@ -3,40 +3,15 @@
       <h1>海纳音乐</h1>
       <!-- 登录 -->
       <div class="login">
-  <!-- <el-tab-pane>
-    <span slot="label"> 登录</span>
-          <form action="">
-            <el-input placeholder="请输入用户名" v-model="input" prefix-icon="el-icon-user-solid" ></el-input><br><br>
-            <el-input placeholder="请输入密码" v-model="input" prefix-icon="el-icon-lock" show-password="true"></el-input><br><br>
-            <el-checkbox v-model="checked">记住我</el-checkbox>   <br><br> 
-           <el-button style="width:100%;margin-bottom:15px;" native-type="submit" >登录</el-button>   
-          </form> <br> -->
-
-       <!-- 第三方登录 -->
-        <!-- <p> 第三方登录 </p>
-        <a v-on:click="loginWithGithub"><img src="../assets/github.png" width="30px"  alt="">  </a>
-  </el-tab-pane> -->
-
-
- <!-- <el-tab-pane label="注册">
-          <form action="">
-            <el-input placeholder="请输入用户名" v-model="input" prefix-icon="el-icon-user-solid" ></el-input><br><br>
-            <el-input placeholder="请输入密码" v-model="input" prefix-icon="el-icon-lock" show-password="true"></el-input><br><br>
-            <el-checkbox v-model="checked">记住我</el-checkbox>   <br><br> 
-           <el-button style="width:100%;margin-bottom:15px;" native-type="submit" >登录</el-button>   
-          </form> <br>
-  </el-tab-pane> -->
-
-
 
   <el-tabs type="border-card">
   <el-tab-pane label="登录">
     <el-card class="box-card">
-    <form action="">
-      <el-input placeholder="请输入用户名" v-model="input" prefix-icon="el-icon-user-solid" ></el-input><br><br>
-      <el-input placeholder="请输入密码" v-model="input" prefix-icon="el-icon-lock" show-password="true"></el-input><br><br>
+    <form ref="loginForm" :model="loginForm">
+      <el-input placeholder="请输入用户名"  v-model="loginForm.username" prefix-icon="el-icon-user-solid" ></el-input><br><br>
+      <el-input placeholder="请输入密码" v-model="loginForm.password" prefix-icon="el-icon-lock" show-password="true"></el-input><br><br>
       <el-checkbox v-model="checked">记住我</el-checkbox>  <br><br> 
-      <el-button style="width:100%;margin-bottom:15px;" native-type="submit" >登录</el-button>   
+      <el-button style="width:100%;margin-bottom:15px;" native-type="submit" @click="loginCheck" >登录</el-button>   
     </form> <br> 
 
        <!-- 第三方登录 -->
@@ -66,7 +41,7 @@
 </template> 
 
 <script>
-
+import { mapActions,mapState } from 'vuex'  
   let oauth_url = 'https://github.com/login/oauth/authorize'
   let client_id = 'cecc9bc83bd8cff1bfb0' 
   let redirect_uri = 'http://localhost:8080/oauth/redirect'
@@ -75,20 +50,72 @@
     data() {
       return {
         input: '',
-        seen:false,
-        current:0
+        showLogin: false,
+        //登录框
+       loginForm: {
+            username: '',
+            password: '',
+        },
+        rules: {
+            username: [
+                { required: true, message: '请输入用户名', trigger: 'blur' },
+            ],
+            password: [
+                { required: true, message: '请输入密码', trigger: 'blur' }
+            ],
+        },
+
       }
     },
+    mounted() {
+        this.showLogin = true;
+    },
+    computed: {
+        ...mapState(['isLogin'])
+    },
     methods: {
+      ...mapActions(['loginAction']),
+
+      //账户密码登录
+      loginCheck() {
+          if(this.loginForm.username == 'liao' && this.loginForm.password == '123456'){
+              this.loginAction();
+          //    this.$store.commit('handleUserName', this.loginForm.username)
+              this.$router.push('/HelloWorld');
+          }else{
+            this.$message({
+                type: 'error',
+                message: '账户密码错误'
+            });
+        }
+      },
+
+      //github登录
       loginWithGithub() {
         window.location.href = `${oauth_url}?client_id=${client_id}&redirect_uri=${redirect_uri}`
-      },
-     
-      
+      }, 
     },
-    
-    
+
   }
+
+
+//  this.$router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     // this route requires auth, check if logged in
+//     // if not, redirect to login page.
+//     if (this.$store.state) {
+//       next({
+//         path: '/',
+//         query: { redirect: to.fullPath }
+//       })
+//     } else {
+//       next()
+//     }
+//   } else {
+//     next() // 确保一定要调用 next()
+//   }
+// })
+
 </script>
 
 

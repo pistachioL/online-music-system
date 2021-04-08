@@ -2,7 +2,7 @@
   <div>
 
     <NavMenu />
-   
+
   <el-image style="width: 200px; height: 200px" :src="this.img" :fit="fit"> </el-image>
 
   <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
@@ -17,16 +17,19 @@
     <el-table-column label="播放时长" prop="data.timelength"  :formatter="msToMin"> </el-table-column>
        
   </el-table> --> 
-
+     <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">  点我打开 </el-button>
 <el-table
       :data="tableData"
       style="width: 100%">
-      <el-table-column
-        prop="date"
-        label="日期"
-        width="180">
-      </el-table-column>
-    
+   
+        <el-table-column
+          prop="date"
+          label="日期"
+          width="180">
+        </el-table-column>
+  <template slot-scope="scope">
+        <div @click="drawer = true">{{ scope.row }}</div>
+  </template>
 
       <el-table-column
         prop="name"
@@ -42,7 +45,12 @@
 
 
 
-
+<el-drawer
+  title="我是标题"
+  :visible.sync="drawer"
+  :with-header="false">
+  <span>我来啦!</span>
+</el-drawer>
 
 </div>
 </template>
@@ -50,6 +58,7 @@
 <script>
 import NavMenu from './NavMenu.vue'
 import axios from 'axios';
+
 
   export default {
 //     headers: { 
@@ -60,6 +69,8 @@ import axios from 'axios';
     },
     data() {
       return {
+        drawer: false,
+        innerDrawer: false,
         popularList: this.popularList,
         tableData: [{
           date: '2016-05-02',
@@ -88,7 +99,8 @@ import axios from 'axios';
         sec = Math.floor((ms/1000) % 60);
         sec = sec.toString().padStart(2, "0");
         return min + ':' + sec
-      }
+      },
+      
     },
 
     mounted() {
