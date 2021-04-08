@@ -1,17 +1,16 @@
 <template>
   <div>
     <div>{{githubUser}}</div>
-   <div>名字： {{name}} </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-
+import { mapActions,mapState } from 'vuex'  
 export default {
   data() {
     return {
-      githubUser: "github登陆中...",
+      githubUser: "github登陆中,请稍候...",
       name: this.name,
     };
   },
@@ -20,22 +19,27 @@ export default {
     axios
     .get(`http://localhost:9090/oauth/redirect?code=${code}`)
     .then(response => {
-        //  if (response.data) {
-             this.name = response.data.name;
-             sessionStorage.setItem("userName", response.data.name)
-            //用户名放入vuex
-            this.$store.dispatch("setUser",response.data.name)
-            console.log(1111)
-            console.log(this.$store.state.isLogin)
-
-        //    this.$router.push('/HelloWorld')  //登录成功，返回主页
-      //  }
+           if (response.data) {
+            this.name = response.data.name;
+            this.loginAction();
+            if(this.$store.state.isLogin === 1) {
+                this.$store.commit('changeLogin', this.name);
+                this.$router.push('/HelloWorld')  //登录成功，返回主页
+            }
+            else {
+              console.log('请登录')
+            }
+        }
        
     })
     .catch(function(err) {
         console.log(err)
     });
 
+  },
+  methods: {
+      ...mapState(['isLogin']),
+      ...mapActions(['loginAction']),
   }
 }
 </script>

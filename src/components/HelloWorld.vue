@@ -1,8 +1,8 @@
 <template>
 <div>  
   <el-container>
- 
-    <NavMenu />    
+    
+    <NavMenu />
     <el-main>
   
     <Carousel />

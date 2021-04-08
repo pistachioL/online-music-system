@@ -10,8 +10,12 @@
         <!-- 搜索框 -->
       <el-menu-item id="el-menu-item-searchinput-container" :disabled="false">
           <el-input style="width: 250px" v-model="input" placeholder="搜索你想要听的歌曲" prefix-icon='el-icon-search'></el-input>
+     
+      你好呀， {{$store.getters.userName}}
       </el-menu-item>
 
+
+     
       <!-- 用户未登录 -->
      <!-- <v-if>
      <a> 登录/注册</a>
@@ -84,7 +88,7 @@
         cursor: default;
         opacity: 1;
         margin: 0 20px;
-        left:60%;
+        left:50%;
     }
 
 </style>

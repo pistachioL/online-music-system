@@ -10,7 +10,7 @@
     <form ref="loginForm" :model="loginForm">
       <el-input placeholder="请输入用户名"  v-model="loginForm.username" prefix-icon="el-icon-user-solid" ></el-input><br><br>
       <el-input placeholder="请输入密码" v-model="loginForm.password" prefix-icon="el-icon-lock" show-password="true"></el-input><br><br>
-      <el-checkbox v-model="checked">记住我</el-checkbox>  <br><br> 
+      <el-checkbox v-model="loginForm.remember">记住我</el-checkbox>  <br><br> 
       <el-button style="width:100%;margin-bottom:15px;" native-type="submit" @click="loginCheck" >登录</el-button>   
     </form> <br> 
 
@@ -55,6 +55,7 @@ import { mapActions,mapState } from 'vuex'
        loginForm: {
             username: '',
             password: '',
+            remember: '',
         },
         rules: {
             username: [
@@ -75,12 +76,12 @@ import { mapActions,mapState } from 'vuex'
     },
     methods: {
       ...mapActions(['loginAction']),
-
+      //判断是否有勾选“记住我”
+      
       //账户密码登录
       loginCheck() {
           if(this.loginForm.username == 'liao' && this.loginForm.password == '123456'){
               this.loginAction();
-          //    this.$store.commit('handleUserName', this.loginForm.username)
               this.$router.push('/HelloWorld');
           }else{
             this.$message({
