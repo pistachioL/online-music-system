@@ -10,39 +10,44 @@
    <!-- 推荐 -->
     <h2>天籁推荐 </h2>
     <el-row :gutter="12">
-      <el-col :span="3">
+      <el-col :span="5">
         <el-card shadow="hover">
-          徐小凤
+             <el-image style="width: 200px; height: 200px" :src="this.personalized[0].picUrl" :fit="fit"> </el-image>
+             {{this.personalized[0].name}}
         </el-card>
       </el-col>
-      <el-col :span="3">
+      <el-col :span="5">
         <el-card shadow="hover">
-          梅艳芳
+           <el-image style="width: 200px; height: 200px" :src="this.personalized[1].picUrl" :fit="fit"> </el-image>
+           {{this.personalized[1].name}}
         </el-card>
       </el-col>
-      <el-col :span="3">
+      <el-col :span="5">
         <el-card shadow="hover">
-          邓紫棋
+            <el-image style="width: 200px; height: 200px" :src="this.personalized[2].picUrl" :fit="fit"> </el-image>
+            {{this.personalized[1].name}}
         </el-card>
       </el-col>
     </el-row>
 
     <!-- 榜单 -->
-    <h2>榜单 </h2>
+    <h2>热门榜单 </h2>
     <el-row :gutter="12">
-      <el-col :span="3">
+      <el-col :span="5">
         <el-card shadow="hover">
-          
+            <el-image style="width: 200px; height: 200px" :src=" this.topList[0].coverImgUrl" :fit="fit"> </el-image>
         </el-card>
       </el-col>
-      <el-col :span="3">
+
+      <el-col :span="5">
         <el-card shadow="hover">
-          梅艳芳
+            <el-image style="width: 200px; height: 200px" :src=" this.topList[1].coverImgUrl" :fit="fit"> </el-image>
         </el-card>
       </el-col>
-      <el-col :span="3">
+
+       <el-col :span="5">
         <el-card shadow="hover">
-          邓紫棋
+            <el-image style="width: 200px; height: 200px" :src=" this.topList[6].coverImgUrl" :fit="fit"> </el-image>
         </el-card>
       </el-col>
     </el-row>
@@ -52,19 +57,24 @@
        <!-- 热门歌手 -->
     <h2> 热门歌手 </h2>
     <el-row :gutter="12">
-      <el-col :span="3">
+     <el-col :span="5">
         <el-card shadow="hover">
-          徐小凤
+             <el-image style="width: 200px; height: 200px" :src="this.topSinger[0].img1v1Url" :fit="fit"> </el-image>
+               {{this.topSinger[0].name}}
         </el-card>
       </el-col>
-      <el-col :span="3">
+
+      <el-col :span="5">
         <el-card shadow="hover">
-          梅艳芳
+           <el-image style="width: 200px; height: 200px" :src="this.topSinger[1].img1v1Url" :fit="fit"> </el-image>
+          {{this.topSinger[1].name}}
         </el-card>
       </el-col>
-      <el-col :span="3">
+
+      <el-col :span="5">
         <el-card shadow="hover">
-          邓紫棋
+            <el-image style="width: 200px; height: 200px" :src="this.topSinger[2].img1v1Url" :fit="fit"> </el-image>
+            {{this.topSinger[2].name}}
         </el-card>
       </el-col>
     </el-row>
@@ -93,8 +103,7 @@
 import NavMenu from './NavMenu.vue'
 import Carousel from './Carousel.vue'
 import Aplayer from 'vue-aplayer'
-
-
+import axios from 'axios'
 
 export default {
   name: 'HelloWorld',
@@ -105,9 +114,41 @@ export default {
   },
   data() {
      return {
-       
-
+        personalized: this.personalized,
+        topList: this.topList,
+        topSinger: this.topSinger,
       }
+  },
+
+  mounted() {
+    //网易云推荐新音乐
+    axios
+    .get(`https://autumnfish.cn/personalized`)
+    .then(response => {
+        this.personalized = response.data.result
+       
+    });
+
+    //网易云热门歌单
+    axios
+    .get(`https://autumnfish.cn/top/playlist?limit=10&order=new`)
+    .then(response => {
+        this.topList = response.data.playlists
+       
+    });
+
+    //网易云热门歌手
+  axios
+    .get(`https://autumnfish.cn/toplist/artist`)
+    .then(response => {
+        console.log(response.data)
+        this.topSinger = response.data.list.artists
+       
+    });
+
+    
+
+
   },
      
 }

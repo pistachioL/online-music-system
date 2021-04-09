@@ -27,9 +27,7 @@
           label="日期"
           width="180">
         </el-table-column>
-  <template slot-scope="scope">
-        <div @click="drawer = true">{{ scope.row }}</div>
-  </template>
+
 
       <el-table-column
         prop="name"

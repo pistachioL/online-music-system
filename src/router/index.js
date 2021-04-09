@@ -7,6 +7,7 @@ import HelloWorld from '@/components/HelloWorld.vue'  //引入根目录下的Hel
 import PopularList from '@/components/PopularList.vue'  //引入根目录下的Hello.vue组件
 import MyMusic from '@/components/MyMusic.vue'  //引入根目录下的Hello.vue组件
 import Song from '@/components/Song.vue'  //引入根目录下的Hello.vue组件
+import UserHome from '@/components/UserHome.vue'  //引入根目录下的Hello.vue组件
 Vue.use(Router)
 
 const routes = [
@@ -42,6 +43,14 @@ const routes = [
         path: '/myMusic',
         name: '我的音乐盒',
         component: MyMusic,
+        meta: {
+            requiresAuth:true
+        },
+    },
+    {
+        path: '/user',
+        name: '个人中心',
+        component: UserHome,
         meta: {
             requiresAuth:true
         },

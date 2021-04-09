@@ -10,18 +10,10 @@
         <!-- 搜索框 -->
       <el-menu-item id="el-menu-item-searchinput-container" :disabled="false">
           <el-input style="width: 250px" v-model="input" placeholder="搜索你想要听的歌曲" prefix-icon='el-icon-search'></el-input>
-     
-      你好呀， {{$store.getters.userName}}
-      </el-menu-item>
-
-
-     
-      <!-- 用户未登录 -->
-     <!-- <v-if>
-     <a> 登录/注册</a>
-    <v-else>
-   <v-else/> -->
     
+      </el-menu-item>
+    
+      你好呀， {{$store.getters.userName}}
 
    
   </el-menu>  
@@ -31,7 +23,7 @@
 </template>
 
 <script>
-
+import axios from 'axios';
   export default {
     components:{
 
@@ -40,9 +32,9 @@
       return {
           navList:[
             {name:"/HelloWorld", navItem:'首页'},
-          
             {name:"/popularList", navItem:'音乐榜单'},
             {name:"/myMusic", navItem:'我的音乐盒'},
+            {name:"/user", navItem:'个人中心'},
           ],
           input: '',
           dialogFormVisible: false,
@@ -52,6 +44,15 @@
           }
           
       };
+    },
+    mounted() {
+      //搜索
+      axios
+      .get(`https://autumnfish.cn/search?keywords=`)
+      .then(response => {
+          this.personalized = response.data.result
+        
+      })
     },
 
     methods: {
