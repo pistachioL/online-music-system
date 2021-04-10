@@ -7,7 +7,7 @@
 
   <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
 
-  <!-- <el-table :data="popularList" style="width: 100%" >
+  <el-table :data="popularList" style="width: 100%" >
       <el-table-column label="歌曲" prop="data.song_name" >   </el-table-column>
    
       <el-table-column label="歌手"  prop="data.author_name"  > </el-table-column>
@@ -16,7 +16,7 @@
 
     <el-table-column label="播放时长" prop="data.timelength"  :formatter="msToMin"> </el-table-column>
        
-  </el-table> --> 
+  </el-table> 
      <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">  点我打开 </el-button>
 <el-table
       :data="tableData"

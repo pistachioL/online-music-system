@@ -1,13 +1,14 @@
 
 import Vue from 'vue'   //引入Vue
 import Router from 'vue-router'  //引入vue-router
-import Login from '@/components/login.vue'  //引入根目录下的登录组件
-import githubLogin from '@/components/githubLogin.vue'  //引入根目录下的登录组件
+import Login from '@/components/login/login.vue'  //引入根目录下的登录组件
+import githubLogin from '@/components/login/githubLogin.vue'  //引入根目录下的登录组件
 import HelloWorld from '@/components/HelloWorld.vue'  //引入根目录下的Hello.vue组件
 import PopularList from '@/components/PopularList.vue'  //引入根目录下的Hello.vue组件
 import MyMusic from '@/components/MyMusic.vue'  //引入根目录下的Hello.vue组件
 import Song from '@/components/Song.vue'  //引入根目录下的Hello.vue组件
 import UserHome from '@/components/UserHome.vue'  //引入根目录下的Hello.vue组件
+import EditProfile from '@/components/EditProfile.vue'  //引入根目录下的Hello.vue组件
 Vue.use(Router)
 
 const routes = [
@@ -51,6 +52,14 @@ const routes = [
         path: '/user',
         name: '个人中心',
         component: UserHome,
+        meta: {
+            requiresAuth:true
+        },
+    },
+    {
+        path: '/user/edit',
+        name: '编辑资料',
+        component: EditProfile,
         meta: {
             requiresAuth:true
         },

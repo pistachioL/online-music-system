@@ -16,7 +16,7 @@
 
        <!-- 第三方登录 -->
         <p> 第三方登录 </p>
-        <a v-on:click="loginWithGithub"><img src="../assets/github.png" width="30px"  alt="">  </a>
+        <a v-on:click="loginWithGithub"><img src="../../assets/github.png" width="30px"  alt="">  </a>
     </el-card>
   </el-tab-pane>
   
@@ -100,17 +100,15 @@ import { mapActions,mapState } from 'vuex'
   }
 
 
-//  this.$router.beforeEach((to, from, next) => {
+//  router.beforeEach((to, from, next) => {
 //   if (to.matched.some(record => record.meta.requiresAuth)) {
 //     // this route requires auth, check if logged in
 //     // if not, redirect to login page.
-//     if (this.$store.state) {
-//       next({
-//         path: '/',
-//         query: { redirect: to.fullPath }
-//       })
+//     if (this.$store.state.isLogin) {
+//       next();
+//       return;
 //     } else {
-//       next()
+//       next('/')
 //     }
 //   } else {
 //     next() // 确保一定要调用 next()
