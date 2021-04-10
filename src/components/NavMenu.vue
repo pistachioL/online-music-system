@@ -12,19 +12,19 @@
       </el-menu-item>
     
         <!-- 根据是否登录展示 -->
-      <div class="login" >
+      <div class="login">
       <div v-if="$store.getters.userName"> 
-          <el-dropdown>
+          <el-dropdown> 
             <span class="el-dropdown-link">
               <a href="http://localhost:8080/user" >{{$store.getters.userName}}</a>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item icon="el-icon-plus">退出登录</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-remove">  <button v-on:click="logoutCheck">退出登录</button></el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
       </div>
         <!-- 未登录 -->
-      <div v-else > <a href="http://localhost:8080/"> 登录/注册 </a>  </div> 
+      <div v-else > <a href="http://localhost:8080/login"> 登录/注册 </a>  </div> 
       </div>
  
   </el-menu>  
@@ -35,6 +35,7 @@
 
 <script>
 import axios from 'axios';
+import { mapActions } from 'vuex'  
   export default {
     components:{
 
@@ -70,6 +71,12 @@ import axios from 'axios';
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },
+      ...mapActions(['logoutAction']),
+      logoutCheck() {
+        console.log(1111);
+        this.logoutAction();
+        this.$router.push('/login');
+      }
     }
     
   }
@@ -105,6 +112,7 @@ import axios from 'axios';
     .login {
         float: right;
         margin: 20px 10px; /*上右下左*/
+        text-decoration: none;
     }
 
 </style>

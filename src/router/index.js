@@ -13,7 +13,7 @@ Vue.use(Router)
 
 const routes = [
     {
-        path: '/',
+        path: '/login',
         name: 'login',
         component: Login
     },
@@ -23,7 +23,7 @@ const routes = [
         component: githubLogin 
     },
     {
-        path: '/HelloWorld',
+        path: '/',
         name: 'HelloWorld',
         component: HelloWorld,
         meta: {

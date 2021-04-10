@@ -1,20 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import * as getters from './getters'
-// import * as mutations from './mutations'
-// import * as actions from './actions'
+
 Vue.use(Vuex)
 
-// const store = new Vuex.store({
-//     state: {
-//         currentUser: null,
-//         isLogin: false,
-//         // token: ''
-//     },
-//     getters,
-//     mutations,
-//     actions
-// })
 
 const state = {
     isLogin: 0,
@@ -33,14 +21,23 @@ const mutations = {
         //把登录的用户的名保存到localStorage中，防止页面刷新，导致vuex重新启动，用户名就成为初始值（初始值为空）的情况
         localStorage.setItem('username', username)
         
+    },
+    changeLogout(state, username) {
+        state.isLogin = 0;
+        state.currentUser = '';
+        localStorage.removeItem('username', username)
     }
+
 }
 
 const actions = {
     loginAction({commit}, username){
         commit('changeLogin',username);
     },
-
+    logoutAction({commit}, username) {
+        commit('changeLogout', username);
+    }
+    
 }
 
 export default new Vuex.Store({

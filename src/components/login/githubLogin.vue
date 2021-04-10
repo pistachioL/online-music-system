@@ -24,7 +24,7 @@ export default {
             this.loginAction();
             if(this.$store.state.isLogin === 1) {
                 this.$store.commit('changeLogin', this.name);
-                this.$router.push('/HelloWorld')  //登录成功，返回主页
+                this.$router.push('/')  //登录成功，返回主页
             }
             else {
               console.log('请登录')

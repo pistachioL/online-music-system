@@ -76,13 +76,15 @@ import { mapActions,mapState } from 'vuex'
     },
     methods: {
       ...mapActions(['loginAction']),
+     
+
       //判断是否有勾选“记住我”
       
       //账户密码登录
       loginCheck() {
           if(this.loginForm.username == 'liao' && this.loginForm.password == '123456'){
               this.loginAction();
-              this.$router.push('/HelloWorld');
+              this.$router.push('/');
           }else{
             this.$message({
                 type: 'error',
