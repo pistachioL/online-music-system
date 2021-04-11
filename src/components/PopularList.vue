@@ -15,48 +15,45 @@
       <el-table-column label="专辑名" prop="data.album_name" > </el-table-column>
 
     <el-table-column label="播放时长" prop="data.timelength"  :formatter="msToMin"> </el-table-column>
-       
+    <el-table-column label=" ">
+      <template slot-scope="scope">
+        <el-button type="text" size="small" @click="play(scope.row)">播放</el-button>
+      </template>
+    </el-table-column>
+
   </el-table> 
-     <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">  点我打开 </el-button>
-<el-table
-      :data="tableData"
-      style="width: 100%">
-   
-        <el-table-column
-          prop="date"
-          label="日期"
-          width="180">
-        </el-table-column>
-
-
-      <el-table-column
-        prop="name"
-        label="姓名"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        label="地址">
-      </el-table-column>
-       
-    </el-table>
+  
+     <!-- <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">  点我打开 </el-button> -->
 
 
 
-<el-drawer
-  title="我是标题"
-  :visible.sync="drawer"
-  :with-header="false">
-  <span>我来啦!</span>
-</el-drawer>
 
+<!--<el-drawer-->
+<!--  title="我是标题"-->
+<!--  :visible.sync="drawer"-->
+<!--  :with-header="false">-->
+<!--  <span>我来啦!</span>-->
+<!--</el-drawer>-->
+    <el-footer height="-100px">
+<!--      <aplayer autoplay :music="{-->
+<!--        title: 'Preparation',-->
+<!--        author: 'Hans Zimmer/Richard Harvey',-->
+<!--        url: 'https://webfs.yun.kugou.com/202104111905/0ea47d21c8d60c18333cd917ffb0cd47/KGTX/CLTX001/ef2ec19104207672f7d17fc580b89b44.mp3',-->
+<!--        pic: 'http://imge.kugou.com/stdmusic/20210408/20210408112113472979.jpg',-->
+<!--        lrc: '[00:00.00]lrc here\n[00:01.00]aplayer',-->
+<!--        theme: '#b7daff'-->
+<!--      }">-->
+<!--      </aplayer>-->
+      <aplayer :autoplay="true" :music=playingSong>
+      </aplayer>
+    </el-footer>
 </div>
 </template>
 
 <script>
 import NavMenu from './NavMenu.vue'
 import axios from 'axios';
-
+import Aplayer from 'vue-aplayer'
 
   export default {
 //     headers: { 
@@ -64,30 +61,21 @@ import axios from 'axios';
 //  },
     components:{
       NavMenu,
+      Aplayer
     },
     data() {
       return {
         drawer: false,
         innerDrawer: false,
         popularList: this.popularList,
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }],
-    
+        tmpPlayingSong: {
+          title: '',
+          author: '',
+          url: '',
+          pic: '',
+          lrc: '',
+        },
+        playingSong: {}
       }
     },
     methods:{
@@ -98,7 +86,16 @@ import axios from 'axios';
         sec = sec.toString().padStart(2, "0");
         return min + ':' + sec
       },
-      
+      play(row){
+        const song = row.data
+        console.log('song', song)
+        this.tmpPlayingSong.author = song.author_name
+        this.tmpPlayingSong.title = song.song_name
+        this.tmpPlayingSong.url = song.play_url
+        this.tmpPlayingSong.lrc = song.lyrics
+        this.tmpPlayingSong.pic = song.img
+        this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
+      }
     },
 
     mounted() {

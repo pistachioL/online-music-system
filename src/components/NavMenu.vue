@@ -43,7 +43,7 @@ import { mapActions } from 'vuex'
     data() {
       return {
           navList:[
-            {name:"/HelloWorld", navItem:'首页'},
+            {name:"/", navItem:'首页'},
             {name:"/popularList", navItem:'音乐榜单'},
             {name:"/myMusic", navItem:'我的音乐盒'},
             {name:"/user", navItem:'个人中心'},
@@ -112,7 +112,9 @@ import { mapActions } from 'vuex'
     .login {
         float: right;
         margin: 20px 10px; /*上右下左*/
-        text-decoration: none;
+    }
+    a {
+      text-decoration: none; 
     }
 
 </style>
