@@ -1,13 +1,16 @@
 <template>
   <div>
+   <NavMenu />
+    <el-input placeholder="搜索你想要听的歌曲" 
+     @keyup.enter.native="onEnterPress"
+     v-model="keyword"
+     prefix-icon='el-icon-search'></el-input>
 
-    <NavMenu />
-
-  <el-image style="width: 200px; height: 200px" :src="this.img" :fit="fit"> </el-image>
+    <el-image style="width: 200px; height: 200px" :src="this.img" :fit="fit"> </el-image>
 
   <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
 
-  <el-table :data="popularList" style="width: 100%" >
+   <el-table :data="searchRes" style="width: 100%" >
       <el-table-column label="歌曲" prop="data.song_name" >   </el-table-column>
 
       <el-table-column label="歌手"  prop="data.author_name"  > </el-table-column>
@@ -21,31 +24,30 @@
       </template>
     </el-table-column>
 
-  </el-table>
-
-    <el-footer height="-100px">
-
-      <aplayer :autoplay="true" :music=playingSong>
+  </el-table> 
+     <aplayer :autoplay="true" :music=playingSong>
       </aplayer>
-    </el-footer>
 </div>
 </template>
 
-<script>
-import NavMenu from './NavMenu.vue'
-import axios from 'axios';
-import Aplayer from 'vue-aplayer'
 
-  export default {
-    components:{
+<script>
+import axios from 'axios'
+import Aplayer from 'vue-aplayer'
+import NavMenu from './NavMenu.vue'
+export default {
+  data() {
+    return {
+      keyword: "",
+      searchRes: [],
+    }
+  },
+  mounted() {
+
+   },
+  components:{
       NavMenu,
-      Aplayer
-    },
-    data() {
-      return {
-        drawer: false,
-        innerDrawer: false,
-        popularList: this.popularList,
+      Aplayer,
         tmpPlayingSong: {
           title: '',
           author: '',
@@ -54,10 +56,18 @@ import Aplayer from 'vue-aplayer'
           lrc: '',
         },
         playingSong: {}
-      }
     },
-    methods:{
-      msToMin(row) {
+  methods: {
+    onEnterPress() {
+        axios
+        .get(`http://localhost:9091/search?keyword=${this.keyword}`)
+        .then(response => {
+            console.log(111111)
+            console.log(response.data)
+            this.searchRes = response.data
+        });
+    },
+     msToMin(row) {
         let ms = row.data.timelength
         let min = Math.floor((ms/1000/60) << 0),
         sec = Math.floor((ms/1000) % 60);
@@ -74,28 +84,10 @@ import Aplayer from 'vue-aplayer'
         this.tmpPlayingSong.pic = song.img
         this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
       }
-    },
+  }
+   
+} 
 
-    mounted() {
-      axios
-      .get(`http://localhost:9091/popularList`)
-      .then(response => {
-            console.log(response.data)
-          this.popularList = response.data
-          this.img = response.data[0].data.img
-      })
-    }
-  };
 </script>
 
-<style>
-  .el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    line-height: 60px;
-  }
-  
-  .el-aside {
-    color: #333;
-  }
-</style>
+ 

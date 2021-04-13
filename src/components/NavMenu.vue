@@ -6,11 +6,8 @@
          {{item.navItem}}
       </el-menu-item>
 
-        <!-- 搜索框 -->
-      <el-menu-item id="el-menu-item-searchinput-container" :disabled="false">
-          <el-input style="width: 250px" v-model="input" placeholder="搜索你想要听的歌曲" prefix-icon='el-icon-search'></el-input>
-      </el-menu-item>
-    
+        <Search />
+        
         <!-- 根据是否登录展示 -->
       <div class="login">
       <div v-if="$store.getters.userName"> 
@@ -34,11 +31,13 @@
 </template>
 
 <script>
-import axios from 'axios';
+
 import { mapActions } from 'vuex'  
+import Search from './Search';
+
   export default {
     components:{
-
+      Search,
     },
     data() {
       return {
@@ -57,26 +56,18 @@ import { mapActions } from 'vuex'
           
       };
     },
-    mounted() {
-      //搜索
-      axios
-      .get(`https://autumnfish.cn/search?keywords=`)
-      .then(response => {
-          this.personalized = response.data.result
-        
-      })
-    },
-
     methods: {
-      handleSelect(key, keyPath) {
-        console.log(key, keyPath);
-      },
+    
+      //退出登录
       ...mapActions(['logoutAction']),
       logoutCheck() {
         console.log(1111);
         this.logoutAction();
         this.$router.push('/login');
       }
+    },
+    mounted() {
+       
     }
     
   }
@@ -102,13 +93,7 @@ import { mapActions } from 'vuex'
         box-sizing: content-box;
         text-align: center;
     }
-
-    #el-menu-item-searchinput-container {
-        cursor: default;
-        opacity: 1;
-        margin: 0 -80px;
-        left:50%;
-    }
+ 
     .login {
         float: right;
         margin: 20px 10px; /*上右下左*/
@@ -116,5 +101,6 @@ import { mapActions } from 'vuex'
     a {
       text-decoration: none; 
     }
+
 
 </style>

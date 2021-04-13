@@ -9,6 +9,8 @@ import MyMusic from '@/components/MyMusic.vue'  //引入根目录下的Hello.vue
 import Song from '@/components/Song.vue'  //引入根目录下的Hello.vue组件
 import UserHome from '@/components/UserHome.vue'  //引入根目录下的Hello.vue组件
 import EditProfile from '@/components/EditProfile.vue'  //引入根目录下的Hello.vue组件
+import Search from '@/components/Search.vue'  //引入根目录下的Hello.vue组件
+
 Vue.use(Router)
 
 const routes = [
@@ -34,6 +36,11 @@ const routes = [
         path: '/popularList',
         name: '音乐榜单',
         component: PopularList
+    },
+    {
+        path: '/Search',
+        name: '搜索',
+        component: Search,
     },
     {
         path: '/song',
@@ -64,6 +71,7 @@ const routes = [
             requiresAuth:true
         },
     },
+
   ]
 
 /*配置路由*/

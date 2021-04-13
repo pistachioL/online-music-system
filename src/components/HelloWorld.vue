@@ -25,7 +25,14 @@
       <el-col :span="5">
         <el-card shadow="hover">
             <el-image style="width: 200px; height: 200px" :src="this.personalized[2].picUrl" :fit="fit"> </el-image>
-            {{this.personalized[1].name}}
+            {{this.personalized[2].name}}
+        </el-card>
+      </el-col>
+   
+       <el-col :span="5">
+        <el-card shadow="hover">
+            <el-image style="width: 200px; height: 200px" :src="this.personalized[3].picUrl" :fit="fit"> </el-image>
+            {{this.personalized[3].name}}
         </el-card>
       </el-col>
     </el-row>
@@ -42,6 +49,12 @@
       <el-col :span="5">
         <el-card shadow="hover">
             <el-image style="width: 200px; height: 200px" :src=" this.topList[1].coverImgUrl" :fit="fit"> </el-image>
+        </el-card>
+      </el-col>
+
+    <el-col :span="5">
+        <el-card shadow="hover">
+            <el-image style="width: 200px; height: 200px" :src=" this.topList[4].coverImgUrl" :fit="fit"> </el-image>
         </el-card>
       </el-col>
 
@@ -77,6 +90,15 @@
             {{this.topSinger[2].name}}
         </el-card>
       </el-col>
+
+        <el-col :span="5">
+        <el-card shadow="hover">
+            <el-image style="width: 200px; height: 200px" :src="this.topSinger[3].img1v1Url" :fit="fit"> </el-image>
+            {{this.topSinger[3].name}}
+        </el-card>
+      </el-col>
+
+    
     </el-row>
 
 
@@ -86,8 +108,8 @@
       <aplayer autoplay :music="{
         title: 'Preparation',
         author: 'Hans Zimmer/Richard Harvey',
-        url: 'https://webfs.yun.kugou.com/202102201935/bbe088faa126f7b6124f1323e2b23fe3/KGTX/CLTX001/217a80c30c4f3de6f68567a1173453e5.mp3',
-        pic: 'http://devtest.qiniudn.com/Preparation.jpg',
+        url: 'https://webfs.yun.kugou.com/202104111909/6c8aeac79c5bd5b887d4ec545e9e6bff/KGTX/CLTX001/06dd65f5e1b3a0e5829175e1ed3ef916.mp3',
+        pic: 'http://imge.kugou.com/stdmusic/20200915/20200915155403608950.jpg',
         lrc: '[00:00.00]lrc here\n[00:01.00]aplayer',
         theme: '#b7daff'
       }">
@@ -141,14 +163,9 @@ export default {
   axios
     .get(`https://autumnfish.cn/toplist/artist`)
     .then(response => {
-        console.log(response.data)
         this.topSinger = response.data.list.artists
        
     });
-
-    
-
-
   },
      
 }

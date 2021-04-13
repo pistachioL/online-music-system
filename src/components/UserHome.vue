@@ -6,12 +6,11 @@
     <el-card class="box-card">
         <div>
         <el-avatar shape="circle" :size="150" src="http://p1.music.126.net/FVI9STacjhXQgOfkPDtPng==/109951163259293373.jpg?param=180y180"></el-avatar>
+        <el-button plain>编辑资料</el-button>
         </div>
         <el-divider></el-divider>
-        {{$store.getters.userName}}
+        {{$store.getters.userName}}<br>
         个人简介：相信音乐的力量！！
-
-        <el-button plain>编辑资料</el-button>
     </el-card>
 
      <el-divider></el-divider>  

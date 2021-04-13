@@ -7,22 +7,27 @@
 <script>
 import axios from 'axios';
 import { mapActions,mapState } from 'vuex'  
+//let Base64 = require('js-base64').Base64
+
 export default {
   data() {
     return {
       githubUser: "github登陆中,请稍候...",
       name: this.name,
+     // responseData: '',
     };
   },
   mounted() {
     let code = this.$route.query.code;
     axios
-    .get(`http://localhost:9090/oauth/redirect?code=${code}`)
+    .get(`http://localhost:9091/oauth/redirect?code=${code}`)
     .then(response => {
+         console.log(1111)
+         console.log(response.data.name)
            if (response.data) {
             this.name = response.data.name;
             this.loginAction();
-            if(this.$store.state.isLogin === 1) {
+            if(this.$store.state.isLogin === 1) { 
                 this.$store.commit('changeLogin', this.name);
                 this.$router.push('/')  //登录成功，返回主页
             }
