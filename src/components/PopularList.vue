@@ -3,11 +3,15 @@
 
     <NavMenu />
 
-  <el-image style="width: 200px; height: 200px" :src="this.img" :fit="fit"> </el-image>
+  <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img" :fit="fit"> </el-image>
 
   <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
 
-  <el-table :data="popularList" style="width: 100%" >
+  <el-table 
+  :data="popularList"
+  v-loading="loading"
+   element-loading-text="努力加载飙升榜数据..."
+   element-loading-spinner="el-icon-loading" style="width: 100%" >
       <el-table-column label="歌曲" prop="data.song_name" >   </el-table-column>
 
       <el-table-column label="歌手"  prop="data.author_name"  > </el-table-column>
@@ -53,7 +57,8 @@ import Aplayer from 'vue-aplayer'
           pic: '',
           lrc: '',
         },
-        playingSong: {}
+        playingSong: {},
+        loading: false,
       }
     },
     methods:{
@@ -77,12 +82,14 @@ import Aplayer from 'vue-aplayer'
     },
 
     mounted() {
+      this.loading = true;
       axios
       .get(`http://localhost:9091/popularList`)
       .then(response => {
-            console.log(response.data)
+          this.loading = false;
           this.popularList = response.data
           this.img = response.data[0].data.img
+          
       })
     }
   };

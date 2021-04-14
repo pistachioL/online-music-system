@@ -5,7 +5,7 @@
 
         
 
-  <el-image style="width: 200px; height: 200px" :src="this.img" :fit="fit"> </el-image>
+  <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img" :fit="fit"> </el-image>
 
   <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
 
@@ -52,7 +52,7 @@ import NavMenu from './NavMenu.vue'
          keyword: "",
          searchRes: [],
          loading: false,
-        
+         img: ''
       }
     },
     mounted: function () {
@@ -61,8 +61,9 @@ import NavMenu from './NavMenu.vue'
       axios
       .get(`http://localhost:9091/search?keyword=${this.keyword}`)
       .then(response => {
-          this.searchRes = response.data
           this.loading = false;
+          this.searchRes = response.data
+          this.img = this.searchRes[0].data.img 
       });
      
 
