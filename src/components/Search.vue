@@ -15,7 +15,6 @@
 <script>
 
 import NavMenu from './NavMenu.vue'
-import { Loading } from 'element-ui';
 export default {
   data() {
     return {
