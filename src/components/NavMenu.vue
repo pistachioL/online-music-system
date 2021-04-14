@@ -6,23 +6,26 @@
          {{item.navItem}}
       </el-menu-item>
 
-        <Search />
-        
-        <!-- 根据是否登录展示 -->
-      <div class="login">
-      <div v-if="$store.getters.userName"> 
-          <el-dropdown> 
-            <span class="el-dropdown-link">
-              <a href="http://localhost:8080/user" >{{$store.getters.userName}}</a>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item icon="el-icon-remove">  <button v-on:click="logoutCheck">退出登录</button></el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-      </div>
-        <!-- 未登录 -->
-      <div v-else > <a href="http://localhost:8080/login"> 登录/注册 </a>  </div> 
-      </div>
+    <!-- 搜索栏 -->
+    <div class="search">
+      <Search />
+    </div>
+    
+    <!-- 根据是否登录展示 -->
+    <div class="login">
+    <div v-if="$store.getters.userName"> 
+        <el-dropdown> 
+          <span class="el-dropdown-link">
+            <a href="http://localhost:8080/user" >{{$store.getters.userName}}</a>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item icon="el-icon-remove">  <button v-on:click="logoutCheck">退出登录</button></el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+    </div>
+      <!-- 未登录 -->
+    <div v-else > <a href="http://localhost:8080/login"> 登录/注册 </a>  </div> 
+    </div>
  
   </el-menu>  
 
@@ -47,8 +50,6 @@ import Search from './Search';
             {name:"/myMusic", navItem:'我的音乐盒'},
             {name:"/user", navItem:'个人中心'},
           ],
-          input: '',
-          dialogFormVisible: false,
           form: {
             username: '',
             password: '',
@@ -96,7 +97,11 @@ import Search from './Search';
  
     .login {
         float: right;
-        margin: 20px 10px; /*上右下左*/
+        margin: 20px -630px; /*上右下左*/
+    }
+    .search {
+       float: right;
+       margin: 10px 200px; /*上右下左*/
     }
     a {
       text-decoration: none; 

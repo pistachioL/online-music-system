@@ -38,15 +38,15 @@ const routes = [
         component: PopularList
     },
     {
-        path: '/Search',
-        name: '搜索',
-        component: Search,
-    },
-    {
-        path: '/song',
-        name: '单曲',
+        path: '/Song',
+        name: 'Song',
         component: Song,
     },
+    // {
+    //     path: '/song',
+    //     name: '单曲',
+    //     component: Song,
+    // },
     {
         path: '/myMusic',
         name: '我的音乐盒',

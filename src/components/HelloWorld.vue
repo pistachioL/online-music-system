@@ -1,13 +1,11 @@
 <template>
-<div>  
-  <el-container>
-    
-    <NavMenu />
-    <el-main>
-  
-    <Carousel />
- 
-   <!-- 推荐 -->
+  <div>
+      <el-container>
+        <NavMenu />
+        <el-main>
+
+        <Carousel />
+         <!-- 推荐 -->
     <h2>天籁推荐 </h2>
     <el-row :gutter="12">
       <el-col :span="5">
@@ -102,8 +100,8 @@
     </el-row>
 
 
-    </el-main>
 
+        </el-main>
     <el-footer height="-100px">
       <aplayer autoplay :music="{
         title: 'Preparation',
@@ -115,34 +113,31 @@
       }">
     </aplayer>
    </el-footer>
-  
-  </el-container> 
-</div>
-  
+      </el-container>
+  </div>
 </template>
+
+
 
 <script>
 import NavMenu from './NavMenu.vue'
 import Carousel from './Carousel.vue'
 import Aplayer from 'vue-aplayer'
 import axios from 'axios'
-
-export default {
-  name: 'HelloWorld',
-  components: {
-    NavMenu,
-    Carousel,
-    Aplayer,
-  },
-  data() {
+  export default {
+    components:{
+      NavMenu,
+      Carousel,
+      Aplayer,
+    },
+   data() {
      return {
         personalized: this.personalized,
         topList: this.topList,
         topSinger: this.topSinger,
       }
-  },
-
-  mounted() {
+   },
+    mounted() {
     //网易云推荐新音乐
     axios
     .get(`https://autumnfish.cn/personalized`)
@@ -168,17 +163,17 @@ export default {
     });
   },
      
-}
+  };
 </script>
 
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-el-footer { 
-  width: 100%;
-  position: absolute;
-  bottom: 0
-}
-
-
+<style>
+  .el-header {
+    background-color: #B3C0D1;
+    color: #333;
+    line-height: 60px;
+  }
+  
+  .el-aside {
+    color: #333;
+  }
 </style>
