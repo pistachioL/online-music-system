@@ -22,10 +22,9 @@ export default {
     axios
     .get(`http://localhost:9091/oauth/redirect?code=${code}`)
     .then(response => {
-         console.log(1111)
-         console.log(response.data.name)
            if (response.data) {
             this.name = response.data.name;
+            // this.avatar = response.data.avatar_url;
             this.loginAction();
             if(this.$store.state.isLogin === 1) { 
                 this.$store.commit('changeLogin', this.name);

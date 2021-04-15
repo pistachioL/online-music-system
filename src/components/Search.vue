@@ -2,11 +2,14 @@
   <div>
    <NavMenu />
 
-    <el-input style="width:250px" placeholder="搜索歌曲/歌手/MV" 
+    <el-autocomplete style="width:250px" placeholder="搜索歌曲/歌手/MV" 
      @keyup.enter.native="onEnterPress"
      v-model="keyword"
-     prefix-icon='el-icon-search'>
-  </el-input>
+     prefix-icon='el-icon-search'
+     :fetch-suggestions="querySearch">
+
+    </el-autocomplete>
+
 
 </div>
 </template>
@@ -20,15 +23,17 @@ export default {
     return {
       keyword: "",
       searchRes: [],
+      singers: [],
     }
   },
   mounted() {
-
-   },
+    this.singers = this.loadAll();
+  },
   components:{
       NavMenu,
     },
   methods: {
+    // 回车即可跳转到song页面
     onEnterPress() {
          this.$router.push({  
             path: '/Song',   
@@ -38,8 +43,30 @@ export default {
             }  
            
         })  
+    },
 
+    //搜索建议
+    querySearch(queryString, cb) {
+      var singers = this.singers;
+      var results = queryString ? singers.filter(this.createFilter(queryString)) : singers;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
+    },
 
+    createFilter(queryString) {
+      return (singers) => {
+        return (singers.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
+    //加载建议查询的数据
+    loadAll() {
+      return [
+        {"value":"邓紫棋"},
+        {"value":"王嘉尔"},
+        {"value":"陈奕迅"},
+        {"value":"梅艳芳"},
+
+      ];
     },
     
   }

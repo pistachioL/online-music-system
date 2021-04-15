@@ -4,15 +4,17 @@
     <el-menu :default-active="this.$route.path" router mode="horizontal">
       <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
          {{item.navItem}}
-      </el-menu-item>
+    </el-menu-item>
 
     <!-- 搜索栏 -->
     <div class="search">
       <Search />
     </div>
     
+
     <!-- 根据是否登录展示 -->
     <div class="login">
+
     <div v-if="$store.getters.userName"> 
         <el-dropdown> 
           <span class="el-dropdown-link">
@@ -68,7 +70,7 @@ import Search from './Search';
       }
     },
     mounted() {
-       
+          
     }
     
   }

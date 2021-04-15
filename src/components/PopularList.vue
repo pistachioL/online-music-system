@@ -6,8 +6,12 @@
       <!-- </el-header> -->
 
       <el-main>
+        <h1> 酷狗飙升榜 </h1>
         <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
+     
         <el-button type="primary" icon="el-icon-video-play" v-on:click="playAll" round>全部播放</el-button>
+        <el-button type="primary" icon="el-icon-star-on" round>收藏</el-button>
+        <el-button type="primary" icon="el-icon-connection" round>分享</el-button>
         <el-table 
           :data="popularList"
           v-loading="loading"
@@ -26,9 +30,9 @@
 
             <el-table-column label="歌手"  prop="data.author_name"  > </el-table-column>
 
-            <el-table-column label="专辑名" prop="data.album_name" > </el-table-column>
+            <el-table-column label="专辑" prop="data.album_name" > </el-table-column>
 
-            <el-table-column label="播放时长" prop="data.timelength"  :formatter="msToMin"> </el-table-column>
+            <el-table-column label="时长" prop="data.timelength" :formatter="msToMin"> </el-table-column>
         
             <el-table-column label=" ">
                 <template slot-scope="scope">
@@ -38,9 +42,10 @@
         </el-table>
       </el-main>
 
+      <!-- 播放器 -->
       <el-footer>
           <div class="hover">
-          <aplayer :autoplay="true" :showLrc=true :music=playingSong :listMaxHeight=30> </aplayer>
+          <aplayer :autoplay="true" :music=playingSong :repeat='repeat-all'> </aplayer>
           </div>
       </el-footer>
     </el-container>
@@ -59,8 +64,6 @@ import Aplayer from 'vue-aplayer'
     },
     data() {
       return {
-        drawer: false,
-        innerDrawer: false,
         popularList: this.popularList,
         tmpPlayingSong: {
           title: '',
@@ -72,7 +75,7 @@ import Aplayer from 'vue-aplayer'
         playingSong: {},
         loading: false,
         img: '',
-        // repeat: 'no-repeat',
+        repeat: 'no-repeat',
 
       }
     },
@@ -89,7 +92,6 @@ import Aplayer from 'vue-aplayer'
       },
       play(row){
         const song = row.data
-        console.log('song', song)
         this.tmpPlayingSong.author = song.author_name
         this.tmpPlayingSong.title = song.song_name
         this.tmpPlayingSong.url = song.play_url
@@ -97,14 +99,13 @@ import Aplayer from 'vue-aplayer'
         this.tmpPlayingSong.pic = song.img
         this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
       },
-      // playAll() {
-      //   this.repeat = 'repeat-all'
-      //   console.log(11111)
-      //   console.log(this.repeat)
-      // }
+      playAll() {
+        this.repeat = 'repeat-all'
+        console.log(11111)
+        console.log(this.repeat)
+      }
 
     },
-
     mounted() {
       this.loading = true;
       axios
@@ -113,7 +114,6 @@ import Aplayer from 'vue-aplayer'
           this.loading = false;
           this.popularList = response.data
           this.img = response.data[0].data.img
-          console.log(response)
       })
     }
   };

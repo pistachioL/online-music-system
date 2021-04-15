@@ -101,7 +101,7 @@
 
 
 
-        </el-main>
+    </el-main>
     <el-footer height="-100px">
       <aplayer autoplay :music="{
         title: 'Preparation',

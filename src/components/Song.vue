@@ -1,41 +1,53 @@
 <template>
   <div>
+    <el-container>
+      <NavMenu />
 
-    <NavMenu />
-
-  
-  <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img" :fit="fit"> </el-image>
-  <h1>{{this.artist}}</h1>
-
-  <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
-
-  <el-table :data="searchRes"
-   v-loading="loading"
-   element-loading-text="拼命加载中"
-   element-loading-spinner="el-icon-loading"
-  style="width: 100%" >
-
+      <el-main>
       
-      <el-table-column label="歌曲" prop="data.song_name" >   </el-table-column>
+        <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
+        <h1>{{this.artist}}</h1>   
 
-      <el-table-column label="歌手"  prop="data.author_name"  > </el-table-column>
+        <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
 
-      <el-table-column label="专辑名" prop="data.album_name" > </el-table-column>
+        <el-table :data="searchRes"
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        type="index"
+        style="width: 100%" >
 
-    <el-table-column label="播放时长" prop="data.timelength"  :formatter="msToMin"> </el-table-column>
-    <el-table-column label=" ">
-      <template slot-scope="scope">
-        <el-button type="text" size="small" @click="play(scope.row)" icon="el-icon-video-play"></el-button>
-      </template>
-    </el-table-column>
+          <el-table-column label="序号" > 
+                  <template slot-scope="scope">
+                    {{scope.$index+1}}
+                  </template>
+          </el-table-column>
 
-  </el-table>
+          <el-table-column label="歌曲" prop="data.song_name" >   </el-table-column>
 
-    <el-footer height="-100px">
+          <el-table-column label="歌手"  prop="data.author_name"  > </el-table-column>
 
-      <aplayer :autoplay="true" :music=playingSong>
-      </aplayer>
+          <el-table-column label="专辑名" prop="data.album_name" > </el-table-column>
+
+        <el-table-column label="播放时长" prop="data.timelength"  :formatter="msToMin"> </el-table-column>
+
+        <el-table-column label=" ">
+          <template slot-scope="scope">
+            <el-button type="text" size="small" @click="play(scope.row)" icon="el-icon-video-play"></el-button>
+          </template>
+        </el-table-column>
+
+        </el-table>
+      </el-main>
+
+        <!-- 播放器 -->
+    <el-footer>
+        <div class="hover"> 
+        <aplayer :autoplay="true" :music=playingSong fixed /> 
+        </div>
     </el-footer>
+   
+  </el-container>
 </div>
 </template>
 
@@ -44,10 +56,11 @@
 <script>
 import axios from 'axios'
 import NavMenu from './NavMenu.vue'
-
+import Aplayer from 'vue-aplayer'
   export default {
     components:{
       NavMenu,
+      Aplayer       
     },
     data() {
       return {
@@ -56,6 +69,14 @@ import NavMenu from './NavMenu.vue'
          loading: false,
          img: "",
          artist: "",
+         tmpPlayingSong: {
+          title: '',
+          author: '',
+          url: '',
+          pic: '',
+          lrc: '',
+        },
+        playingSong: {},
       }
     },
     mounted: function () {
@@ -69,7 +90,7 @@ import NavMenu from './NavMenu.vue'
           this.img = this.searchRes[0].data.img 
           this.artist = this.searchRes[0].data.author_name
       });
-     
+
 
     },
     methods:{
@@ -82,13 +103,14 @@ import NavMenu from './NavMenu.vue'
       },
       play(row){
         const song = row.data
-        console.log('song', song)
+        // console.log('song', song)
         this.tmpPlayingSong.author = song.author_name
         this.tmpPlayingSong.title = song.song_name
         this.tmpPlayingSong.url = song.play_url
         this.tmpPlayingSong.lrc = song.lyrics
         this.tmpPlayingSong.pic = song.img
         this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
+      
       },
       
     },
@@ -106,4 +128,12 @@ import NavMenu from './NavMenu.vue'
   .el-aside {
     color: #333;
   }
+
+  .hover{
+    left: 0;
+    position: fixed;
+    bottom: -10;
+    width: 100%;
+    z-index: 100;
+}
 </style>

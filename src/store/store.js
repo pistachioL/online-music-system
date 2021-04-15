@@ -3,15 +3,14 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-
 const state = {
     isLogin: 0,
     currentUser: '' || localStorage.getItem('username'),
-    remember: false, //
+    remember: false, 
 }
 
 const getters = {
-    userName: (state) => state.currentUser
+    userName: (state) => state.currentUser,
 }
 
 const mutations = {
