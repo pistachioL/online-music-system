@@ -13,7 +13,15 @@
           v-loading="loading"
           element-loading-text="努力加载飙升榜数据..."
           element-loading-spinner="el-icon-loading" 
+          type="index"
           style="width: 100%" >
+        
+            <el-table-column label="序号" > 
+              <template slot-scope="scope">
+                {{scope.$index+1}}
+              </template>
+            </el-table-column>
+
             <el-table-column label="歌曲" prop="data.song_name" >   </el-table-column>
 
             <el-table-column label="歌手"  prop="data.author_name"  > </el-table-column>
@@ -76,6 +84,9 @@ import Aplayer from 'vue-aplayer'
         sec = sec.toString().padStart(2, "0");
         return min + ':' + sec
       },
+      indexMethod(index) {
+        return index;
+      },
       play(row){
         const song = row.data
         console.log('song', song)
@@ -102,6 +113,7 @@ import Aplayer from 'vue-aplayer'
           this.loading = false;
           this.popularList = response.data
           this.img = response.data[0].data.img
+          console.log(response)
       })
     }
   };
