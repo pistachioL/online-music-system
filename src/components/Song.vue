@@ -32,9 +32,9 @@
   </el-table>
 
     <el-footer height="-100px">
-    <audio ref="audio" autoplay></audio>
-      <!-- <aplayer :autoplay="true" :music=playingSong>
-      </aplayer> -->
+
+      <aplayer :autoplay="true" :music=playingSong>
+      </aplayer>
     </el-footer>
 </div>
 </template>

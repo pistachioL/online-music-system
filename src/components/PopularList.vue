@@ -1,38 +1,42 @@
 <template>
   <div>
+    <el-container>
+      <!-- <el-header style="hegith:100px"> -->
+      <NavMenu />
+      <!-- </el-header> -->
 
-    <NavMenu />
+      <el-main>
+        <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
+        <el-button type="primary" icon="el-icon-video-play" v-on:click="playAll" round>全部播放</el-button>
+        <el-table 
+          :data="popularList"
+          v-loading="loading"
+          element-loading-text="努力加载飙升榜数据..."
+          element-loading-spinner="el-icon-loading" 
+          style="width: 100%" >
+            <el-table-column label="歌曲" prop="data.song_name" >   </el-table-column>
 
-  <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img" :fit="fit"> </el-image>
+            <el-table-column label="歌手"  prop="data.author_name"  > </el-table-column>
 
-  <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
+            <el-table-column label="专辑名" prop="data.album_name" > </el-table-column>
 
-  <el-table 
-  :data="popularList"
-  v-loading="loading"
-   element-loading-text="努力加载飙升榜数据..."
-   element-loading-spinner="el-icon-loading" style="width: 100%" >
-      <el-table-column label="歌曲" prop="data.song_name" >   </el-table-column>
+            <el-table-column label="播放时长" prop="data.timelength"  :formatter="msToMin"> </el-table-column>
+        
+            <el-table-column label=" ">
+                <template slot-scope="scope">
+                  <el-button type="text" size="small" @click="play(scope.row)" icon="el-icon-video-play"></el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+      </el-main>
 
-      <el-table-column label="歌手"  prop="data.author_name"  > </el-table-column>
-
-      <el-table-column label="专辑名" prop="data.album_name" > </el-table-column>
-
-    <el-table-column label="播放时长" prop="data.timelength"  :formatter="msToMin"> </el-table-column>
-    <el-table-column label=" ">
-      <template slot-scope="scope">
-        <el-button type="text" size="small" @click="play(scope.row)">播放</el-button>
-      </template>
-    </el-table-column>
-
-  </el-table>
-
-    <el-footer height="-100px">
-
-      <aplayer :autoplay="true" :music=playingSong>
-      </aplayer>
-    </el-footer>
-</div>
+      <el-footer>
+          <div class="hover">
+          <aplayer :autoplay="true" :showLrc=true :music=playingSong :listMaxHeight=30> </aplayer>
+          </div>
+      </el-footer>
+    </el-container>
+  </div>
 </template>
 
 <script>
@@ -59,6 +63,9 @@ import Aplayer from 'vue-aplayer'
         },
         playingSong: {},
         loading: false,
+        img: '',
+        // repeat: 'no-repeat',
+
       }
     },
     methods:{
@@ -78,7 +85,13 @@ import Aplayer from 'vue-aplayer'
         this.tmpPlayingSong.lrc = song.lyrics
         this.tmpPlayingSong.pic = song.img
         this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
-      }
+      },
+      // playAll() {
+      //   this.repeat = 'repeat-all'
+      //   console.log(11111)
+      //   console.log(this.repeat)
+      // }
+
     },
 
     mounted() {
@@ -89,7 +102,6 @@ import Aplayer from 'vue-aplayer'
           this.loading = false;
           this.popularList = response.data
           this.img = response.data[0].data.img
-          
       })
     }
   };
@@ -105,4 +117,13 @@ import Aplayer from 'vue-aplayer'
   .el-aside {
     color: #333;
   }
+
+  .hover{
+    left: 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+}
+     
 </style>

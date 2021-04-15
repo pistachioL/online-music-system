@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 导航栏 -->
-    <el-menu :default-active="this.$route.path" router mode="horizontal" @select="handleSelect">
+    <el-menu :default-active="this.$route.path" router mode="horizontal">
       <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
          {{item.navItem}}
       </el-menu-item>
