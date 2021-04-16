@@ -1,14 +1,19 @@
 <template>
   <div>
-  <el-tabs :tab-position="tabPosition" style="height: 1700px; margin-top:10px" >
-    <el-tab-pane label="酷狗音乐">
+    <el-container>
+      <!-- <el-header style="hegith:100px"> -->
+      <!-- <NavMenu /> -->
+      <!-- </el-header> -->
 
+      <el-main>
+        <h1> 酷狗飙升榜 </h1>
         <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
-               <h1> 酷狗飙升榜 </h1>
-        <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
+
+      <div class="" >
+        <el-button type="primary" icon="el-icon-video-play" v-on:click="playAll" round>全部播放</el-button>
         <el-button type="primary" icon="el-icon-star-on" round>收藏</el-button>
         <el-button type="primary" icon="el-icon-connection" round>分享</el-button>
-
+      </div>
         <el-table 
           :data="popularList"
           v-loading="loading"
@@ -37,40 +42,43 @@
                 </template>
             </el-table-column>
         </el-table>
+      </el-main>
 
-     <!-- 分页 -->
-      <el-pagination 
-        :page-size="10"
-        :pager-count="10"
-        layout="prev, pager, next"
-        :total="this.popularList.length">
-    
-     </el-pagination>
-
-
-
-
-
-    </el-tab-pane>
-    <el-tab-pane label="配置管理">配置管理</el-tab-pane>
-    <el-tab-pane label="角色管理">角色管理</el-tab-pane>
-    <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
-
- 
-  </el-tabs>
+      <!-- 播放器 -->
+      <el-footer>
+          <div class="hover">
+          <aplayer :autoplay="true" :music=playingSong :repeat='repeat-all'> </aplayer>
+          </div>
+      </el-footer>
+    </el-container>
   </div>
 </template>
+
 <script>
+
 import axios from 'axios';
+import Aplayer from 'vue-aplayer'
+
   export default {
+    components:{
+      Aplayer
+    },
     data() {
       return {
-        tabPosition: 'left',
         popularList: this.popularList,
+        tmpPlayingSong: {
+          title: '',
+          author: '',
+          url: '',
+          pic: '',
+          lrc: '',
+        },
+        playingSong: {},
         loading: false,
         img: '',
+        repeat: 'no-repeat',
 
-      };
+      }
     },
     methods:{
       msToMin(row) {
@@ -92,12 +100,11 @@ import axios from 'axios';
         this.tmpPlayingSong.pic = song.img
         this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
       },
-      // playAll() {
-      //   this.repeat = 'repeat-all'
-      //   console.log(11111)
-      //   console.log(this.repeat)
-      // },
- 
+      playAll() {
+        this.repeat = 'repeat-all'
+        console.log(11111)
+        console.log(this.repeat)
+      }
 
     },
     mounted() {
@@ -107,9 +114,29 @@ import axios from 'axios';
       .then(response => {
           this.loading = false;
           this.popularList = response.data
-          console.log(this.popularList)
           this.img = response.data[0].data.img
       })
     }
   };
 </script>
+
+<style>
+  .el-header {
+    background-color: #B3C0D1;
+    color: #333;
+    line-height: 60px;
+  }
+  
+  .el-aside {
+    color: #333;
+  }
+
+  .hover{
+    left: 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+}
+     
+</style>

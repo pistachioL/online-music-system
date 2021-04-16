@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <NavMenu />
+    <!-- <NavMenu /> -->
    
 
     <el-upload
@@ -17,11 +17,11 @@
 </template>
 
 <script>
-import NavMenu from './NavMenu.vue'
+// import NavMenu from './NavMenu/topbar.vue'
 
  export default {
     components:{
-      NavMenu,
+      // NavMenu,
     },
     data() {
       return {

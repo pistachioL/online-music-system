@@ -1,7 +1,7 @@
 <template>
   <div>
       <el-container>
-        <NavMenu />
+        
         <el-main>
 
         <Carousel />
@@ -120,13 +120,13 @@
 
 
 <script>
-import NavMenu from './NavMenu.vue'
+
 import Carousel from './Carousel.vue'
 import Aplayer from 'vue-aplayer'
 import axios from 'axios'
   export default {
     components:{
-      NavMenu,
+  
       Carousel,
       Aplayer,
     },

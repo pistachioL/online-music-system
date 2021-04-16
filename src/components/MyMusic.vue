@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <NavMenu />
+    <!-- <NavMenu /> -->
      <el-image style="width: 200px; height: 200px" :src="this.personalizedSong.result[0].picUrl" :fit="fit"> </el-image>
   
   <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
@@ -21,13 +21,13 @@
 </template>
 
 <script>
-import NavMenu from './NavMenu.vue'
+// import NavMenu from './NavMenu/topbar.vue'
 import axios from 'axios';
 
   export default {
     
     components:{
-      NavMenu,
+      // NavMenu,
     },
     data() {
      return {

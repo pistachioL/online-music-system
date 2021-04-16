@@ -1,8 +1,6 @@
 <template>
   <div>
 
-    <NavMenu />
-
     <el-card class="box-card">
         <div>
         <el-avatar shape="circle" :size="150" src="http://p1.music.126.net/FVI9STacjhXQgOfkPDtPng==/109951163259293373.jpg?param=180y180"></el-avatar>
@@ -29,10 +27,10 @@
 
 
 <script>
- import NavMenu from './NavMenu.vue'
+
   export default {
     components:{
-      NavMenu,
+
     },
     data() {
       return {

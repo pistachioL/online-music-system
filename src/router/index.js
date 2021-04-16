@@ -9,7 +9,10 @@ import MyMusic from '@/components/MyMusic.vue'  //引入根目录下的Hello.vue
 import Song from '@/components/Song.vue'  //引入根目录下的Hello.vue组件
 import UserHome from '@/components/UserHome.vue'  //引入根目录下的Hello.vue组件
 import EditProfile from '@/components/EditProfile.vue'  //引入根目录下的Hello.vue组件
-import Search from '@/components/Search.vue'  //引入根目录下的Hello.vue组件
+//import Search from '@/components/Search.vue'  //引入根目录下的Hello.vue组件
+import KugoPopularList from '@/pages/kugoPopularList.vue'  //引入根目录下的Hello.vue组件
+import NeteaseCloud from '@/pages/NeteaseCloud.vue'  //引入根目录下的Hello.vue组件
+
 
 Vue.use(Router)
 
@@ -38,9 +41,13 @@ const routes = [
         component: PopularList
     },
     {
-        path: '/Song',
+        path: '/song/search',
         name: 'Song',
         component: Song,
+        meta: {
+            title: '搜索',
+            keepAlive: true
+          }
     },
     // {
     //     path: '/song',
@@ -70,6 +77,16 @@ const routes = [
         meta: {
             requiresAuth:true
         },
+    },
+    {
+        path: '/kugoPopularList',
+        name: '酷狗飙升榜',
+        component: KugoPopularList,
+    },
+    {
+        path: '/NeteaseCloud',
+        name: '网易云飙升榜',
+        component: NeteaseCloud,
     },
 
   ]

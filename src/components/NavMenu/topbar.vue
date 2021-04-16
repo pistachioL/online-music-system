@@ -1,20 +1,19 @@
 <template>
-  <div>
+  <el-header>
     <!-- 导航栏 -->
     <el-menu :default-active="this.$route.path" router mode="horizontal">
       <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
          {{item.navItem}}
-    </el-menu-item>
+      </el-menu-item>
 
     <!-- 搜索栏 -->
-    <div class="search">
+    <!-- <div class="search"> -->
       <Search />
-    </div>
+    <!-- </div> -->
     
 
     <!-- 根据是否登录展示 -->
     <div class="login">
-
     <div v-if="$store.getters.userName"> 
         <el-dropdown> 
           <span class="el-dropdown-link">
@@ -30,15 +29,13 @@
     </div>
  
   </el-menu>  
-
-
-</div>
+  </el-header>
 </template>
 
 <script>
 
 import { mapActions } from 'vuex'  
-import Search from './Search';
+import Search from '../Search.vue';
 
   export default {
     components:{
@@ -77,37 +74,48 @@ import Search from './Search';
 </script>
 
 <style scoped>
-/* .nav {
-  padding-left: 1000px;
-  padding-top: 15px;
-} */
- .el-menu {
+
+    .el-menu {
         min-width: 800px;
         padding-left: 20px;
     }
-    #el-menu-item-placeholder1 {
-        width: 60%;
-        max-width: 60%;
-        cursor: default;
-    }
+  
     .el-menu > .el-menu-item {
         min-width: 5%;
         padding: 0 5px;
         box-sizing: content-box;
         text-align: center;
+        
     }
- 
+
     .login {
         float: right;
-        margin: 20px -630px; /*上右下左*/
+        margin: -65px 0px; /*上右下左*/
     }
     .search {
        float: right;
        margin: 10px 200px; /*上右下左*/
     }
+    /* .w{
+        width:1200px;
+        margin: auto;
+    }
+    .header{
+        height: 42px;
+        margin:30px auto;
+    }
+
+    .search{
+        float: left;
+        margin: 0px 320px;
+    }
+    .login {
+        float: left;
+        margin: 0px -300px;
+    } */
     a {
       text-decoration: none; 
     }
-
+  
 
 </style>

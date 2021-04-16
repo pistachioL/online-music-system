@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-container>
-      <NavMenu />
+      <!-- <NavMenu /> -->
 
       <el-main>
-      
+     <!-- <span> {{this.keyword}}找到20条结果 </span> -->
         <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
         <h1>{{this.artist}}</h1>   
 
@@ -55,11 +55,11 @@
 
 <script>
 import axios from 'axios'
-import NavMenu from './NavMenu.vue'
+// import NavMenu from './NavMenu/topbar.vue'
 import Aplayer from 'vue-aplayer'
   export default {
     components:{
-      NavMenu,
+      // NavMenu,
       Aplayer       
     },
     data() {
@@ -80,13 +80,16 @@ import Aplayer from 'vue-aplayer'
       }
     },
     mounted: function () {
-      this.keyword = this.$route.params.keyword
+      this.keyword = this.$route.query.keyword
+      console.log(this.keyword)
       this.loading = true;
       axios
       .get(`http://localhost:9091/search?keyword=${this.keyword}`)
       .then(response => {
           this.loading = false;
           this.searchRes = response.data
+          console.log(this.searchRes)
+
           this.img = this.searchRes[0].data.img 
           this.artist = this.searchRes[0].data.author_name
       });
