@@ -1,9 +1,7 @@
 <template>
   <div>
     <el-container>
-      <!-- <el-header style="hegith:100px"> -->
-      <!-- <NavMenu /> -->
-      <!-- </el-header> -->
+s
 
       <el-main>
         <h1> 酷狗飙升榜 </h1>
@@ -45,87 +43,87 @@
       </el-main>
 
       <!-- 播放器 -->
-      <el-footer>
+      <!-- <el-footer>
           <div class="hover">
           <aplayer :autoplay="true" :music=playingSong :repeat='repeat-all'> </aplayer>
           </div>
       </el-footer>
     </el-container>
-  </div>
+  </div> -->
 </template>
 
 <script>
 
-import axios from 'axios';
-import Aplayer from 'vue-aplayer'
+// import axios from 'axios';
+// import Aplayer from 'vue-aplayer'
 
-  export default {
-    components:{
-      Aplayer
-    },
-    data() {
-      return {
-        popularList: this.popularList,
-        tmpPlayingSong: {
-          title: '',
-          author: '',
-          url: '',
-          pic: '',
-          lrc: '',
-        },
-        playingSong: {},
-        loading: false,
-        img: '',
-        repeat: 'no-repeat',
+//   export default {
+//     components:{
+//       Aplayer
+//     },
+//     data() {
+//       return {
+//         popularList: this.popularList,
+//         tmpPlayingSong: {
+//           title: '',
+//           author: '',
+//           url: '',
+//           pic: '',
+//           lrc: '',
+//         },
+//         playingSong: {},
+//         loading: false,
+//         img: '',
+//         repeat: 'no-repeat',
 
-      }
-    },
-    methods:{
-      msToMin(row) {
-        let ms = row.data.timelength
-        let min = Math.floor((ms/1000/60) << 0),
-        sec = Math.floor((ms/1000) % 60);
-        sec = sec.toString().padStart(2, "0");
-        return min + ':' + sec
-      },
-      indexMethod(index) {
-        return index;
-      },
-      play(row){
-        const song = row.data
-        this.tmpPlayingSong.author = song.author_name
-        this.tmpPlayingSong.title = song.song_name
-        this.tmpPlayingSong.url = song.play_url
-        this.tmpPlayingSong.lrc = song.lyrics
-        this.tmpPlayingSong.pic = song.img
-        this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
-      },
-      playAll() {
-        this.repeat = 'repeat-all'
-        console.log(11111)
-        console.log(this.repeat)
-      }
+//       }
+//     },
+//     methods:{
+//       msToMin(row) {
+//         let ms = row.data.timelength
+//         let min = Math.floor((ms/1000/60) << 0),
+//         sec = Math.floor((ms/1000) % 60);
+//         sec = sec.toString().padStart(2, "0");
+//         return min + ':' + sec
+//       },
+//       indexMethod(index) {
+//         return index;
+//       },
+//       play(row){
+//         const song = row.data
+//         this.tmpPlayingSong.author = song.author_name
+//         this.tmpPlayingSong.title = song.song_name
+//         this.tmpPlayingSong.url = song.play_url
+//         this.tmpPlayingSong.lrc = song.lyrics
+//         this.tmpPlayingSong.pic = song.img
+//         this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
+//       },
+//       playAll() {
+//         this.repeat = 'repeat-all'
+//         console.log(11111)
+//         console.log(this.repeat)
+//       }
 
-    },
-    mounted() {
-      this.loading = true;
-      axios
-      .get(`http://localhost:9091/popularList`)
-      .then(response => {
-          this.loading = false;
-          this.popularList = response.data
-          this.img = response.data[0].data.img
-      })
-    }
-  };
+//     },
+//     mounted() {
+//       this.loading = true;
+//       axios
+//       .get(`http://localhost:9091/popularList`)
+//       .then(response => {
+//           this.loading = false;
+//           this.popularList = response.data
+//           this.img = response.data[0].data.img
+//       })
+//     }
+//   };
 </script>
 
 <style>
-  .el-header {
-    background-color: #B3C0D1;
+  /* .el-header {
+    background-color:white;
     color: #333;
     line-height: 60px;
-  }
+  } 
   
   .el-aside {
     color: #333;
@@ -137,6 +135,6 @@ import Aplayer from 'vue-aplayer'
     bottom: 0;
     width: 100%;
     z-index: 100;
-}
+}  */
      
 </style>

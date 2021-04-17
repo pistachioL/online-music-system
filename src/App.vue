@@ -1,10 +1,17 @@
 <template>
   <div id="app">
-
     <el-container >
-      <el-header>
+      <el-header style="background-color: white; height: 73px">
           <Topbar/>
       </el-header>
+
+      <!-- 播放器 -->
+      <el-footer>
+          <div class="hover">
+          <aplayer :autoplay="true" :music=playingSong> </aplayer>
+          </div>
+      </el-footer>
+      
       <router-view></router-view> 
     </el-container>
   </div>
@@ -12,12 +19,13 @@
 
 <script>
 
-import Topbar from './components/NavMenu/topbar.vue'
+import Topbar from '@/components/NavMenu/topbar.vue'
+import Aplayer from 'vue-aplayer'
 export default {
   name: 'App',
   components:{
     Topbar,
-
+    Aplayer
   },
 }
 </script>
@@ -25,9 +33,5 @@ export default {
 
 
 <style>
-   /* .el-header {
-    background-color:white;
-    color: #333;
-    line-height: 60px;
-  } */
+
 </style>

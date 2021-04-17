@@ -1,8 +1,8 @@
 <template>
   <div>
-  <el-tabs :tab-position="tabPosition" style="height: 1700px; margin-top:10px" >
+  <el-tabs :tab-position="tabPosition" style="height: 1700px; margin-top:-50px" >
+    
     <el-tab-pane label="酷狗音乐">
-
         <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
                <h1> 酷狗飙升榜 </h1>
         <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
@@ -44,15 +44,13 @@
         :pager-count="10"
         layout="prev, pager, next"
         :total="this.popularList.length">
+      
     
      </el-pagination>
 
 
-
-
-
     </el-tab-pane>
-    <el-tab-pane label="配置管理">配置管理</el-tab-pane>
+    <el-tab-pane label="网易云音乐"></el-tab-pane>
     <el-tab-pane label="角色管理">角色管理</el-tab-pane>
     <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
 
@@ -113,3 +111,16 @@ import axios from 'axios';
     }
   };
 </script>
+
+
+<style>
+
+
+  .hover{
+    left: 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+  } 
+</style>

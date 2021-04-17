@@ -1,5 +1,5 @@
 <template>
-  <el-header>
+  <div>
     <!-- 导航栏 -->
     <el-menu :default-active="this.$route.path" router mode="horizontal">
       <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
@@ -7,11 +7,9 @@
       </el-menu-item>
 
     <!-- 搜索栏 -->
-    <!-- <div class="search"> -->
+    <div class="search">
       <Search />
-    <!-- </div> -->
-    
-
+    </div>
     <!-- 根据是否登录展示 -->
     <div class="login">
     <div v-if="$store.getters.userName"> 
@@ -29,7 +27,7 @@
     </div>
  
   </el-menu>  
-  </el-header>
+  </div>
 </template>
 
 <script>
@@ -75,47 +73,30 @@ import Search from '../Search.vue';
 
 <style scoped>
 
-    .el-menu {
-        min-width: 800px;
-        padding-left: 20px;
-    }
-  
-    .el-menu > .el-menu-item {
-        min-width: 5%;
-        padding: 0 5px;
-        box-sizing: content-box;
-        text-align: center;
-        
-    }
+  .el-menu {
+      min-width: 800px;
+      padding-left: 20px;
+  }
 
-    .login {
-        float: right;
-        margin: -65px 0px; /*上右下左*/
-    }
-    .search {
-       float: right;
-       margin: 10px 200px; /*上右下左*/
-    }
-    /* .w{
-        width:1200px;
-        margin: auto;
-    }
-    .header{
-        height: 42px;
-        margin:30px auto;
-    }
+  .el-menu > .el-menu-item {
+      min-width: 5%;
+      padding: 0 5px;
+      box-sizing: content-box;
+      text-align: center;  
+  }
 
-    .search{
-        float: left;
-        margin: 0px 320px;
-    }
-    .login {
-        float: left;
-        margin: 0px -300px;
-    } */
-    a {
+  .login {
+    float: right;
+    margin: -65px 0px; /*上右下左*/
+  }
+  .search {
+    /* width: 300px; */
+    margin: 0px 800px; /*上右下左*/
+  }
+
+  a {
       text-decoration: none; 
-    }
-  
+  }
+
 
 </style>

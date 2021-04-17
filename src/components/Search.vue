@@ -1,6 +1,5 @@
 <template>
   <div>
-   <!-- <NavMenu /> -->
 
     <el-autocomplete style="width:250px" placeholder="搜索歌曲/歌手/MV" 
      @keyup.enter.native="onEnterPress"
@@ -16,8 +15,6 @@
 
 
 <script>
-
-// import NavMenu from './NavMenu/topbar.vue'
 export default {
   data() {
     return {
@@ -30,7 +27,7 @@ export default {
     this.singers = this.loadAll();
   },
   components:{
-      // NavMenu,
+     
     },
   methods: {
     // 回车即可跳转到song页面

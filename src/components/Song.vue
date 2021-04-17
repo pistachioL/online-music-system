@@ -1,10 +1,8 @@
 <template>
   <div>
     <el-container>
-      <!-- <NavMenu /> -->
-
       <el-main>
-     <!-- <span> {{this.keyword}}找到20条结果 </span> -->
+     <span> {{this.keyword}}找到 {{searchRes.length}}条结果 </span>
         <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
         <h1>{{this.artist}}</h1>   
 
@@ -55,11 +53,9 @@
 
 <script>
 import axios from 'axios'
-// import NavMenu from './NavMenu/topbar.vue'
 import Aplayer from 'vue-aplayer'
   export default {
     components:{
-      // NavMenu,
       Aplayer       
     },
     data() {
@@ -122,11 +118,7 @@ import Aplayer from 'vue-aplayer'
 </script>
 
 <style>
-  .el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    line-height: 60px;
-  }
+
   
   .el-aside {
     color: #333;

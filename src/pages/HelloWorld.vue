@@ -121,7 +121,7 @@
 
 <script>
 
-import Carousel from './Carousel.vue'
+import Carousel from '../components/Carousel.vue'
 import Aplayer from 'vue-aplayer'
 import axios from 'axios'
   export default {
@@ -167,13 +167,6 @@ import axios from 'axios'
 </script>
 
 <style>
-  .el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    line-height: 60px;
-  }
+
   
-  .el-aside {
-    color: #333;
-  }
 </style>
