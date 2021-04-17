@@ -4,10 +4,12 @@
     
     <el-tab-pane label="酷狗音乐">
         <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
-               <h1> 酷狗飙升榜 </h1>
-        <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
-        <el-button type="primary" icon="el-icon-star-on" round>收藏</el-button>
-        <el-button type="primary" icon="el-icon-connection" round>分享</el-button>
+        <h1 style="width:400px; margin:-200px 250px 230px"> 酷狗飙升榜 </h1>
+        <div style="width:400px; margin:-100px 250px 60px">
+          <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
+          <el-button type="primary" icon="el-icon-star-on" round>收藏</el-button>
+          <el-button type="primary" icon="el-icon-connection" round>分享</el-button>
+        </div>
 
         <el-table 
           :data="popularList"
@@ -51,16 +53,27 @@
 
     </el-tab-pane>
     <el-tab-pane label="网易云音乐"></el-tab-pane>
-    <el-tab-pane label="角色管理">角色管理</el-tab-pane>
+    <el-tab-pane label="QQ音乐"> </el-tab-pane>
     <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
 
  
   </el-tabs>
+
+    <el-footer>
+      <div class="hover">
+      <aplayer :autoplay="true" :music=playingSong> </aplayer>
+      </div>
+    </el-footer>
+
   </div>
 </template>
 <script>
 import axios from 'axios';
+import Aplayer from 'vue-aplayer'
   export default {
+    components:{
+      Aplayer
+    },
     data() {
       return {
         tabPosition: 'left',

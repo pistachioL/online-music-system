@@ -68,6 +68,9 @@ import { mapActions,mapState } from 'vuex'
 
       }
     },
+    created() {
+      this.$emit('header', false)
+    },
     mounted() {
         this.showLogin = true;
     },

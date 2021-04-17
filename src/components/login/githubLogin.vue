@@ -17,6 +17,9 @@ export default {
      // responseData: '',
     };
   },
+  created() {
+    this.$emit('header', false)
+  },
   mounted() {
     let code = this.$route.query.code;
     axios

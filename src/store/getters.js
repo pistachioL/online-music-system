@@ -1,2 +1,8 @@
-export const currentUser = state => state.currentUser
-export const isLogin = state => state.isLogin 
+
+const getters = {
+    userName: (state) => state.currentUser,
+    isPlaying: (state) => state.isPlaying,
+    playList: (state) => state.playList,
+}
+
+export default getters

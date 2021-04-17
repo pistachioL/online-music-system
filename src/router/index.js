@@ -6,7 +6,7 @@ import githubLogin from '@/components/login/githubLogin.vue'  //引入根目录�
 import HelloWorld from '@/pages/HelloWorld.vue'  //引入根目录下的Hello.vue组件
 import PopularList from '@/pages/popularList.vue'  //引入根目录下的Hello.vue组件
 import MyMusic from '@/components/MyMusic.vue'  //引入根目录下的Hello.vue组件
-import Song from '@/components/Song.vue'  //引入根目录下的Hello.vue组件
+import Song from '@/pages/searchSong.vue'  //引入根目录下的Hello.vue组件
 import UserHome from '@/pages/userHome.vue'  //引入根目录下的Hello.vue组件
 import EditProfile from '@/components/EditProfile.vue'  //引入根目录下的Hello.vue组件
 

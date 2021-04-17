@@ -10,26 +10,26 @@
     <el-row :gutter="12">
       <el-col :span="5">
         <el-card shadow="hover">
-             <el-image style="width: 200px; height: 200px" :src="this.personalized[0].picUrl" :fit="fit"> </el-image>
+             <el-image style="width: 200px; height: 200px" :src="this.personalized[0].picUrl"> </el-image>
              {{this.personalized[0].name}}
         </el-card>
       </el-col>
       <el-col :span="5">
         <el-card shadow="hover">
-           <el-image style="width: 200px; height: 200px" :src="this.personalized[1].picUrl" :fit="fit"> </el-image>
+           <el-image style="width: 200px; height: 200px" :src="this.personalized[1].picUrl"> </el-image>
            {{this.personalized[1].name}}
         </el-card>
       </el-col>
       <el-col :span="5">
         <el-card shadow="hover">
-            <el-image style="width: 200px; height: 200px" :src="this.personalized[2].picUrl" :fit="fit"> </el-image>
+            <el-image style="width: 200px; height: 200px" :src="this.personalized[2].picUrl" > </el-image>
             {{this.personalized[2].name}}
         </el-card>
       </el-col>
    
        <el-col :span="5">
         <el-card shadow="hover">
-            <el-image style="width: 200px; height: 200px" :src="this.personalized[3].picUrl" :fit="fit"> </el-image>
+            <el-image style="width: 200px; height: 200px" :src="this.personalized[3].picUrl"> </el-image>
             {{this.personalized[3].name}}
         </el-card>
       </el-col>
@@ -40,25 +40,25 @@
     <el-row :gutter="12">
       <el-col :span="5">
         <el-card shadow="hover">
-            <el-image style="width: 200px; height: 200px" :src=" this.topList[0].coverImgUrl" :fit="fit"> </el-image>
+            <el-image style="width: 200px; height: 200px" :src=" this.topList[0].coverImgUrl"> </el-image>
         </el-card>
       </el-col>
 
       <el-col :span="5">
         <el-card shadow="hover">
-            <el-image style="width: 200px; height: 200px" :src=" this.topList[1].coverImgUrl" :fit="fit"> </el-image>
+            <el-image style="width: 200px; height: 200px" :src=" this.topList[1].coverImgUrl" > </el-image>
         </el-card>
       </el-col>
 
     <el-col :span="5">
         <el-card shadow="hover">
-            <el-image style="width: 200px; height: 200px" :src=" this.topList[4].coverImgUrl" :fit="fit"> </el-image>
+            <el-image style="width: 200px; height: 200px" :src=" this.topList[4].coverImgUrl" > </el-image>
         </el-card>
       </el-col>
 
        <el-col :span="5">
         <el-card shadow="hover">
-            <el-image style="width: 200px; height: 200px" :src=" this.topList[6].coverImgUrl" :fit="fit"> </el-image>
+            <el-image style="width: 200px; height: 200px" :src=" this.topList[6].coverImgUrl"> </el-image>
         </el-card>
       </el-col>
     </el-row>
@@ -70,28 +70,28 @@
     <el-row :gutter="12">
      <el-col :span="5">
         <el-card shadow="hover">
-             <el-image style="width: 200px; height: 200px" :src="this.topSinger[0].img1v1Url" :fit="fit"> </el-image>
+             <el-image style="width: 200px; height: 200px" :src="this.topSinger[0].img1v1Url"> </el-image>
                {{this.topSinger[0].name}}
         </el-card>
       </el-col>
 
       <el-col :span="5">
         <el-card shadow="hover">
-           <el-image style="width: 200px; height: 200px" :src="this.topSinger[1].img1v1Url" :fit="fit"> </el-image>
+           <el-image style="width: 200px; height: 200px" :src="this.topSinger[1].img1v1Url"> </el-image>
           {{this.topSinger[1].name}}
         </el-card>
       </el-col>
 
       <el-col :span="5">
         <el-card shadow="hover">
-            <el-image style="width: 200px; height: 200px" :src="this.topSinger[2].img1v1Url" :fit="fit"> </el-image>
+            <el-image style="width: 200px; height: 200px" :src="this.topSinger[2].img1v1Url"> </el-image>
             {{this.topSinger[2].name}}
         </el-card>
       </el-col>
 
         <el-col :span="5">
         <el-card shadow="hover">
-            <el-image style="width: 200px; height: 200px" :src="this.topSinger[3].img1v1Url" :fit="fit"> </el-image>
+            <el-image style="width: 200px; height: 200px" :src="this.topSinger[3].img1v1Url"> </el-image>
             {{this.topSinger[3].name}}
         </el-card>
       </el-col>
@@ -126,7 +126,6 @@ import Aplayer from 'vue-aplayer'
 import axios from 'axios'
   export default {
     components:{
-  
       Carousel,
       Aplayer,
     },
@@ -137,6 +136,9 @@ import axios from 'axios'
         topSinger: this.topSinger,
       }
    },
+    created() {
+      this.$emit('header', true)
+    },
     mounted() {
     //网易云推荐新音乐
     axios

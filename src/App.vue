@@ -2,7 +2,7 @@
   <div id="app">
     <el-container >
       <el-header style="background-color: white; height: 73px">
-          <Topbar/>
+          <Topbar v-if="nav_show"/>
       </el-header>
 
       <!-- 播放器 -->
@@ -12,7 +12,7 @@
           </div>
       </el-footer>
       
-      <router-view></router-view> 
+      <router-view v-on:header="header"></router-view> 
     </el-container>
   </div>
 </template>
@@ -21,12 +21,24 @@
 
 import Topbar from '@/components/NavMenu/topbar.vue'
 import Aplayer from 'vue-aplayer'
+import { mapMutations, mapActions } from 'vuex'
+
 export default {
   name: 'App',
+  data() {
+    return {
+      nav_show: true,
+    }
+  },
   components:{
     Topbar,
     Aplayer
   },
+  methods:{
+    header(bool){
+      this.nav_show = bool;
+    }
+  }
 }
 </script>
 

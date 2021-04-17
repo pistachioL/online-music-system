@@ -13,14 +13,15 @@
     <!-- 根据是否登录展示 -->
     <div class="login">
     <div v-if="$store.getters.userName"> 
-        <el-dropdown> 
-          <span class="el-dropdown-link">
-            <a href="http://localhost:8080/user" >{{$store.getters.userName}}</a>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-remove">  <button v-on:click="logoutCheck">退出登录</button></el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+      <el-avatar src="https://avatars.githubusercontent.com/u/35989937?v=4"></el-avatar>
+      <el-dropdown> 
+        <span class="el-dropdown-link">
+          <a href="http://localhost:8080/user" >{{$store.getters.userName}}</a>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item icon="el-icon-remove">  <button v-on:click="logoutCheck">退出登录</button></el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
       <!-- 未登录 -->
     <div v-else > <a href="http://localhost:8080/login"> 登录/注册 </a>  </div> 
