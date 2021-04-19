@@ -75,18 +75,15 @@ import { mapActions,mapState } from 'vuex'
         this.showLogin = true;
     },
     computed: {
-        ...mapState(['isLogin'])
+      
     },
     methods: {
-      ...mapActions(['loginAction']),
-     
-
       //判断是否有勾选“记住我”
       
       //账户密码登录
       loginCheck() {
           if(this.loginForm.username == 'liao' && this.loginForm.password == '123456'){
-              this.loginAction();
+              this.$store.dispatch('user/loginAction')  //修改action
               this.$router.push('/');
           }else{
             this.$message({

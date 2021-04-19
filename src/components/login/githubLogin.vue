@@ -6,7 +6,7 @@
 
 <script>
 import axios from 'axios';
-import { mapActions,mapState } from 'vuex'  
+// import { mapActions,mapState } from 'vuex'  
 
 export default {
   data() {
@@ -28,10 +28,8 @@ export default {
             this.name = response.data.name;
             
             // this.avatar = response.data.avatar_url;
-    
             this.$store.dispatch('user/loginAction')  //修改action
-            console.log(1111)
-            console.log(this.$store.state.user.isLogin)
+           
             if(this.$store.state.user.isLogin === 1) { 
                 this.$store.commit('user/changeLogin', this.name);
                 this.$router.push('/')  //登录成功，返回主页

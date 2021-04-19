@@ -59,12 +59,6 @@
  
   </el-tabs>
 
-    <el-footer>
-      <div class="hover">
-      <aplayer :autoplay="true" :music=playingSong> </aplayer>
-      </div>
-    </el-footer>
-
   </div>
 </template>
 <script>
@@ -81,28 +75,19 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
         popularList: this.popularList,
         loading: false,
         img: '',
-        playlist: [
-        {
-          title: ' ',
-          artist: ' ',
-          src: ' ',
-          pic: ' '
-        }
-      ],
+        tmpPlayingSong: {
+          title: '',
+          author: '',
+          url: '',
+          pic: '',
+          lrc: '',
+        },
+        playingSong: {},
 
-      };
+        };
     },
     computed:{
-      ...mapGetters([
-        'audioEle',
-        // 'mode',
-        'playing',
-        'playlist',
-        'orderList',
-        'currentIndex',
-        'currentMusic',
-        // 'historyList'
-      ])
+    
     },
     methods:{
       msToMin(row) {
@@ -120,10 +105,10 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
         this.tmpPlayingSong.lrc = song.lyrics
         this.tmpPlayingSong.pic = song.img
         this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
+        this.$store.dispatch('player/playAction')  //修改action
+        this.$store.commit('player/playSong', this.playingSong);
       },
-   
- 
-
+  
     },
     mounted() {
       this.loading = true;
@@ -142,7 +127,6 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 
 <style>
-
 
   .hover{
     left: 0;

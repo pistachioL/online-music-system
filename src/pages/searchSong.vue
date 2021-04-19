@@ -37,13 +37,6 @@
 
         </el-table>
       </el-main>
-
-        <!-- 播放器 -->
-    <el-footer>
-        <div class="hover"> 
-        <aplayer :autoplay="true" :music=playingSong fixed /> 
-        </div>
-    </el-footer>
    
   </el-container>
 </div>
@@ -102,14 +95,14 @@ import Aplayer from 'vue-aplayer'
       },
       play(row){
         const song = row.data
-        // console.log('song', song)
         this.tmpPlayingSong.author = song.author_name
         this.tmpPlayingSong.title = song.song_name
         this.tmpPlayingSong.url = song.play_url
         this.tmpPlayingSong.lrc = song.lyrics
         this.tmpPlayingSong.pic = song.img
         this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
-      
+        this.$store.dispatch('player/playAction')  //修改action
+        this.$store.commit('player/playSong', this.playingSong);
       },
       
     },

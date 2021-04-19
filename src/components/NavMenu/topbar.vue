@@ -64,12 +64,9 @@ import Search from '../Search.vue';
       })
     },
     methods: {
-      
       //退出登录
-      // ...mapActions(['logoutAction']),
       logoutCheck() {
         this.$store.dispatch('user/logoutAction')  //修改action
-        // this.logoutAction();
         this.$router.push('/login');
       }
     },
