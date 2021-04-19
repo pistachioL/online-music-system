@@ -84,6 +84,7 @@ const routes = [
         meta: {
             requiresAuth:true,
             navShow: true
+            
         },
     },
 

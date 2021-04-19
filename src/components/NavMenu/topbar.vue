@@ -66,10 +66,10 @@ import Search from '../Search.vue';
     methods: {
       
       //退出登录
-      ...mapActions(['logoutAction']),
+      // ...mapActions(['logoutAction']),
       logoutCheck() {
-        console.log(1111);
-        this.logoutAction();
+        this.$store.dispatch('user/logoutAction')  //修改action
+        // this.logoutAction();
         this.$router.push('/login');
       }
     },

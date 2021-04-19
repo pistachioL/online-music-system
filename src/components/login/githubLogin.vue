@@ -18,7 +18,7 @@ export default {
   },
   created() {
       this.$parent.showNav = false;
-    },
+  },
   mounted() {
     let code = this.$route.query.code;
     axios
@@ -26,10 +26,14 @@ export default {
     .then(response => {
            if (response.data) {
             this.name = response.data.name;
+            
             // this.avatar = response.data.avatar_url;
-            this.loginAction();
-            if(this.$store.state.isLogin === 1) { 
-                this.$store.commit('changeLogin', this.name);
+    
+            this.$store.dispatch('user/loginAction')  //修改action
+            console.log(1111)
+            console.log(this.$store.state.user.isLogin)
+            if(this.$store.state.user.isLogin === 1) { 
+                this.$store.commit('user/changeLogin', this.name);
                 this.$router.push('/')  //登录成功，返回主页
             }
             else {
@@ -44,8 +48,10 @@ export default {
 
   },
   methods: {
-      ...mapState(['isLogin']),
-      ...mapActions(['loginAction']),
+     
+      // ...mapState(['isLogin']),
+
+      // ...mapActions(['loginAction']),
   }
 }
 </script>
