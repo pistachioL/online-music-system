@@ -18,25 +18,35 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: Login
+        component: Login,
+        meta:{
+            navShow: false
+        }
     },
     {
         path: '/oauth/redirect', //github授权页面
         name: 'github',
-        component: githubLogin 
+        component: githubLogin,
+        meta:{
+            navShow: false
+        }
     },
     {
         path: '/',
         name: 'HelloWorld',
         component: HelloWorld,
         meta: {
-            requiresAuth:true
+            requiresAuth: true,
+            navShow: true
         },
     },
     {
         path: '/popularList',
         name: '音乐榜单',
-        component: PopularList
+        component: PopularList,
+        meta:{
+            navShow: true
+        }
     },
     {
         path: '/song/search',
@@ -44,7 +54,8 @@ const routes = [
         component: Song,
         meta: {
             title: '搜索',
-            keepAlive: true
+            keepAlive: true,
+            navShow: true
           }
     },
  
@@ -53,7 +64,8 @@ const routes = [
         name: '我的音乐盒',
         component: MyMusic,
         meta: {
-            requiresAuth:true
+            requiresAuth:true,
+            navShow: true
         },
     },
     {
@@ -61,7 +73,8 @@ const routes = [
         name: '个人中心',
         component: UserHome,
         meta: {
-            requiresAuth:true
+            requiresAuth:true,
+            navShow: true
         },
     },
     {
@@ -69,7 +82,8 @@ const routes = [
         name: '编辑资料',
         component: EditProfile,
         meta: {
-            requiresAuth:true
+            requiresAuth:true,
+            navShow: true
         },
     },
 

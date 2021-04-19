@@ -69,7 +69,7 @@ import { mapActions,mapState } from 'vuex'
       }
     },
     created() {
-      this.$emit('header', false)
+      this.$parent.showNav = false;
     },
     mounted() {
         this.showLogin = true;
@@ -127,10 +127,11 @@ import { mapActions,mapState } from 'vuex'
   .login{
     position: relative;
     width: 100%;
-    height: 70vh;
+    height: 60vh;
     display:flex;
     justify-content: center;
     align-items: center;
+    margin-top: 60px;
   }
   .text {
     font-size: 14px;
@@ -142,7 +143,7 @@ import { mapActions,mapState } from 'vuex'
 
   .box-card {
     width: 380px;
-  
+    margin: 20px 30px;
   }
   p{
     font-size:2px;
@@ -150,6 +151,7 @@ import { mapActions,mapState } from 'vuex'
   h1{
     text-align:center;
     font-size:2.5em;
+    margin-top:-100px;
   }
  
   img:hover{

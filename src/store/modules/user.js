@@ -1,3 +1,24 @@
+
+const state = {
+    isLogin: 0,
+    currentUser: '' || localStorage.getItem('username'),
+    remember: false,
+
+}
+
+const getters = {
+    userName: (state) => state.currentUser,
+}
+
+const actions = {
+    loginAction({commit}, username){
+        commit('changeLogin',username);
+    },
+    logoutAction({commit}, username) {
+        commit('changeLogout', username);
+    }, 
+}
+
 const mutations = {
     changeLogin(state,username){
         state.isLogin = 1;
@@ -10,8 +31,15 @@ const mutations = {
         state.isLogin = 0;
         state.currentUser = '';
         localStorage.removeItem('username', username)
-    }
-
+    },
 }
 
-export default mutations
+
+export default {
+    namespaced: true,
+    state,
+    getters,
+    actions,
+    mutations
+}
+

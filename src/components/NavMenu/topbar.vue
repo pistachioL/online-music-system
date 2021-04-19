@@ -10,13 +10,14 @@
     <div class="search">
       <Search />
     </div>
+
     <!-- 根据是否登录展示 -->
     <div class="login">
-    <div v-if="$store.getters.userName"> 
+    <div v-if="userName"> 
       <el-avatar src="https://avatars.githubusercontent.com/u/35989937?v=4"></el-avatar>
       <el-dropdown> 
         <span class="el-dropdown-link">
-          <a href="http://localhost:8080/user" >{{$store.getters.userName}}</a>
+          <a href="http://localhost:8080/user" >{{userName}}</a>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item icon="el-icon-remove">  <button v-on:click="logoutCheck">退出登录</button></el-dropdown-item>
@@ -33,7 +34,8 @@
 
 <script>
 
-import { mapActions } from 'vuex'  
+import { mapActions,mapGetters,mapState } from 'vuex'  
+
 import Search from '../Search.vue';
 
   export default {
@@ -51,12 +53,18 @@ import Search from '../Search.vue';
           form: {
             username: '',
             password: '',
-          }
+          },
+  
           
       };
     },
+    computed: {
+      ...mapState({
+        userName: state => state.user.currentUser,
+      })
+    },
     methods: {
-    
+      
       //退出登录
       ...mapActions(['logoutAction']),
       logoutCheck() {

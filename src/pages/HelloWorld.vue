@@ -136,9 +136,9 @@ import axios from 'axios'
         topSinger: this.topSinger,
       }
    },
-    created() {
-      this.$emit('header', true)
-    },
+    // created() {
+    //   this.$emit('header', true)
+    // },
     mounted() {
     //网易云推荐新音乐
     axios
@@ -156,7 +156,7 @@ import axios from 'axios'
        
     });
 
-    //网易云热门歌手
+  //网易云热门歌手
   axios
     .get(`https://autumnfish.cn/toplist/artist`)
     .then(response => {

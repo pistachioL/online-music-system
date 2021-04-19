@@ -70,6 +70,7 @@
 <script>
 import axios from 'axios';
 import Aplayer from 'vue-aplayer'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
   export default {
     components:{
       Aplayer
@@ -80,8 +81,28 @@ import Aplayer from 'vue-aplayer'
         popularList: this.popularList,
         loading: false,
         img: '',
+        playlist: [
+        {
+          title: ' ',
+          artist: ' ',
+          src: ' ',
+          pic: ' '
+        }
+      ],
 
       };
+    },
+    computed:{
+      ...mapGetters([
+        'audioEle',
+        // 'mode',
+        'playing',
+        'playlist',
+        'orderList',
+        'currentIndex',
+        'currentMusic',
+        // 'historyList'
+      ])
     },
     methods:{
       msToMin(row) {
@@ -90,9 +111,6 @@ import Aplayer from 'vue-aplayer'
         sec = Math.floor((ms/1000) % 60);
         sec = sec.toString().padStart(2, "0");
         return min + ':' + sec
-      },
-      indexMethod(index) {
-        return index;
       },
       play(row){
         const song = row.data
@@ -103,11 +121,7 @@ import Aplayer from 'vue-aplayer'
         this.tmpPlayingSong.pic = song.img
         this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
       },
-      // playAll() {
-      //   this.repeat = 'repeat-all'
-      //   console.log(11111)
-      //   console.log(this.repeat)
-      // },
+   
  
 
     },
@@ -124,6 +138,7 @@ import Aplayer from 'vue-aplayer'
     }
   };
 </script>
+
 
 
 <style>

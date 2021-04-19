@@ -1,25 +1,24 @@
 <template>
   <div>
-    <div>{{githubUser}}</div>
+    {{githubUser}}
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import { mapActions,mapState } from 'vuex'  
-//let Base64 = require('js-base64').Base64
 
 export default {
   data() {
     return {
       githubUser: "github登陆中,请稍候...",
       name: this.name,
-     // responseData: '',
+
     };
   },
   created() {
-    this.$emit('header', false)
-  },
+      this.$parent.showNav = false;
+    },
   mounted() {
     let code = this.$route.query.code;
     axios
