@@ -7,7 +7,7 @@
         <el-button plain>编辑资料</el-button>
         </div>
         <el-divider></el-divider>
-        {{$store.getters.userName}}<br>
+        {{'小廖~'}}<br>
         个人简介：相信音乐的力量！！
     </el-card>
 

@@ -24,7 +24,7 @@
     <el-card class="box-card">
       <form action="">
       <el-input placeholder="请输入用户名" v-model="input" prefix-icon="el-icon-user-solid" ></el-input><br><br>
-      <el-input placeholder="请输入手机号码" v-model="input" prefix-icon="el-icon-mobile-phone" ></el-input><br><br>
+      <el-input placeholder="请输入邮箱" v-model="input" prefix-icon="el-icon-mobile-phone" ></el-input><br><br>
       <el-input placeholder="请输入密码" v-model="input" prefix-icon="el-icon-lock" show-password="true"></el-input><br><br>
       <el-input placeholder="确认密码" v-model="input" prefix-icon="el-icon-lock" show-password="true"></el-input><br><br>
       <el-button style="width:100%;margin-bottom:15px;" native-type="submit">注册</el-button>   

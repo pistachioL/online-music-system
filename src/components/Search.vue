@@ -5,9 +5,16 @@
      @keyup.enter.native="onEnterPress"
      v-model="keyword"
      prefix-icon='el-icon-search'
-     :fetch-suggestions="querySearch">
-
+     :trigger-on-focus="false"
+     :fetch-suggestions="querySearch"
+     clearable>
+  <ul>
+    历史记录:<br/> 
+		<li v-for="(item,index) in historyList" :key="index"> {{item}}</li>
+	</ul>
+      <el-button size="mini" @click="empty" icon="el-icon-delete"> </el-button>
     </el-autocomplete>
+
 
 
 </div>
@@ -21,14 +28,20 @@ export default {
       keyword: "",
       searchRes: [],
       singers: [],
+      historyList: [],
+  
     }
   },
   mounted() {
     this.singers = this.loadAll();
+     //如果本地存储的数据historyList有值，直接赋值给data中的historyList
+    if (JSON.parse(localStorage.getItem("historyList"))) {
+        this.historyList = JSON.parse(localStorage.getItem("historyList"));
+    }
   },
   components:{
      
-    },
+  },
   methods: {
     // 回车即可跳转到song页面
     onEnterPress() {
@@ -36,14 +49,41 @@ export default {
         this.$alert('搜索内容不能为空！')
         return
       }
+      else {
+        if (!this.historyList.includes(this.keyword)) {
+          this.historyList.unshift(this.keyword);
+          localStorage.setItem("historyList", JSON.stringify(this.historyList));
+        }
+        else {
+          //有搜索记录，删除之前的旧记录，将新搜索值重新push到数组首位
+          let i =this.historyList.indexOf(this.keyword);
+          this.historyList.splice(i,1)
+          this.historyList.unshift(this.keyword);
+          localStorage.setItem("historyList", JSON.stringify(this.historyList));
+        }
+
          this.$router.push({  
-            path: '/song/search',   
+           path: '/song/search',  
             name: 'Song',  
             query:{
               keyword: this.keyword
             }
         })  
+    }
     },
+  
+    //清空历史搜索记录
+    empty(){
+        localStorage.removeItem('historyList');
+        if(this.historyList === null) {
+          this.$alert('清空历史搜索成功')
+        }
+        this.historyList = [];
+    },
+    click() {
+
+    },
+
 
     //搜索建议
     querySearch(queryString, cb) {
@@ -62,10 +102,12 @@ export default {
     loadAll() {
       return [
         {"value":"邓紫棋"},
+        {"value":"邓丽君"},
+        {"value":"邓典果DDG-甩脑壳 Cypher"},
         {"value":"王嘉尔"},
         {"value":"陈奕迅"},
         {"value":"梅艳芳"},
-
+  
       ];
     },
     

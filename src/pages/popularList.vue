@@ -54,7 +54,8 @@
     </el-tab-pane>
     <el-tab-pane label="网易云音乐"></el-tab-pane>
     <el-tab-pane label="QQ音乐"> </el-tab-pane>
-    <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
+    <el-tab-pane label="咪咕音乐"></el-tab-pane>
+    <el-tab-pane label="酷我音乐"></el-tab-pane>
 
  
   </el-tabs>
