@@ -25,7 +25,9 @@
       </el-dropdown>
     </div>
       <!-- 未登录 -->
-    <div v-else > <a href="http://localhost:8080/login"> 登录/注册 </a>  </div> 
+    <div v-else >
+       <a href="http://localhost:8080/login" > 登录/注册 </a>  
+       </div> 
     </div>
  
   </el-menu>  
@@ -41,6 +43,7 @@ import Search from '../Search.vue';
   export default {
     components:{
       Search,
+
     },
     data() {
       return {
@@ -50,10 +53,12 @@ import Search from '../Search.vue';
             {name:"/myMusic", navItem:'我的音乐盒'},
             {name:"/user", navItem:'个人中心'},
           ],
+          dialogTableVisible: false,
           form: {
             username: '',
             password: '',
           },
+          
   
           
       };

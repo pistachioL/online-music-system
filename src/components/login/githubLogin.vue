@@ -6,7 +6,6 @@
 
 <script>
 import axios from 'axios';
-// import { mapActions,mapState } from 'vuex'  
 
 export default {
   data() {
@@ -17,7 +16,7 @@ export default {
     };
   },
   created() {
-      this.$parent.showNav = false;
+      this.$parent.showNav = false; //是否显示导航栏
   },
   mounted() {
     let code = this.$route.query.code;
@@ -26,7 +25,6 @@ export default {
     .then(response => {
            if (response.data) {
             this.name = response.data.name;
-            
             // this.avatar = response.data.avatar_url;
             this.$store.dispatch('user/loginAction')  //修改action
            
@@ -38,7 +36,6 @@ export default {
               console.log('请登录')
             }
         }
-       
     })
     .catch(function(err) {
         console.log(err)

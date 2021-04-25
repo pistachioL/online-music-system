@@ -5,15 +5,27 @@
      @keyup.enter.native="onEnterPress"
      v-model="keyword"
      prefix-icon='el-icon-search'
-     :trigger-on-focus="false"
+     :trigger-on-focus="true"
      :fetch-suggestions="querySearch"
-     clearable>
-  <ul>
-    历史记录:<br/> 
-		<li v-for="(item,index) in historyList" :key="index"> {{item}}</li>
-	</ul>
-      <el-button size="mini" @click="empty" icon="el-icon-delete"> </el-button>
+     clearable
+     >
+      <!-- 历史记录:<br/>  -->
+      <!-- {{historyList}} -->
+      <!-- <li v-for="(item,index) in historyList" :key="index">
+ 
+
+        {{item}}
+
+       </li> -->
+
+      <!-- <el-button size="mini" @click="empty" icon="el-icon-delete"> </el-button> -->
     </el-autocomplete>
+   
+
+
+
+
+
 
 
 

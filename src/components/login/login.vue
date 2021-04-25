@@ -8,12 +8,13 @@
   <el-tab-pane label="登录">
     <el-card class="box-card">
     <form ref="loginForm" :model="loginForm">
-      <el-input placeholder="请输入用户名"  v-model="loginForm.username" prefix-icon="el-icon-user-solid" ></el-input><br><br>
+      <el-input placeholder="请输入用户名"  v-model="loginForm.username" prefix-icon="el-icon-user" ></el-input><br><br>
       <el-input placeholder="请输入密码" v-model="loginForm.password" prefix-icon="el-icon-lock" show-password="true"></el-input><br><br>
       <el-checkbox v-model="loginForm.remember">记住我</el-checkbox>  <br><br> 
-      <el-button style="width:100%;margin-bottom:15px;" native-type="submit" @click="loginCheck" >登录</el-button>   
+      <el-button style="width:100%;margin-bottom:15px;" @click="loginCheck" >登录</el-button>   
     </form> <br> 
-
+<!-- 
+ native-type="submit" -->
        <!-- 第三方登录 -->
         <p> 第三方登录 </p>
         <a v-on:click="loginWithGithub"><img src="../../assets/github.png" width="30px"  alt="">  </a>
@@ -23,11 +24,11 @@
   <el-tab-pane label="注册" >
     <el-card class="box-card">
       <form action="">
-      <el-input placeholder="请输入用户名" v-model="input" prefix-icon="el-icon-user-solid" ></el-input><br><br>
-      <el-input placeholder="请输入邮箱" v-model="input" prefix-icon="el-icon-mobile-phone" ></el-input><br><br>
-      <el-input placeholder="请输入密码" v-model="input" prefix-icon="el-icon-lock" show-password="true"></el-input><br><br>
-      <el-input placeholder="确认密码" v-model="input" prefix-icon="el-icon-lock" show-password="true"></el-input><br><br>
-      <el-button style="width:100%;margin-bottom:15px;" native-type="submit">注册</el-button>   
+      <el-input placeholder="请输入用户名" v-model="registerForm.username" prefix-icon="el-icon-user-solid" ></el-input><br><br>
+      <el-input placeholder="请输入邮箱" v-model="registerForm.email" prefix-icon="el-icon-mobile-phone" ></el-input><br><br>
+      <el-input placeholder="请输入密码" v-model="registerForm.password" prefix-icon="el-icon-lock" show-password="true"></el-input><br><br>
+      <!-- <el-input placeholder="确认密码" v-model="registerForm.password" prefix-icon="el-icon-lock" show-password="true"></el-input><br><br> -->
+      <el-button style="width:100%;margin-bottom:15px;" native-type="submit" @click="register">注册</el-button>   
     </form> <br> 
     </el-card>
   </el-tab-pane>
@@ -41,7 +42,8 @@
 </template> 
 
 <script>
-import { mapActions,mapState } from 'vuex'  
+
+import axios from 'axios'
   let oauth_url = 'https://github.com/login/oauth/authorize'
   let client_id = 'cecc9bc83bd8cff1bfb0' 
   let redirect_uri = 'http://localhost:8080/oauth/redirect'
@@ -51,12 +53,20 @@ import { mapActions,mapState } from 'vuex'
       return {
         input: '',
         showLogin: false,
+        //注册框
+        registerForm: {
+            username: '',
+            password: '',
+            email: '',
+        },
         //登录框
        loginForm: {
-            username: '',
+            email: '',
             password: '',
             remember: '',
         },
+
+        
         rules: {
             username: [
                 { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -79,19 +89,63 @@ import { mapActions,mapState } from 'vuex'
     },
     methods: {
       //判断是否有勾选“记住我”
-      
+      //注册
+      register() {
+        axios
+        .post(`http://localhost:9091/register?username=${this.registerForm.username}&password=${this.registerForm.password}&email=${this.registerForm.email}`)
+        .then(response => {
+            if(response.data.code == 0) {
+              this.$message({
+                showClose: true,
+                message: '注册成功！',
+                type: 'success'
+              });
+              this.$router.push('/login');
+            } 
+            if(response.data.code == 1) {
+               this.$message({
+                showClose: true,
+                message: '错了哦，该邮箱已被注册！',
+                type: 'error'
+              });
+            }
+             if(response.data.code == -1) {
+               this.$message({
+                showClose: true,
+                message: '用户名密码不为空！',
+                type: 'error'
+              });
+            }
+
+        })
+      },
+
       //账户密码登录
       loginCheck() {
-          if(this.loginForm.username == 'liao' && this.loginForm.password == '123456'){
+        axios
+        .post(`http://localhost:9091/login?username=${this.loginForm.username}&password=${this.loginForm.password}`)
+        .then(response => {
+            if(response.data.code == 0) {
+                this.$message({
+                showClose: true,
+                message: '登录成功！',
+                type: 'success'
+              });
               this.$store.dispatch('user/loginAction')  //修改action
+              this.$store.commit('user/changeLogin', this.loginForm.username);
               this.$router.push('/');
-          }else{
-            this.$message({
-                type: 'error',
-                message: '账户密码错误'
-            });
-        }
+            }
+           if(response.data.code == 1) {
+                this.$message({
+                showClose: true,
+                message: '密码错误哦！',
+                type: 'error'
+              });
+           }
+
+        });
       },
+
 
       //github登录
       loginWithGithub() {

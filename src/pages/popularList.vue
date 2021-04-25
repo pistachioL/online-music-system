@@ -8,7 +8,7 @@
         <div style="width:400px; margin:-100px 250px 60px">
           <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
           <el-button type="primary" icon="el-icon-star-on" round>收藏</el-button>
-          <el-button type="primary" icon="el-icon-connection" round>分享</el-button>
+          <el-button type="primary"  :plain="true" @click="share" icon="el-icon-link" round>分享</el-button>
         </div>
 
         <el-table 
@@ -36,6 +36,14 @@
             <el-table-column label=" ">
                 <template slot-scope="scope">
                   <el-button type="text" size="small" @click="play(scope.row)" icon="el-icon-video-play"></el-button>
+                </template>
+            </el-table-column>
+
+             <el-table-column label=" ">
+                <template slot-scope="scope">
+                  <el-button type="text" size="small" @click="collect(scope.row)">  
+                    <img width="15px" height="15px" :src="isCollected? collected  : uncollected" > 
+                  </el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -84,11 +92,14 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
           lrc: '',
         },
         playingSong: {},
+        isCollected: false,
+        uncollected:require('../assets/uncollected.png'),
+        collected:require('../assets/collected.png')
 
-        };
+        } 
     },
     computed:{
-    
+       
     },
     methods:{
       msToMin(row) {
@@ -98,6 +109,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
         sec = sec.toString().padStart(2, "0");
         return min + ':' + sec
       },
+      //点击播放按钮
       play(row){
         const song = row.data
         this.tmpPlayingSong.author = song.author_name
@@ -109,7 +121,23 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
         this.$store.dispatch('player/playAction')  //修改action
         this.$store.commit('player/playSong', this.playingSong);
       },
-  
+      //分享功能待完善
+      share() {
+         this.$message({
+          message: '复制成功',
+          type: 'success'
+        });
+      },
+
+      //todo:收藏功能待完善
+      collect() { 
+        if(this.isCollected == false) {
+          this.isCollected = true;
+        } 
+        else{
+          this.isCollected = false;
+        }
+      }
     },
     mounted() {
       this.loading = true;
