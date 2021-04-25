@@ -1,31 +1,95 @@
 <template>
-  <div>
+  <div >
+    <el-row>
+      <!-- <p style="font-size:15px"> 头像 </p> -->
+      <el-col :span="4" :offset="2">
+        <el-upload
+            class="avatar-uploader"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-col>
 
-    <!-- <NavMenu /> -->
-   
+      <el-col :span="5" offset="2">      
+        <p style="font-size:10px; color:grey" > 格式：支持PNG/JPG格式的图片 </p>
+        <p style="font-size:10px; color:grey"> 尺寸：建议尺寸200*200px </p>
+        <p style="font-size:10px; color:grey"> 大小：不能超过10M</p>
+      </el-col>
+    </el-row>
 
-    <el-upload
-        class="avatar-uploader"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>
+
+    <el-row>
+      <el-col :span="4" :offset="2"> <p style="font-size:15px">      </p> </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col :span="4" :offset="2"> <p style="font-size:15px">      </p> </el-col>
+    </el-row>
+    
+    
+    <el-row>
+      <el-col :span="4" :offset="2">
+        昵称
+      </el-col>
+
+      <el-col :span="5" :offset="4">      
+        性别
+      </el-col>
+
+      <el-col :span="5" :offset="2">      
+        个人简介
+      </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col :span="4" :offset="2"> <p style="font-size:15px">      </p> </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col :span="4" :offset="2">
+        <el-input size="medium" v-model="username" placeholder="请输入昵称"></el-input>
+      </el-col>
+
+      <el-col :span="5" :offset="4">      
+          <el-radio size="medium" v-model="gender" label="1">男</el-radio>   
+          <el-radio v-model="gender" label="2">女</el-radio>
+      </el-col>
+
+      <el-col :span="5" offset="2">      
+         <el-input  v-model="desc" type="textarea" size="medium" placeholder="写下你的个性签名吧~"></el-input>
+      </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col> <p style="font-size:15px">      </p> </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col :span="4" :offset="2">
+        <el-button type="danger" round>保存</el-button>
+      </el-col>
+    </el-row>
 </div>
 </template>
 
 <script>
-// import NavMenu from './NavMenu/topbar.vue'
+
 
  export default {
     components:{
-      // NavMenu,
+  
     },
     data() {
       return {
-        imageUrl: ''
+        imageUrl: '',
+        username: '',
+        gender:' ',
+        desc: ''
+
       };
     },
     methods: {
@@ -83,4 +147,39 @@
     height: 178px;
     display: block;
   }
+
+
+  .upload {
+    margin-top: 10px;
+    margin-left:70px;
+  }
+  .word {
+    color: grey;
+    margin-top: -170px;
+    margin-left:300px;
+    font-size:10px;
+  }
+  .info {
+    margin-top: 100px;
+    margin-left:70px;
+  }
+
+
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+
 </style>

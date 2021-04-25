@@ -13,8 +13,7 @@
       <el-checkbox v-model="loginForm.remember">记住我</el-checkbox>  <br><br> 
       <el-button style="width:100%;margin-bottom:15px;" @click="loginCheck" >登录</el-button>   
     </form> <br> 
-<!-- 
- native-type="submit" -->
+
        <!-- 第三方登录 -->
         <p> 第三方登录 </p>
         <a v-on:click="loginWithGithub"><img src="../../assets/github.png" width="30px"  alt="">  </a>
