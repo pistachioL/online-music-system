@@ -1,7 +1,7 @@
 <template>
   <div >
     <el-row>
-      <!-- <p style="font-size:15px"> 头像 </p> -->
+   
       <el-col :span="4" :offset="2">
         <el-upload
             class="avatar-uploader"
@@ -14,23 +14,14 @@
         </el-upload>
       </el-col>
 
-      <el-col :span="5" offset="2">      
+      <el-col :span="5" offset="2">   
+        <p style="font-size:15x;" > 头像上传 </p>
         <p style="font-size:10px; color:grey" > 格式：支持PNG/JPG格式的图片 </p>
         <p style="font-size:10px; color:grey"> 尺寸：建议尺寸200*200px </p>
         <p style="font-size:10px; color:grey"> 大小：不能超过10M</p>
       </el-col>
     </el-row>
 
-
-    <el-row>
-      <el-col :span="4" :offset="2"> <p style="font-size:15px">      </p> </el-col>
-    </el-row>
-
-    <el-row>
-      <el-col :span="4" :offset="2"> <p style="font-size:15px">      </p> </el-col>
-    </el-row>
-    
-    
     <el-row>
       <el-col :span="4" :offset="2">
         昵称
@@ -45,9 +36,7 @@
       </el-col>
     </el-row>
 
-    <el-row>
-      <el-col :span="4" :offset="2"> <p style="font-size:15px">      </p> </el-col>
-    </el-row>
+  
 
     <el-row>
       <el-col :span="4" :offset="2">
@@ -62,10 +51,6 @@
       <el-col :span="5" offset="2">      
          <el-input  v-model="desc" type="textarea" size="medium" placeholder="写下你的个性签名吧~"></el-input>
       </el-col>
-    </el-row>
-
-    <el-row>
-      <el-col> <p style="font-size:15px">      </p> </el-col>
     </el-row>
 
     <el-row>
@@ -168,18 +153,9 @@
   .el-col {
     border-radius: 4px;
   }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
+  .el-row {
+    margin-bottom: 20px;
+
   }
 
 </style>
