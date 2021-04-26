@@ -9,7 +9,7 @@ import MyMusic from '@/pages/myMusic.vue'  //引入根目录下的Hello.vue组�
 import Song from '@/pages/searchSong.vue'  //引入根目录下的Hello.vue组件
 import UserHome from '@/pages/userHome.vue'  //引入根目录下的Hello.vue组件
 import EditProfile from '@/components/EditProfile.vue'  //引入根目录下的Hello.vue组件
-
+import store from '../store/index.js';
 
 
 Vue.use(Router)
@@ -108,6 +108,38 @@ const router = new Router({
 })
 
 
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(route => route.meta.requiresAuth)) {
+      if (store.state.user.isLogin != 0) {  // 没有登录信息跳转到登录页
+        next();
+      } else {
+        next({
+            path: "/login",
+            // query: { redirect: to.fullPath }  // 'to.fullPath'跳转到登录之前页面的路径
+          });
+       
+      }
+    } else {
+      next();
+    }
+  });
+  
+
+//  router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     // this route requires auth, check if logged in
+//     // if not, redirect to login page.
+//     if (store.state.user.isLogin == 1) {
+//       next();
+//       return;
+//     } else {
+//       next('/')
+//     }
+//   } else {
+//     next() // 确保一定要调用 next()
+//   }
+// });
+  
 export default router
 
 // 是否登录的路由拦截

@@ -3,7 +3,7 @@
       <el-container>
         
         <el-main>
-
+  {{this.$store.state.user.isLogin}}
         <Carousel />
          <!-- 推荐 -->
     <h2>天籁推荐 </h2>

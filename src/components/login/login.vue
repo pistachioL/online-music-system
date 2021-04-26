@@ -1,6 +1,7 @@
 <template>
     <div>
       <h1>海纳音乐</h1>
+      {{this.$store.state.user.isLogin}}
       <!-- 登录 -->
       <div class="login">
 
@@ -79,19 +80,17 @@ import axios from 'axios'
       this.$parent.showNav = false;
     },
     mounted() {
-        this.showLogin = true;
+      this.showLogin = true;
     },
     computed: {
       
     },
     methods: {
-      //判断是否有勾选“记住我”
       //注册
       register() {
         axios
         .post(`http://localhost:9091/register?username=${this.registerForm.username}&password=${this.registerForm.password}&email=${this.registerForm.email}`)
         .then(response => {
-       
             if(response.data.code == 0) {
               this.$message({
                 showClose: true,
@@ -123,14 +122,16 @@ import axios from 'axios'
         axios
         .post(`http://localhost:9091/login?username=${this.loginForm.username}&password=${this.loginForm.password}`)
         .then(response => {
-            if(response.data.code == 0) {
+          this.$store.dispatch('user/loginAction')  //修改action
+            if(response.data.code == 0 && this.$store.state.user.isLogin == 1) {
+               this.$store.commit('user/changeLogin', this.loginForm.username);
                 this.$message({
                   showClose: true,
                   message: '登录成功！',
                   type: 'success'
                 });
-              this.$store.dispatch('user/loginAction')  //修改action
-              this.$store.commit('user/changeLogin', this.loginForm.username);
+              
+             
               this.$router.push('/');
             }
             if(response.data.code == 1) {
