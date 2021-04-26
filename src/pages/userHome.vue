@@ -1,15 +1,19 @@
 <template>
   <div>
+    <el-row :gutter="20">
+      <el-col :span="4" :offset="4"> 
+        <el-avatar shape="square" :size="150" src="http://p1.music.126.net/FVI9STacjhXQgOfkPDtPng==/109951163259293373.jpg?param=180y180"></el-avatar>
+      </el-col>
 
-    <el-card class="box-card">
-        <div>
-        <el-avatar shape="circle" :size="150" src="http://p1.music.126.net/FVI9STacjhXQgOfkPDtPng==/109951163259293373.jpg?param=180y180"></el-avatar>
-        <el-button plain @click="goto"> 编辑资料</el-button>
-        </div>
-        <el-divider></el-divider>
-        {{'小廖~'}}<br>
-        个人简介：相信音乐的力量！！
-    </el-card>
+      <el-col :span="5" :offset="0"> 
+        <h2>  {{currentName}} </h2>
+        <p style="color:grey"> {{this.desc}} </p>
+        <p style="color:grey"> {{this.gender}} </p>
+          <el-button plain @click="goto"  type="primary" round> 编辑资料</el-button>
+      </el-col>
+
+    </el-row>
+   
 
    <el-divider></el-divider>  
     <el-card class="box-card">
@@ -22,19 +26,22 @@
         我收藏的歌曲
     </el-card>
 
-</div>
+  </div>
 </template>
 
 
 <script>
-
+import axios from 'axios'
+import {mapGetters,mapState } from 'vuex' 
   export default {
     components:{
 
     },
     data() {
       return {
-        imageUrl: ''
+        imageUrl: '',
+        desc: '',
+        gender: '',
       };
     },
     methods: {
@@ -57,21 +64,38 @@
         return isJPG && isLt2M;
       },
 
-    }
+    },
+    mounted() {
+       axios
+        .post(`http://localhost:9091/readProfile?user=${this.currentName}`)
+        .then(response => {
+            if(response.data.code == 0) {
+              this.gender = response.data.msg.gender
+              this.desc = response.data.msg.desc
+            }
+        });
+    },
+
+      computed: {
+      ...mapState({
+        currentName: state => state.user.currentUser,
+      })
+       
+    
+    },
+
   }
 </script>
 
 <style>
- 
-  
   .el-aside {
     color: #333;
   }
 
-.clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
+  .clearfix:before,
+    .clearfix:after {
+      display: table;
+      content: "";
   }
   .clearfix:after {
     clear: both
@@ -80,6 +104,10 @@
   .box-card {
     width: 50%;
     margin-left: 200px;
+  }
+
+  .el-row {
+    margin-bottom: 20px;
   }
 
   

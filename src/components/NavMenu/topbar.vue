@@ -1,48 +1,43 @@
 <template>
   <div>
-    <el-row>
-      <!-- 导航栏 -->
-      <el-col :span="2" :offset="0">
+    <!-- 导航栏 -->
+    <el-menu :default-active="this.$route.path" router mode="horizontal">
+      <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
+         {{item.navItem}}
+      </el-menu-item>
 
-      <el-menu :default-active="this.$route.path" router mode="horizontal" style="width:1200px">
-        <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
-          {{item.navItem}}
-        </el-menu-item>
-      </el-menu>  
-      </el-col>
-      
-      <!-- 搜索栏 -->
-        <el-col :span="8" :offset="10">
-          <Search />
-        </el-col>
+    <!-- 搜索栏 -->
+    <div class="search">
+      <Search />
+    </div>
 
-      <!-- 根据是否登录展示 -->
-      <el-col :span="-10" :offset="0">
-      <div v-if="userName"> 
-        <el-dropdown> 
-          <span class="el-dropdown-link">
-            <el-avatar src="https://avatars.githubusercontent.com/u/35989937?v=4"></el-avatar>
-            <a href="http://localhost:8080/user" >{{userName}}</a>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-remove">  <button v-on:click="logoutCheck">退出登录</button></el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        
-      </div>
-        <!-- 未登录 -->
-      <div v-else >
-        <a href="http://localhost:8080/login" > 登录/注册 </a>  
-        </div> 
-      </el-col>
-
-    </el-row>
+    <!-- 根据是否登录展示 -->
+    <div class="login">
+    <div v-if="userName"> 
+      <el-avatar src="https://avatars.githubusercontent.com/u/35989937?v=4"></el-avatar>
+      <el-dropdown> 
+        <span class="el-dropdown-link">
+          <a href="http://localhost:8080/user" >{{userName}}</a>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item icon="el-icon-remove">  <button v-on:click="logoutCheck">退出登录</button></el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
+      <!-- 未登录 -->
+    <div v-else >
+       <a href="http://localhost:8080/login" > 登录/注册 </a>  
+       </div> 
+    </div>
+ 
+  </el-menu>  
   </div>
 </template>
 
 <script>
 
 import { mapActions,mapGetters,mapState } from 'vuex'  
+
 
 import Search from '../Search.vue';
 

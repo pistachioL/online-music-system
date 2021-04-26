@@ -33,8 +33,6 @@
   </el-tab-pane>
   </el-tabs>
 
-
-  
       </div>
     </div>
 
@@ -93,6 +91,7 @@ import axios from 'axios'
         axios
         .post(`http://localhost:9091/register?username=${this.registerForm.username}&password=${this.registerForm.password}&email=${this.registerForm.email}`)
         .then(response => {
+       
             if(response.data.code == 0) {
               this.$message({
                 showClose: true,
@@ -126,22 +125,28 @@ import axios from 'axios'
         .then(response => {
             if(response.data.code == 0) {
                 this.$message({
-                showClose: true,
-                message: '登录成功！',
-                type: 'success'
-              });
+                  showClose: true,
+                  message: '登录成功！',
+                  type: 'success'
+                });
               this.$store.dispatch('user/loginAction')  //修改action
               this.$store.commit('user/changeLogin', this.loginForm.username);
               this.$router.push('/');
             }
-           if(response.data.code == 1) {
-                this.$message({
+            if(response.data.code == 1) {
+              this.$message({
                 showClose: true,
                 message: '密码错误哦！',
                 type: 'error'
+             });
+            }
+            if(response.data.code == -1) {
+              this.$message({
+                showClose: true,
+                message: '用户不存在哦！',
+                type: 'error'
               });
-           }
-
+            }
         });
       },
 

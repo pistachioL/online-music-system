@@ -1,7 +1,6 @@
 <template>
   <div >
     <el-row>
-   
       <el-col :span="4" :offset="2">
         <el-upload
             class="avatar-uploader"
@@ -14,7 +13,7 @@
         </el-upload>
       </el-col>
 
-      <el-col :span="5" offset="2">   
+      <el-col :span="5" :offset="2">   
         <p style="font-size:15x;" > 头像上传 </p>
         <p style="font-size:10px; color:grey" > 格式：支持PNG/JPG格式的图片 </p>
         <p style="font-size:10px; color:grey"> 尺寸：建议尺寸200*200px </p>
@@ -36,44 +35,42 @@
       </el-col>
     </el-row>
 
-  
-
     <el-row>
       <el-col :span="4" :offset="2">
-        <el-input size="medium" v-model="username" placeholder="请输入昵称"></el-input>
+        <el-input size="medium" :disabled="true"  v-model="getUsername" placeholder="请输入昵称"/>
       </el-col>
 
       <el-col :span="5" :offset="4">      
-          <el-radio size="medium" v-model="gender" label="1">男</el-radio>   
-          <el-radio v-model="gender" label="2">女</el-radio>
+          <el-radio v-model="gender" label="男">男</el-radio>   
+          <el-radio v-model="gender" label="女">女</el-radio>
       </el-col>
 
-      <el-col :span="5" offset="2">      
-         <el-input  v-model="desc" type="textarea" size="medium" placeholder="写下你的个性签名吧~"></el-input>
+      <el-col :span="5" offset="2" >      
+         <textarea v-model="desc" placeholder="写下你的个性签名吧~"/>
       </el-col>
     </el-row>
 
     <el-row>
       <el-col :span="4" :offset="2">
-        <el-button type="danger" round>保存</el-button>
+        <el-button type="danger" round @click="update"> 保存</el-button>
       </el-col>
     </el-row>
 </div>
 </template>
 
 <script>
-
-
+import axios from 'axios'
+import {mapGetters,mapState } from 'vuex' 
  export default {
     components:{
-  
+
     },
     data() {
       return {
-        imageUrl: '',
-        username: '',
-        gender:' ',
-        desc: ''
+        imageUrl: '',    
+        // username: this.$store.state.user.currentUser,
+        gender:'',
+        desc: '',
 
       };
     },
@@ -92,8 +89,43 @@
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
         return isJPG && isLt2M;
-      }
-    }
+      },
+
+      update() {
+        axios
+        .post(`http://localhost:9091/editProfile?user=${this.currentName}&username=${this.getUsername}&gender=${this.gender}&desc=${this.desc}`)
+        .then(response => {
+            if(response.data.code == 0) {
+              this.$store.dispatch('user/editAction')  //修改action
+              this.$store.commit('user/changeProfile', this.desc);
+              this.$message({
+                showClose: true,
+                message: '修改成功啦！',
+                type: 'success'
+              });
+              this.$router.push('/user');
+            }
+        });
+      },
+    },
+
+ 
+     computed: {
+       
+      ...mapState({
+        currentName: state => state.user.currentUser,
+      }),
+
+      getUsername: {
+        get() {
+          return this.$store.state.user.currentUser
+        },
+        set () {
+          this.$store.commit('setUsername', this.username)
+        }
+      },     
+      
+    },
   }
   
 </script>
@@ -133,26 +165,6 @@
     display: block;
   }
 
-
-  .upload {
-    margin-top: 10px;
-    margin-left:70px;
-  }
-  .word {
-    color: grey;
-    margin-top: -170px;
-    margin-left:300px;
-    font-size:10px;
-  }
-  .info {
-    margin-top: 100px;
-    margin-left:70px;
-  }
-
-
-  .el-col {
-    border-radius: 4px;
-  }
   .el-row {
     margin-bottom: 20px;
 

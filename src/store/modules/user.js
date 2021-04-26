@@ -2,12 +2,18 @@
 const state = {
     isLogin: 0,
     currentUser: '' || localStorage.getItem('username'),
+    avatar: '',
+    gender: '',
+    desc: '',
     remember: false,
 
 }
 
 const getters = {
     userName: (state) => state.currentUser,
+    avatar: (state) => state.avatar,
+    gender: (state) => state.gender,
+    desc: (state) => state.desc,
 }
 
 const actions = {
@@ -17,6 +23,13 @@ const actions = {
     logoutAction({commit}, username) {
         commit('changeLogout', username);
     }, 
+
+    // editAction({commit}, username, gender, desc) {
+    //     commit('changeProfile', username, gender, desc)
+    // }
+    editAction({commit}, desc) {
+        commit('changeProfile', desc)
+    }
 }
 
 const mutations = {
@@ -32,6 +45,17 @@ const mutations = {
         state.currentUser = '';
         localStorage.removeItem('username', username)
     },
+
+
+    //修改个人信息
+    changeProfile(state, desc) {
+        state.desc =  desc
+    },
+
+    //设定input的默认值
+    setUsername(state, username) {
+        state.currentUser = username
+    },    
 }
 
 
