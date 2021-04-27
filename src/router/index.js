@@ -35,7 +35,7 @@ const routes = [
         name: 'HelloWorld',
         component: HelloWorld,
         meta: {
-            requiresAuth: true,
+           
             navShow: true
         },
     },
@@ -95,7 +95,7 @@ const router = new Router({
     routes
 })
 
-
+//全局前置守卫
 router.beforeEach((to, from, next) => {
     if (to.matched.some(route => route.meta.requiresAuth)) {
       if (localStorage.getItem('username')) {   //通过localstorage存储
@@ -103,7 +103,6 @@ router.beforeEach((to, from, next) => {
       } else {
         next({// 没有登录信息跳转到登录页
             path: "/login",
-            // query: { redirect: to.fullPath }  // 'to.fullPath'跳转到登录之前页面的路径
           });
        
       }

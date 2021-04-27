@@ -105,6 +105,13 @@ import {mapGetters,mapState } from 'vuex'
               });
               this.$router.push('/user');
             }
+            if(response.data.code == -2) {
+              this.$message({
+                showClose: true,
+                message: '没有修改信息！',
+                type: 'error'
+              });
+            }
         });
       },
     },

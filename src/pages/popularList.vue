@@ -13,11 +13,13 @@
 
         <el-table 
           :data="popularList"
+          popularList.like = false
           v-loading="loading"
           element-loading-text="努力加载飙升榜数据..."
           element-loading-spinner="el-icon-loading" 
           type="index"
-          style="width: 100%" >
+          style="width: 100%"
+        >
         
             <el-table-column label="序号" > 
               <template slot-scope="scope">
@@ -39,24 +41,16 @@
                 </template>
             </el-table-column>
 
-             <el-table-column label=" ">
-                <template slot-scope="scope">
-                  <el-button type="text" size="small" @click="collect(scope.row)">  
-                    <img width="15px" height="15px" :src="isCollected? collected  : uncollected" > 
-                  </el-button>
-                </template>
-            </el-table-column>
+          <!-- 收藏功能 -->
+          <el-table-column prop="like" label="">
+              <template slot-scope="scope">
+                <img width="15px" height="15px" @click="change(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
+              </template>
+          </el-table-column>
+
+
         </el-table>
 
-     <!-- 分页 -->
-      <el-pagination 
-        :page-size="10"
-        :pager-count="10"
-        layout="prev, pager, next"
-        :total="this.popularList.length">
-      
-    
-     </el-pagination>
 
 
     </el-tab-pane>
@@ -70,6 +64,8 @@
 
   </div>
 </template>
+
+
 <script>
 import axios from 'axios';
 import Aplayer from 'vue-aplayer'
@@ -82,6 +78,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
       return {
         tabPosition: 'left',
         popularList: this.popularList,
+        
         loading: false,
         img: '',
         tmpPlayingSong: {
@@ -92,10 +89,10 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
           lrc: '',
         },
         playingSong: {},
-        isCollected: false,
+        // isCollected: new Array(50).fill(false),
         uncollected:require('../assets/uncollected.png'),
         collected:require('../assets/collected.png')
-
+        
         } 
     },
     computed:{
@@ -130,14 +127,13 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
       },
 
       //todo:收藏功能待完善
-      collect() { 
-        if(this.isCollected == false) {
-          this.isCollected = true;
-        } 
-        else{
-          this.isCollected = false;
-        }
+      change(index, row){
+        this.popularList[index].like = row.like === false ? true : false;
+         
+        console.log(this.popularList[index].like)
+
       }
+
     },
     mounted() {
       this.loading = true;
@@ -147,6 +143,10 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
           this.loading = false;
           this.popularList = response.data
           console.log(this.popularList)
+          // this.popularList.forEach((value , index) => {
+          //     value['like'] = false
+          //   })
+  
           this.img = response.data[0].data.img
       })
     }

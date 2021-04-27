@@ -3,7 +3,7 @@
       <el-container> 
         <el-main>
         <Carousel />
-         <!-- 推荐 -->
+  <!-- 推荐 -->
     <h2>天籁推荐 </h2>
     <el-row :gutter="12">
       <el-col :span="5">
@@ -34,7 +34,12 @@
     </el-row>
 
     <!-- 榜单 -->
-    <h2>热门榜单 </h2>
+    <el-row>
+  <el-col :span="24"> <h2 style="display:inline">  热门榜单  </h2>  
+   <el-link type="primary" href='/popularList' :underline="false">更多☞</el-link> </el-col>
+
+    </el-row>
+  
     <el-row :gutter="12">
       <el-col :span="5">
         <el-card shadow="hover">
@@ -63,8 +68,8 @@
 
 
 
-       <!-- 热门歌手 -->
-    <h2> 热门歌手 </h2>
+  <!-- 热门歌手 -->
+    <h2> 热门歌手 </h2>  
     <el-row :gutter="12">
      <el-col :span="5">
         <el-card shadow="hover">
