@@ -8,8 +8,7 @@ import PopularList from '@/pages/popularList.vue'  //引入根目录下的Hello.
 import MyMusic from '@/pages/myMusic.vue'  //引入根目录下的Hello.vue组件
 import Song from '@/pages/searchSong.vue'  //引入根目录下的Hello.vue组件
 import UserHome from '@/pages/userHome.vue'  //引入根目录下的Hello.vue组件
-import EditProfile from '@/components/EditProfile.vue'  //引入根目录下的Hello.vue组件
-import store from '../store/index.js';
+import EditProfile from '@/pages/editProfile.vue'  //引入根目录下的Hello.vue组件
 
 
 Vue.use(Router)
@@ -88,17 +87,6 @@ const routes = [
         },
     },
 
-    // {
-    //     path: '/kugoPopularList',
-    //     name: '酷狗飙升榜',
-    //     component: KugoPopularList,
-    // },
-    // {
-    //     path: '/NeteaseCloud',
-    //     name: '网易云飙升榜',
-    //     component: NeteaseCloud,
-    // },
-
   ]
 
 /*配置路由*/
@@ -110,39 +98,19 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(route => route.meta.requiresAuth)) {
-      if (store.state.user.isLogin != 0) {  // 没有登录信息跳转到登录页
+      if (localStorage.getItem('username')) {   //通过localstorage存储
         next();
       } else {
-        next({
+        next({// 没有登录信息跳转到登录页
             path: "/login",
             // query: { redirect: to.fullPath }  // 'to.fullPath'跳转到登录之前页面的路径
           });
        
       }
     } else {
-      next();
+      next();// 确保一定要调用 next()
     }
   });
   
-
-//  router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     // this route requires auth, check if logged in
-//     // if not, redirect to login page.
-//     if (store.state.user.isLogin == 1) {
-//       next();
-//       return;
-//     } else {
-//       next('/')
-//     }
-//   } else {
-//     next() // 确保一定要调用 next()
-//   }
-// });
   
 export default router
-
-// 是否登录的路由拦截
-// router.beforeEach((to, from, next) => {
-//     if(to.matched.some((r) => r.meta.auth))
-// })

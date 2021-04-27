@@ -1,7 +1,6 @@
 <template>
     <div>
       <h1>海纳音乐</h1>
-      {{this.$store.state.user.isLogin}}
       <!-- 登录 -->
       <div class="login">
 
