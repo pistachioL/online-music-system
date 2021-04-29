@@ -1,102 +1,133 @@
-
 <template>
-     <el-table
-      :data="tableData"
-      style="width: 100%">
-      <el-table-column
-        prop="date"
-        label="日期"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        label="姓名"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        label="地址">
-      </el-table-column>
+  <div>
 
-           <!-- 收藏功能 -->
-             <!-- <el-table-column label=" " prop="like"     :filter-method=" filterLike"
-               :filters="[{ text: true, value: true }, { text: false, value: false }]">
+        <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
+        <h1 style="width:400px; margin:-200px 250px 230px"> 最近播放 </h1>
+        <div style="width:400px; margin:-100px 250px 60px">
+          <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
+          <el-button type="primary" icon="el-icon-star-on" round>收藏</el-button>
+          <!-- <el-button type="primary"  :plain="true" @click="share" icon="el-icon-link" round>分享</el-button> -->
+        </div>
+
+        <el-table 
+          :data="recentPlayList"
+          type="index"
+          style="width: 100%">
+            <el-table-column label="序号" > 
+              <template slot-scope="scope">
+                {{scope.$index+1}}
+              </template>
+            </el-table-column>
+
+            <el-table-column label="歌曲" prop="title" >   </el-table-column>
+
+            <el-table-column label="歌手"  prop="author"  > </el-table-column>
+
+            <el-table-column label="图片" prop="pic" > </el-table-column>
+            
+       
+        
+            <el-table-column label=" ">
                 <template slot-scope="scope">
-                  <el-button @click="collect(scope.$index, scope.row)"  :type="scope.row.like === true ? 'primary' : 'success'"  disable-transitions size="small"  >  
-                    like: {{scope.row.like}}
-                    <img width="15px" height="15px" :src="scope.row.like === true ? collected  : uncollected" /> 
-                  </el-button>
+                  <el-button type="text" size="small" @click="play(scope.row)" icon="el-icon-video-play"></el-button>
                 </template>
-            </el-table-column> -->
+            </el-table-column>
 
-      <el-table-column prop="like" label=" ">
-        <template slot-scope="scope">
-          <img width="15px" height="15px" @click="change(scope.$index, scope.row)" :src="scope.row.like === true ? collected : uncollected" >
-        </template>
-     </el-table-column>
+          <!-- 收藏功能 -->
+          <el-table-column prop="like" label="">
+              <template slot-scope="scope">
+                <img width="15px" height="15px" @click="collect(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
+              </template>
+          </el-table-column>
 
-    </el-table>
+        </el-table>
+
+  </div>
 </template>
 
 
+<script>
+import axios from 'axios';
+import Aplayer from 'vue-aplayer'
+import { mapState, mapMutations, mapActions } from 'vuex'
+  export default {
+    components:{
+      Aplayer
+    },
+    data() {
+      return {
+        loading: false,
+        img: '',
+        tmpPlayingSong: {
+          title: '',
+          author: '',
+          url: '',
+          pic: '',
+          lrc: '',
+        },
+        playingSong: {},
+        uncollected:require('../assets/uncollected.png'), //未收藏
+        collected:require('../assets/collected.png'),
+        recentPlayList: this.recentPlayList,
+     
+        } 
+    },
+    computed:{
 
-  <script>
-    export default {
-      data() {
-        return {
-          tableData: [{
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄',
-            like: false
-     
-          }, {
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1516 弄'
-          }],
-        isCollected: new Array(50).fill(false),
-     
-        uncollected:require('../assets/uncollected.png'),
-        collected:require('../assets/collected.png')
-        
-        }
+      // ...mapState({
+      // songList: state => state.player.songList
+      // })
+    },
+    methods:{
+      msToMin(row) {
+        let ms = row.data.timelength
+        let min = Math.floor((ms/1000/60) << 0),
+        sec = Math.floor((ms/1000) % 60);
+        sec = sec.toString().padStart(2, "0");
+        return min + ':' + sec
       },
-      methods:{
-      // resetDateFilter() {
-      //   this.$refs.filterTable.clearFilter('date');
-      // },
-      // clearFilter() {
-      //   this.$refs.filterTable.clearFilter();
-      // },
-      // formatter(row, column) {
-      //   return row.like;
-      // },
-      // filterLike(value, row) {
-      //   return row.like === value;
-      // },
-      // filterHandler(value, row, column) {
-      //   const property = column['property'];
-      //   return row[property] === value;
-      // },
-      change(index, row){
-        console.log('data', this.tableData)
-        console.log(this.tableData[index].like)
-        this.tableData[index].like = row.like === false? true: false;
+      //点击播放按钮
+      play(row){
+        const song = row.data
+        this.tmpPlayingSong.author = song.author_name
+        this.tmpPlayingSong.title = song.song_name
+        this.tmpPlayingSong.url = song.play_url
+        this.tmpPlayingSong.lrc = song.lyrics
+        this.tmpPlayingSong.pic = song.img
+        this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
+      
+        this.$store.dispatch('player/playAction')  //修改action
+        this.$store.commit('player/playSong', this.playingSong);
+      },
 
-      }
+    },
+    mounted() {
+       
+         axios
+        .get(`http://localhost:9091/getRecentlyPlay?user=${localStorage.getItem('username')}`)
+        .then(response =>{
+           this.recentPlayList = response.data
+             var obj = [];
+            for(var i = 0; i < this.recentPlayList.length; i++) {
+              obj.push(JSON.parse(this.recentPlayList[i]))
+            }
 
-      }
+            var arr = []
+            for (var j = 0; j < obj.length; j++) {
+               arr.push(obj[j])
+            }
+            this.recentPlayList = arr 
+        })
+
+  
+    
     }
-  </script>
+  };
+</script>
 
 
 
+<style>
+
+
+</style>

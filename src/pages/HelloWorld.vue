@@ -40,7 +40,7 @@
 
     </el-row>
   
-    <el-row :gutter="12">
+    <!-- <el-row :gutter="12">
       <el-col :span="5">
         <el-card shadow="hover">
             <el-image style="width: 200px; height: 200px" :src=" this.topList[0].coverImgUrl"> </el-image>
@@ -64,7 +64,7 @@
             <el-image style="width: 200px; height: 200px" :src=" this.topList[6].coverImgUrl"> </el-image>
         </el-card>
       </el-col>
-    </el-row>
+    </el-row> -->
 
 
 
@@ -138,13 +138,13 @@ import axios from 'axios'
        
     });
 
-    //网易云热门歌单
-    axios
-    .get(`https://autumnfish.cn/top/playlist?limit=10&order=new`)
-    .then(response => {
-        this.topList = response.data.playlists
+    // //网易云热门歌单
+    // axios
+    // .get(`https://autumnfish.cn/top/playlist?limit=10&order=new`)
+    // .then(response => {
+    //     this.topList = response.data.playlists
        
-    });
+    // });
 
   //网易云热门歌手
   axios

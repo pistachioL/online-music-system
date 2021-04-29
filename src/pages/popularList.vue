@@ -1,10 +1,10 @@
 <template>
   <div>
   <el-tabs :tab-position="tabPosition" style="height: 1700px; margin-top:-50px" >
-    
+
     <el-tab-pane label="酷狗音乐">
         <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
-        <h1 style="width:400px; margin:-200px 250px 230px"> 酷狗飙升榜 </h1>
+        <h1 style="width:400px; margin:-200px 250px 230px"> 酷狗飙升榜 </h1>   
         <div style="width:400px; margin:-100px 250px 60px">
           <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
           <el-button type="primary" icon="el-icon-star-on" round>收藏</el-button>
@@ -13,7 +13,6 @@
 
         <el-table 
           :data="popularList"
-          popularList.like = false
           v-loading="loading"
           element-loading-text="努力加载飙升榜数据..."
           element-loading-spinner="el-icon-loading" 
@@ -44,10 +43,9 @@
           <!-- 收藏功能 -->
           <el-table-column prop="like" label="">
               <template slot-scope="scope">
-                <img width="15px" height="15px" @click="change(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
+                <img width="15px" height="15px" @click="collect(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
               </template>
           </el-table-column>
-
 
         </el-table>
 
@@ -89,8 +87,8 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
           lrc: '',
         },
         playingSong: {},
-        // isCollected: new Array(50).fill(false),
-        uncollected:require('../assets/uncollected.png'),
+      
+        uncollected:require('../assets/uncollected.png'), //未收藏
         collected:require('../assets/collected.png')
         
         } 
@@ -117,6 +115,13 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
         this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
         this.$store.dispatch('player/playAction')  //修改action
         this.$store.commit('player/playSong', this.playingSong);
+        console.log('playingSong:',this.playingSong)
+        //存入缓存
+        axios
+        .post(`http://localhost:9091/setRecentlyPlay?user=${localStorage.getItem('username')}&play=${JSON.stringify(this.playingSong)}`)
+        .then(response=>{
+            console.log(response)
+        })
       },
       //分享功能待完善
       share() {
@@ -127,11 +132,10 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
       },
 
       //todo:收藏功能待完善
-      change(index, row){
+      collect(index, row){
         this.popularList[index].like = row.like === false ? true : false;
-         
-        console.log(this.popularList[index].like)
-
+        this.$store.dispatch('collect/collectAction')  //修改action
+        this.$store.commit('collect/collectSong', row.data);
       }
 
     },
@@ -143,10 +147,6 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
           this.loading = false;
           this.popularList = response.data
           console.log(this.popularList)
-          // this.popularList.forEach((value , index) => {
-          //     value['like'] = false
-          //   })
-  
           this.img = response.data[0].data.img
       })
     }

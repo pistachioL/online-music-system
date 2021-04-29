@@ -2,13 +2,21 @@
   <div>
     <el-container>
       <el-main>
-     <span> {{this.keyword}}找到 {{searchRes.length}}条结果 </span>
-        <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
-        <h1>{{this.artist}}</h1>   
+      <el-row>
+        <el-col :span="5">
+            <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
+        </el-col>
 
-        <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
+        <el-col :span="10" >
+           <h1>搜索结果 </h1> <span style="color:red"> {{this.keyword}} </span> <span style="color:grey">找到 {{searchRes.length}} 条结果  </span> <br><br><br>
+            <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
+            <el-button type="primary" icon="el-icon-star-on" round>收藏</el-button>
+            <el-button type="primary"  :plain="true" @click="share" icon="el-icon-link" round>分享</el-button>
+        </el-col>
 
-        <el-table :data="searchRes"
+      </el-row>
+
+      <el-table :data="searchRes"
         v-loading="loading"
         element-loading-text="拼命加载中"
         element-loading-spinner="el-icon-loading"
@@ -16,9 +24,9 @@
         style="width: 100%" >
 
           <el-table-column label="序号" > 
-                  <template slot-scope="scope">
-                    {{scope.$index+1}}
-                  </template>
+            <template slot-scope="scope">
+              {{scope.$index+1}}
+            </template>
           </el-table-column>
 
           <el-table-column label="歌曲" prop="data.song_name" >   </el-table-column>
@@ -35,7 +43,14 @@
           </template>
         </el-table-column>
 
+        <el-table-column prop="like" label="">
+          <template slot-scope="scope">
+            <img width="15px" height="15px" @click="collect(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
+          </template>
+        </el-table-column>
         </el-table>
+
+    
       </el-main>
    
   </el-container>
@@ -66,6 +81,8 @@ import Aplayer from 'vue-aplayer'
           lrc: '',
         },
         playingSong: {},
+        uncollected:require('../assets/uncollected.png'), //未收藏
+        collected:require('../assets/collected.png')
       }
     },
     mounted: function () {
@@ -77,13 +94,10 @@ import Aplayer from 'vue-aplayer'
       .then(response => {
           this.loading = false;
           this.searchRes = response.data
-          console.log(this.searchRes)
-
           this.img = this.searchRes[0].data.img 
           this.artist = this.searchRes[0].data.author_name
       });
-
-
+  
     },
     methods:{
       msToMin(row) {
@@ -124,4 +138,7 @@ import Aplayer from 'vue-aplayer'
     width: 100%;
     z-index: 100;
 }
+  .el-row {
+    margin-bottom: 50px;
+  }
 </style>
