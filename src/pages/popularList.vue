@@ -1,6 +1,6 @@
 <template>
   <div>
-  <el-tabs :tab-position="tabPosition" style="height: 1700px; margin-top:-50px" >
+  <el-tabs :tab-position="tabPosition" style="height: 1700px; margin-top:0px" >
 
     <el-tab-pane label="酷狗音乐">
         <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
@@ -10,7 +10,8 @@
           <el-button type="primary" icon="el-icon-star-on" round>收藏</el-button>
           <el-button type="primary"  :plain="true" @click="share" icon="el-icon-link" round>分享</el-button>
         </div>
-
+    <el-row>
+      <el-col>
         <el-table 
           :data="popularList"
           v-loading="loading"
@@ -26,13 +27,13 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="歌曲" prop="data.song_name" >   </el-table-column>
+            <el-table-column label="歌曲" prop="song_name" >   </el-table-column>
 
-            <el-table-column label="歌手"  prop="data.author_name"  > </el-table-column>
+            <el-table-column label="歌手"  prop="author_name"  > </el-table-column>
 
-            <el-table-column label="专辑" prop="data.album_name" > </el-table-column>
+            <el-table-column label="专辑" prop="album_name" > </el-table-column>
 
-            <el-table-column label="时长" prop="data.timelength" :formatter="msToMin"> </el-table-column>
+            <el-table-column label="时长" prop="timelength" :formatter="msToMin"> </el-table-column>
         
             <el-table-column label=" ">
                 <template slot-scope="scope">
@@ -48,7 +49,8 @@
           </el-table-column>
 
         </el-table>
-
+      </el-col>
+    </el-row>
 
 
     </el-tab-pane>
@@ -98,7 +100,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
     },
     methods:{
       msToMin(row) {
-        let ms = row.data.timelength
+        let ms = row.timelength
         let min = Math.floor((ms/1000/60) << 0),
         sec = Math.floor((ms/1000) % 60);
         sec = sec.toString().padStart(2, "0");
@@ -137,8 +139,8 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
         this.$store.dispatch('collect/collectAction')  //修改action
         this.$store.commit('collect/collectSong', row.data);
       }
-
     },
+    
     mounted() {
       this.loading = true;
       axios
@@ -146,8 +148,6 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
       .then(response => {
           this.loading = false;
           this.popularList = response.data
-          console.log(this.popularList)
-          this.img = response.data[0].data.img
       })
     }
   };
@@ -157,11 +157,4 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 <style>
 
-  .hover{
-    left: 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 100;
-  } 
 </style>
