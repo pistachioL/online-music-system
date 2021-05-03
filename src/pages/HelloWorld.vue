@@ -35,9 +35,8 @@
 
     <!-- 榜单 -->
     <el-row>
-  <el-col :span="24"> <h2 style="display:inline">  热门榜单  </h2>  
-   <el-link type="primary" href='/popularList' :underline="false">更多☞</el-link> </el-col>
-
+      <el-col :span="24"> <h2 style="display:inline">  热门榜单  </h2>  
+      <el-link type="primary" href='/popularList' :underline="false">更多☞</el-link> </el-col>
     </el-row>
   
     <!-- <el-row :gutter="12">

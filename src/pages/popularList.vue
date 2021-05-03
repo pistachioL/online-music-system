@@ -35,7 +35,7 @@
 
             <el-table-column label="时长" prop="timelength" :formatter="msToMin"> </el-table-column>
         
-            <el-table-column label=" ">
+            <el-table-column label="">
                 <template slot-scope="scope">
                   <el-button type="text" size="small" @click="play(scope.row)" icon="el-icon-video-play"></el-button>
                 </template>
@@ -44,7 +44,7 @@
           <!-- 收藏功能 -->
           <el-table-column prop="like" label="">
               <template slot-scope="scope">
-                <img width="15px" height="15px" @click="collect(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
+                <img width="15px" height="15px" @click="collect(scope.$index, scope.row)" :src="scope.row.like === true ? collected : uncollected" >
               </template>
           </el-table-column>
 
@@ -69,7 +69,7 @@
 <script>
 import axios from 'axios';
 import Aplayer from 'vue-aplayer'
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
   export default {
     components:{
       Aplayer
@@ -78,7 +78,6 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
       return {
         tabPosition: 'left',
         popularList: this.popularList,
-        
         loading: false,
         img: '',
         tmpPlayingSong: {
@@ -95,7 +94,10 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
         
         } 
     },
-    computed:{
+    computed: {
+      ...mapState({
+        currentName: state => state.user.currentUser,
+      })
        
     },
     methods:{
@@ -108,7 +110,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
       },
       //点击播放按钮
       play(row){
-        const song = row.data
+        const song = row
         this.tmpPlayingSong.author = song.author_name
         this.tmpPlayingSong.title = song.song_name
         this.tmpPlayingSong.url = song.play_url
@@ -117,7 +119,6 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
         this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
         this.$store.dispatch('player/playAction')  //修改action
         this.$store.commit('player/playSong', this.playingSong);
-        console.log('playingSong:',this.playingSong)
         //存入缓存
         axios
         .post(`http://localhost:9091/setRecentlyPlay?user=${localStorage.getItem('username')}&play=${JSON.stringify(this.playingSong)}`)
@@ -136,11 +137,32 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
       //todo:收藏功能待完善
       collect(index, row){
         this.popularList[index].like = row.like === false ? true : false;
+        if(row.like == true) {
+          this.$message({
+          message: '收藏成功',
+          type: 'success'
+          });
+        }
+        else{
+          this.$message({
+            message: '取消收藏',
+          });
+        }
+
         this.$store.dispatch('collect/collectAction')  //修改action
-        this.$store.commit('collect/collectSong', row.data);
+        this.$store.commit('collect/collectSong', row);
+    
+        var songId = row.Id
+
+        axios
+        .post(`http://localhost:9091/addCollection?user=${this.currentName}&songId=${songId}`)
+        .then(response => {
+            console.log(response)
+        });
+
       }
     },
-    
+
     mounted() {
       this.loading = true;
       axios
@@ -148,7 +170,11 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
       .then(response => {
           this.loading = false;
           this.popularList = response.data
-      })
+          console.log(this.popularList)
+       
+      });
+
+     
     }
   };
 </script>

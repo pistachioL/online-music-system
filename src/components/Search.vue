@@ -7,20 +7,19 @@
      prefix-icon='el-icon-search'
      :trigger-on-focus="true"
      :fetch-suggestions="querySearch"
-     clearable
-     >
-      <!-- 历史记录:<br/>  -->
-      <!-- {{historyList}} -->
-      <!-- <li v-for="(item,index) in historyList" :key="index">
- 
+     clearable>
 
-        {{item}}
+      历史记录<br>
+  <ul>
+		<li v-for="(item,index) in historyList" :key="index" @click="goSearchDetail(item)">{{item}}</li>
+	</ul>
 
-       </li> -->
-
-      <!-- <el-button size="mini" @click="empty" icon="el-icon-delete"> </el-button> -->
+      <el-button size="mini" @click="empty" icon="el-icon-delete"> </el-button> 
+    
     </el-autocomplete>
-   
+    
+  
+
 
 
 
@@ -73,7 +72,7 @@ export default {
           this.historyList.unshift(this.keyword);
           localStorage.setItem("historyList", JSON.stringify(this.historyList));
         }
-
+   
          this.$router.push({  
            path: '/song/search',  
             name: 'Song',  
@@ -81,8 +80,9 @@ export default {
               keyword: this.keyword
             }
         })  
-    }
+      }
     },
+
   
     //清空历史搜索记录
     empty(){
@@ -92,10 +92,16 @@ export default {
         }
         this.historyList = [];
     },
-    click() {
-
-    },
-
+    //点击历史记录进行搜索
+    goSearchDetail(title){
+        this.keyword = title
+        this.$router.push({
+          path: "/song/search", 
+          query: { 
+            keyword: title,
+          },
+        });
+      },
 
     //搜索建议
     querySearch(queryString, cb) {
@@ -132,7 +138,9 @@ export default {
 
 <style scoped>
 
-  
+  .search_btn{
+    display: inline;
+  }
 
 </style>
 

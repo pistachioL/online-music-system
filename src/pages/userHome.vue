@@ -16,15 +16,58 @@
    
 
    <el-divider></el-divider>  
+
+    <el-card class="box-card">
+      <el-row>
+      <el-col>
+        <el-table 
+          :data="collectList"
+          v-loading="loading"
+          element-loading-text="努力加载飙升榜数据..."
+          element-loading-spinner="el-icon-loading" 
+          type="index"
+          style="width: 100%"
+        >
+        
+            <el-table-column label="序号" > 
+              <template slot-scope="scope">
+                {{scope.$index+1}}
+              </template>
+            </el-table-column>
+
+            <el-table-column label="歌曲" prop="song_name" >   </el-table-column>
+
+            <el-table-column label="歌手"  prop="author_name"  > </el-table-column>
+
+            <el-table-column label="专辑" prop="album_name" > </el-table-column>
+
+            <el-table-column label="时长" prop="timelength" :formatter="msToMin"> </el-table-column>
+        
+            <el-table-column label="">
+                <template slot-scope="scope">
+                  <el-button type="text" size="small" @click="play(scope.row)" icon="el-icon-video-play"></el-button>
+                </template>
+            </el-table-column>
+
+          <!-- 收藏功能 -->
+          <el-table-column prop="like" label="">
+              <template slot-scope="scope">
+                <img width="15px" height="15px" @click="collect(scope.$index, scope.row)" :src="scope.row.like === true ? collected : uncollected" >
+              </template>
+          </el-table-column>
+
+        </el-table>
+      </el-col>
+    </el-row>
+
+    </el-card>
     <el-card class="box-card">
         我创建的歌单
     </el-card>
 
     <el-divider></el-divider>
 
-    <el-card class="box-card">
-        我收藏的歌曲
-    </el-card>
+
 
   </div>
 </template>
@@ -42,6 +85,7 @@ import {mapGetters,mapState } from 'vuex'
         imageUrl: '',
         desc: '',
         gender: '',
+        collectList: [], //歌曲收藏记录
       };
     },
     methods: {
@@ -64,6 +108,14 @@ import {mapGetters,mapState } from 'vuex'
         return isJPG && isLt2M;
       },
 
+      msToMin(row) {
+        let ms = row.timelength
+        let min = Math.floor((ms/1000/60) << 0),
+        sec = Math.floor((ms/1000) % 60);
+        sec = sec.toString().padStart(2, "0");
+        return min + ':' + sec
+      },
+
     },
     mounted() {
        axios
@@ -74,6 +126,13 @@ import {mapGetters,mapState } from 'vuex'
               this.desc = response.data.msg.desc
             }
         });
+
+        //查询收藏的歌曲
+        axios
+        .post(`http://localhost:9091/queryCollection?user=${this.currentName}`)
+        .then(response => {
+            this.collectList = response.data
+        });
     },
 
       computed: {
@@ -81,7 +140,6 @@ import {mapGetters,mapState } from 'vuex'
         currentName: state => state.user.currentUser,
       })
        
-    
     },
 
   }
@@ -102,7 +160,7 @@ import {mapGetters,mapState } from 'vuex'
   }
 
   .box-card {
-    width: 50%;
+    width: 80%;
     margin-left: 200px;
   }
 

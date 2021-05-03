@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <el-container >
-      <el-header style="background-color: white; height: 73px">
+    <el-container>
+      <el-header style="background-color: white; height: 63px">
           <Topbar v-show="$route.meta.navShow" />
       </el-header>
 
       <!-- 播放器 -->
-      <el-footer>
+      <!-- <el-footer> -->
           <div class="hover">
               <aplayer :autoplay="true" :music=songList v-show="$route.meta.navShow"> </aplayer>
           </div>
-      </el-footer>
+      <!-- </el-footer> -->
       
       <router-view></router-view> 
     </el-container>
@@ -50,4 +50,11 @@ export default {
 
 <style>
 
+  .hover{
+    left: 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+  } 
 </style>
