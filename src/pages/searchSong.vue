@@ -94,12 +94,12 @@ import Aplayer from 'vue-aplayer'
       axios
       .get(`http://localhost:9091/search?keyword=${this.keyword}`)
       .then(response => {
-  
           this.loading = false;
           this.searchRes = response.data
           this.img = this.searchRes[0].data.img 
           this.artist = this.searchRes[0].data.author_name
       });
+
   
     },
     methods:{
@@ -126,6 +126,13 @@ import Aplayer from 'vue-aplayer'
         .then(response=>{
             console.log(response)
         })
+      },
+      //分享功能待完善
+      share() {
+         this.$message({
+          message: '复制成功',
+          type: 'success'
+        });
       },
       
     },

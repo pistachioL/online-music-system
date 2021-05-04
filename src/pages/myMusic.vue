@@ -28,7 +28,7 @@
                           <img width="50px" height="50px"  :src="scope.row.pic" >
                         </template>
                       </el-table-column>
-
+                
                       <el-table-column label=" ">
                           <template slot-scope="scope">
                             <el-button type="text" size="small" @click="play(scope.row)" icon="el-icon-video-play"></el-button>

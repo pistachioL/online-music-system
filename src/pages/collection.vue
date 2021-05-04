@@ -34,10 +34,10 @@
                 </template>
             </el-table-column>
 
-        <!-- 取消收藏功能 -->
+
           <el-table-column prop="like" label="">
               <template slot-scope="scope">
-                <el-button icon="el-icon-delete" type="primary" @click="uncollect(scope.$index, scope.row)"/>
+                <img width="24px" height="24px" :src="isDelete" @click="uncollect(scope.$index, scope.row)" >
              </template>
           </el-table-column>
         </el-table>
@@ -48,6 +48,7 @@
 
 <script>
 import axios from 'axios';
+import { mapState, mapMutations, mapActions } from 'vuex'
   export default {
     components:{
       
@@ -64,9 +65,10 @@ import axios from 'axios';
           lrc: '',
         },
         playingSong: {},
-        uncollected:require('../assets/uncollected.png'), //未收藏
-        collected:require('../assets/collected.png'),
+        // uncollected:require('../assets/uncollected.png'), //未收藏
+        // collected:require('../assets/collected.png'),
         collectList:[],
+        isDelete:require('../assets/delete.jpg'), 
    
       } 
     },
@@ -100,7 +102,17 @@ import axios from 'axios';
         });
       },
       uncollect(index, row) {
-
+        var songId = row.Id
+        console.log(songId)
+        axios
+        .post(`http://localhost:9091/cancelCollection?user=${this.currentName}&songId=${songId}`)
+        .then(response => {
+            console.log("取消收藏",response)
+        });
+        this.$message({
+          message: '取消收藏',
+        });
+        location.reload();
       }
 
     },
@@ -110,10 +122,19 @@ import axios from 'axios';
       .post(`http://localhost:9091/queryCollection?user=${localStorage.getItem('username')}`)
       .then(response => {
           this.collectList = response.data
-          console.log("收藏：",this.collectList)
+          console.log(this.collectList)
+         
+      
       });
 
+    },
+
+    computed: {
+      ...mapState({
+        currentName: state => state.user.currentUser,
+      }),
     }
+    
   };
 </script>
 <style scoped>

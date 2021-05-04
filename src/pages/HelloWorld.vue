@@ -38,17 +38,8 @@
       <el-col :span="24"> <h2 style="display:inline">  热门榜单  </h2>  
       <el-link type="primary" href='/popularList' :underline="false">更多☞</el-link> </el-col>
     </el-row>
-  
-  <!-- <el-row>
-      <el-col>
-          <el-card shadow="hover">
-              
-        </el-card>
-      </el-col>
-  </el-row> -->
 
-
-    <!-- <el-row :gutter="12">
+    <el-row :gutter="12">
       <el-col :span="5">
         <el-card shadow="hover">
             <el-image style="width: 200px; height: 200px" :src=" this.topList[0].coverImgUrl"> </el-image>
@@ -72,7 +63,7 @@
             <el-image style="width: 200px; height: 200px" :src=" this.topList[6].coverImgUrl"> </el-image>
         </el-card>
       </el-col>
-    </el-row> -->
+    </el-row>
 
 
 
@@ -146,13 +137,13 @@ import axios from 'axios'
        
     });
 
-    // //网易云热门歌单
-    // axios
-    // .get(`https://autumnfish.cn/top/playlist?limit=10&order=new`)
-    // .then(response => {
-    //     this.topList = response.data.playlists
+    //网易云热门歌单
+    axios
+    .get(`https://autumnfish.cn/top/playlist?limit=10&order=new`)
+    .then(response => {
+        this.topList = response.data.playlists
        
-    // });
+    });
 
   //网易云热门歌手
   axios

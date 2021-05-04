@@ -14,9 +14,7 @@
    
 
     <el-card class="box-card">
-      <el-row>
-      <el-col>
-          我的收藏    <el-link type="primary" href='/user/collection' :underline="false">更多☞</el-link> 
+       <h1 style="display:inline"> 我的收藏 </h1> <el-link type="primary" href='/user/collection' :underline="false">更多☞</el-link>         
         <el-table 
           :data="collectList"
           v-loading="loading"
@@ -45,9 +43,9 @@
                 </template>
             </el-table-column>
         </el-table>
-            ......
-      </el-col>
-    </el-row>
+            ...... 
+
+  
 
     </el-card>
 
@@ -80,6 +78,8 @@ import {mapGetters,mapState } from 'vuex'
         desc: '',
         gender: '',
         collectList: [], //歌曲收藏记录
+        collectImg: [], //收藏歌曲的封面
+        collectName: [], //收藏歌曲的名字
       };
     },
     methods: {
@@ -125,7 +125,23 @@ import {mapGetters,mapState } from 'vuex'
         axios
         .post(`http://localhost:9091/queryFiveCollection?user=${this.currentName}`)
         .then(response => {
-            this.collectList = response.data
+           if(response.data.length > 5) {
+            for(var i = 0; i < 5; i++) {
+                this.collectList.push(response.data[i])
+                this.collectImg.push(response.data[i].img)
+                this.collectName.push(response.data[i].song_name)
+            }
+          }
+          else {
+            for(var i = 0; i < response.data.length ; i++) {
+                this.collectList.push(response.data[i])
+                this.collectImg.push(response.data[i].img)
+                this.collectName.push(response.data[i].song_name)
+            }
+          }
+          
+
+          
         });
     },
 
@@ -154,7 +170,7 @@ import {mapGetters,mapState } from 'vuex'
   }
 
   .box-card {
-    width: 70%;
+    width: 80%;
     margin-left: 200px;
   }
 
@@ -162,5 +178,7 @@ import {mapGetters,mapState } from 'vuex'
     margin-bottom: 20px;
   }
 
-  
+  .el-col {
+   display:inline
+  }
 </style>

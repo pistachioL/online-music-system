@@ -27,9 +27,9 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="歌曲" prop="song_name" >   </el-table-column>
+            <el-table-column label="歌曲" prop="song_name">  </el-table-column>
 
-            <el-table-column label="歌手"  prop="author_name"  > </el-table-column>
+            <el-table-column label="歌手"  prop="author_name"> </el-table-column>
 
             <el-table-column label="专辑" prop="album_name" > </el-table-column>
 
@@ -37,14 +37,14 @@
         
             <el-table-column label="">
                 <template slot-scope="scope">
-                  <el-button type="text" size="small" @click="play(scope.row)" icon="el-icon-video-play"></el-button>
+                  <el-button type="text" size="medium" @click="play(scope.row)" icon="el-icon-video-play"></el-button>
                 </template>
             </el-table-column>
 
         <!-- 收藏功能 -->
             <el-table-column prop="like" label="">
                 <template slot-scope="scope">
-                  <img width="15px" height="15px" @click="collect(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
+                  <img width="24px" height="24px" @click="collect(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
                 </template>
             </el-table-column>
 
@@ -88,9 +88,9 @@ import { mapState, mapMutations, mapActions } from 'vuex'
           lrc: '',
         },
         playingSong: {},
-      
         uncollected:require('../assets/uncollected.png'), //未收藏
         collected:require('../assets/collected.png')
+
         
         } 
     },
@@ -98,9 +98,9 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       ...mapState({
         currentName: state => state.user.currentUser,
       }),
-      ...mapState({
-        isCollect: state => state.collect.isCollect,
-      })
+      // ...mapState({
+      //   isCollect: state => state.collect.isCollect,
+      // })
        
     },
     methods:{
@@ -140,24 +140,31 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       collect(index, row) {
         this.popularList[index].like = row.like === false ? true : false;
         if(row.like == true) {
+          // this.$store.dispatch('collect/collectAction')  //修改action
+          // this.$store.commit('collect/collectSong', row);
+          var songId = row.Id
+          axios
+          .post(`http://localhost:9091/addCollection?user=${this.currentName}&songId=${songId}`)
+          .then(response => {
+              console.log(response)
+          });
           this.$message({
           message: '收藏成功',
           type: 'success'
           });
         }
-        else{
+        else {
+          var songId = row.Id
+          axios
+          .post(`http://localhost:9091/cancelCollection?user=${this.currentName}&songId=${songId}`)
+          .then(response => {
+              console.log("取消收藏",response)
+          });
           this.$message({
             message: '取消收藏',
           });
         }
-        this.$store.dispatch('collect/collectAction')  //修改action
-        this.$store.commit('collect/collectSong', row);
-        var songId = row.Id
-        axios
-        .post(`http://localhost:9091/addCollection?user=${this.currentName}&songId=${songId}`)
-        .then(response => {
-            console.log(response)
-        });
+    
 
       },
 
@@ -165,13 +172,14 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 
     mounted() {
       this.loading = true;
+    
       axios
       .get(`http://localhost:9091/popularList`)
       .then(response => {
           this.loading = false;
           this.popularList = response.data
           this.img = this.popularList[0].img
- 
+        console.log(this.popularList)
        
       });
 
