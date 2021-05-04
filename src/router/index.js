@@ -9,7 +9,7 @@ import MyMusic from '@/pages/myMusic.vue'  //引入根目录下的Hello.vue组�
 import Song from '@/pages/searchSong.vue'  //引入根目录下的Hello.vue组件
 import UserHome from '@/pages/userHome.vue'  //引入根目录下的Hello.vue组件
 import EditProfile from '@/pages/editProfile.vue'  //引入根目录下的Hello.vue组件
-
+import Collection from '@/pages/collection.vue'  //引入根目录下的Hello.vue组件
 
 Vue.use(Router)
 
@@ -80,6 +80,16 @@ const routes = [
         path: '/user/edit',
         name: '编辑资料',
         component: EditProfile,
+        meta: {
+            requiresAuth:true,
+            navShow: true
+            
+        },
+    },
+    {
+        path: '/user/collection',
+        name: '歌曲收藏',
+        component: Collection,
         meta: {
             requiresAuth:true,
             navShow: true

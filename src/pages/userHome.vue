@@ -4,30 +4,26 @@
       <el-col :span="4" :offset="4"> 
         <el-avatar shape="square" :size="150" src="http://p1.music.126.net/FVI9STacjhXQgOfkPDtPng==/109951163259293373.jpg?param=180y180"></el-avatar>
       </el-col>
-
       <el-col :span="5" :offset="0"> 
         <h2>  {{currentName}} </h2>
         <p style="color:grey"> {{this.desc}} </p>
         <p style="color:grey"> {{this.gender}} </p>
           <el-button plain @click="goto"  type="primary" round> 编辑资料</el-button>
       </el-col>
-
     </el-row>
    
-
-   <el-divider></el-divider>  
 
     <el-card class="box-card">
       <el-row>
       <el-col>
+          我的收藏    <el-link type="primary" href='/user/collection' :underline="false">更多☞</el-link> 
         <el-table 
           :data="collectList"
           v-loading="loading"
           element-loading-text="努力加载飙升榜数据..."
           element-loading-spinner="el-icon-loading" 
           type="index"
-          style="width: 100%"
-        >
+          style="width: 100%">
         
             <el-table-column label="序号" > 
               <template slot-scope="scope">
@@ -48,21 +44,19 @@
                   <el-button type="text" size="small" @click="play(scope.row)" icon="el-icon-video-play"></el-button>
                 </template>
             </el-table-column>
-
-          <!-- 收藏功能 -->
-          <el-table-column prop="like" label="">
-              <template slot-scope="scope">
-                <img width="15px" height="15px" @click="collect(scope.$index, scope.row)" :src="scope.row.like === true ? collected : uncollected" >
-              </template>
-          </el-table-column>
-
         </el-table>
+            ......
       </el-col>
     </el-row>
 
     </el-card>
+
     <el-card class="box-card">
-        我创建的歌单
+      <el-row>
+        <el-col>
+          我创建的歌单
+        </el-col>
+      </el-row>
     </el-card>
 
     <el-divider></el-divider>
@@ -129,7 +123,7 @@ import {mapGetters,mapState } from 'vuex'
 
         //查询收藏的歌曲
         axios
-        .post(`http://localhost:9091/queryCollection?user=${this.currentName}`)
+        .post(`http://localhost:9091/queryFiveCollection?user=${this.currentName}`)
         .then(response => {
             this.collectList = response.data
         });
@@ -160,7 +154,7 @@ import {mapGetters,mapState } from 'vuex'
   }
 
   .box-card {
-    width: 80%;
+    width: 70%;
     margin-left: 200px;
   }
 
