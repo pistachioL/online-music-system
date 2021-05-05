@@ -8,13 +8,13 @@
      :trigger-on-focus="true"
      :fetch-suggestions="querySearch"
      clearable>
-
+<!-- 
       历史记录<br>
   <ul>
 		<li v-for="(item,index) in historyList" :key="index" @click="goSearchDetail(item)">{{item}}</li>
 	</ul>
 
-      <el-button size="mini" @click="empty" icon="el-icon-delete"> </el-button> 
+      <el-button size="mini" @click="empty" icon="el-icon-delete"> </el-button>  -->
     
     </el-autocomplete>
     
