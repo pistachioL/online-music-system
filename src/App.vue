@@ -8,7 +8,7 @@
       <!-- 播放器 -->
       <!-- <el-footer> -->
           <div class="hover">
-              <aplayer :autoplay="true" :music=songList v-show="$route.meta.navShow"> </aplayer>
+              <aplayer :autoplay="true" :music="this.$store.state.player.songList" v-show="$route.meta.navShow"> </aplayer>
           </div>
       <!-- </el-footer> -->
       
@@ -26,7 +26,8 @@ export default {
   name: 'App',
   data() {
     return {
-
+ 
+      
     }
     
   },
@@ -38,10 +39,11 @@ export default {
   computed: {
     ...mapState({
       songList: state => state.player.songList,
-    })
+    }),
+  
   },
-  methods:{
-     
+  mounted(){
+
   }
 }
 </script>

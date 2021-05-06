@@ -19,15 +19,17 @@
                         </template>
                       </el-table-column>
 
+                      <el-table-column label="" prop="pic" > 
+                        <template slot-scope="scope">
+                          <img width="70px" height="70px"  :src="scope.row.pic" >
+                        </template>
+                      </el-table-column>
+
                       <el-table-column label="歌曲" prop="title" >   </el-table-column>
 
                       <el-table-column label="歌手"  prop="author"> </el-table-column>
 
-                      <el-table-column label="" prop="pic" > 
-                        <template slot-scope="scope">
-                          <img width="50px" height="50px"  :src="scope.row.pic" >
-                        </template>
-                      </el-table-column>
+              
                 
                       <el-table-column label=" ">
                           <template slot-scope="scope">
@@ -85,16 +87,17 @@ import axios from 'axios';
       },
       //点击播放按钮
       play(row){
-        const song = row.data
-        this.tmpPlayingSong.author = song.author_name
-        this.tmpPlayingSong.title = song.song_name
-        this.tmpPlayingSong.url = song.play_url
-        this.tmpPlayingSong.lrc = song.lyrics
-        this.tmpPlayingSong.pic = song.img
+        const song = row
+        this.tmpPlayingSong.author = song.author
+        this.tmpPlayingSong.title = song.title
+        this.tmpPlayingSong.url = song.url
+        this.tmpPlayingSong.lrc = song.lrc
+        this.tmpPlayingSong.pic = song.pic
         this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
       
         this.$store.dispatch('player/playAction')  //修改action
         this.$store.commit('player/playSong', this.playingSong);
+
       },
       //分享功能待完善
       share() {
@@ -121,6 +124,8 @@ import axios from 'axios';
               arr.push(obj[j])
           }
           this.recentPlayList = arr 
+          console.log("最近播放:",this.recentPlayList)
+          
       }); 
 
     }

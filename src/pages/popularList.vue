@@ -1,7 +1,7 @@
 <template>
   <div>
   <el-tabs :tab-position="tabPosition" style="height: 1700px; margin-top:0px" >
-
+    
     <el-tab-pane label="酷狗音乐">
       <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
       <h1 style="width:400px; margin:-200px 250px 230px"> 酷狗飙升榜 </h1>   
@@ -14,7 +14,44 @@
       <el-row>
         <el-col>
           <el-table 
-            :data="popularList1" v-loading="loading" element-loading-text="努力加载飙升榜数据..."
+            :data="popularList" v-loading="loading" element-loading-text="努力加载飙升榜数据..."
+            element-loading-spinner="el-icon-loading" type="index" style="width: 100%">
+              <el-table-column label="序号" > 
+                <template slot-scope="scope">
+                  {{scope.$index+1}}
+                </template>
+              </el-table-column>
+
+              <el-table-column label="歌曲" prop="data.song_name">  </el-table-column>
+
+              <el-table-column label="歌手"  prop="data.author_name"> </el-table-column>
+
+              <el-table-column label="专辑" prop="data.album_name" > </el-table-column>
+
+              <el-table-column label="时长" prop="data.timelength" :formatter="msToMin"> </el-table-column>
+          
+              <el-table-column label="" >
+                  <template slot-scope="scope">
+                    <el-button type="text" size="medium" @click="play(scope.row)" icon="el-icon-video-play"></el-button>
+                  </template>
+              </el-table-column>
+
+              <el-table-column prop="like" label="">
+                  <template slot-scope="scope">
+                    <img width="24px" height="24px" @click="collect(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
+                  </template>
+              </el-table-column>
+          </el-table>
+        </el-col>
+      </el-row>
+    </el-tab-pane>
+
+
+    <el-tab-pane label="酷狗音乐1">
+      <el-row>
+        <el-col>
+          <el-table 
+            :data="popularListDB" v-loading="loading" element-loading-text="努力加载飙升榜数据..."
             element-loading-spinner="el-icon-loading" type="index" style="width: 100%">
               <el-table-column label="序号" > 
                 <template slot-scope="scope">
@@ -28,23 +65,22 @@
 
               <el-table-column label="专辑" prop="album_name" > </el-table-column>
 
-              <el-table-column label="时长" prop="timelength" :formatter="msToMin"> </el-table-column>
+              <el-table-column label="时长" prop="timelength" :formatter="msToMinDB"> </el-table-column> 
           
-              <el-table-column label="">
+              <el-table-column label="" >
                   <template slot-scope="scope">
-                    <el-button type="text" size="medium" @click="play(scope.row)" icon="el-icon-video-play"></el-button>
+                    <el-button type="text" size="medium" @click="playDB(scope.row)" icon="el-icon-video-play"></el-button>
                   </template>
               </el-table-column>
+
               <el-table-column prop="like" label="">
                   <template slot-scope="scope">
-                    <img width="24px" height="24px" @click="collect1(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
+                    <img width="24px" height="24px" @click="collecDB(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
                   </template>
               </el-table-column>
           </el-table>
         </el-col>
       </el-row>
-
-     
     </el-tab-pane>
 
 
@@ -73,10 +109,11 @@
           </el-table-column>
         
             <el-table-column label="">
-                <template slot-scope="scope">
-                  <el-button type="text" size="medium" @click="play(scope.row)" icon="el-icon-video-play"></el-button>
-                </template>
+                <!-- <template slot-scope="scope"> -->
+                  <el-button type="text" size="medium" icon="el-icon-video-play"></el-button>
+                <!-- </template> -->
             </el-table-column>
+
             <el-table-column prop="like" label="">
                 <template slot-scope="scope">
                   <img width="24px" height="24px" @click="collect(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
@@ -126,11 +163,39 @@
       </el-row>
 
     </el-tab-pane>
-    <el-tab-pane label="咪咕音乐"></el-tab-pane>
-    <el-tab-pane label="酷我音乐"></el-tab-pane>
+    <!-- qq音乐 -->
+    <el-tab-pane label="qq音乐">
+        <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.qqMusicImg"> </el-image>
+       更新时间： {{this.qqMusic.data.date}}
+       <el-row>
+        <el-col>
+          <el-table 
+            :data="qqMusic.data.songlist"
+            v-loading="loading" element-loading-text="努力加载飙升榜数据..." element-loading-spinner="el-icon-loading" 
+            type="index" style="width: 100%">
+            <el-table-column label="序号" > 
+              <template slot-scope="scope">
+                {{scope.$index+1}}
+              </template>
+            </el-table-column>
 
- 
-  </el-tabs>
+            <el-table-column label="歌曲" prop="data.songname">  </el-table-column>
+
+            <el-table-column label="歌手"  prop="data.singer[0].name"> </el-table-column>
+        
+            <el-table-column label="">
+                  <el-button type="text" size="medium" icon="el-icon-video-play"></el-button>
+            </el-table-column>
+            <el-table-column prop="like" label="">
+                <template slot-scope="scope">
+                  <img width="24px" height="24px"  :src="scope.row.like == true ? collected : uncollected" >
+                </template>
+            </el-table-column>
+          </el-table>
+        </el-col>
+      </el-row>
+    </el-tab-pane>
+  </el-tabs> 
 
   </div>
 </template>
@@ -148,10 +213,13 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       return {
         tabPosition: 'left',
         netEase: this.netEase,
-        popularList1: this.popularList1, //数据库的数据
+        popularList: this.popularList, //酷狗音乐
+        popularListDB: this.popularListDB, //已存储的酷狗音乐
         kuwo:this.kuwo,//酷我音乐
+        qqMusic:this.qqMusic,
         loading: false, 
         img: '',
+        qqMusicImg:'', //qq音乐图
         tmpPlayingSong: {
           title: '',
           author: '',
@@ -164,7 +232,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
         collected:require('../assets/collected.png')
 
         
-        } 
+      } 
     },
     computed: {
       ...mapState({
@@ -174,6 +242,13 @@ import { mapState, mapMutations, mapActions } from 'vuex'
     },
     methods:{
       msToMin(row) {
+        let ms = row.data.timelength
+        let min = Math.floor((ms/1000/60) << 0),
+        sec = Math.floor((ms/1000) % 60);
+        sec = sec.toString().padStart(2, "0");
+        return min + ':' + sec
+      },
+      msToMinDB(row) {
         let ms = row.timelength
         let min = Math.floor((ms/1000/60) << 0),
         sec = Math.floor((ms/1000) % 60);
@@ -182,6 +257,25 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       },
       //点击播放按钮
       play(row){
+        const song = row.data
+        this.tmpPlayingSong.author = song.author_name
+        this.tmpPlayingSong.title = song.song_name
+        this.tmpPlayingSong.url = song.play_url
+        this.tmpPlayingSong.lrc = song.lyrics
+        this.tmpPlayingSong.pic = song.img
+        this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
+        this.$store.dispatch('player/playAction')  //修改action
+        this.$store.commit('player/playSong', this.playingSong);
+      
+        //存入缓存
+        axios
+        .post(`http://localhost:9091/setRecentlyPlay?user=${localStorage.getItem('username')}&play=${JSON.stringify(this.playingSong)}`)
+        .then(response=>{
+            console.log(response)
+        })
+      },
+
+      playDB(row){
         const song = row
         this.tmpPlayingSong.author = song.author_name
         this.tmpPlayingSong.title = song.song_name
@@ -191,6 +285,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
         this.playingSong = JSON.parse(JSON.stringify(this.tmpPlayingSong))
         this.$store.dispatch('player/playAction')  //修改action
         this.$store.commit('player/playSong', this.playingSong);
+      
         //存入缓存
         axios
         .post(`http://localhost:9091/setRecentlyPlay?user=${localStorage.getItem('username')}&play=${JSON.stringify(this.playingSong)}`)
@@ -206,8 +301,8 @@ import { mapState, mapMutations, mapActions } from 'vuex'
         });
       },
 
-      collect1(index, row) {
-        this.popularList1[index].like = row.like === false ? true : false;
+      collect(index, row) {
+        this.popularList[index].like = row.like === false ? true : false;
         if(row.like == true) {
           var songId = row.Id
           axios
@@ -221,7 +316,35 @@ import { mapState, mapMutations, mapActions } from 'vuex'
           });
         }
         else {
+          var songId = row
+          axios
+          .post(`http://localhost:9091/cancelCollection?user=${this.currentName}&songId=${songId}`)
+          .then(response => {
+              console.log("取消收藏",response)
+          });
+          this.$message({
+            message: '取消收藏',
+          });
+        }
+      },
+      collecDB(index, row) {
+        this.popularListDB[index].like = row.like === false ? true : false;
+        if(row.like == true) {
           var songId = row.Id
+          console.log(row)
+          axios
+          .post(`http://localhost:9091/addCollection?user=${this.currentName}&songId=${songId}`)
+          .then(response => {
+              console.log(response)
+          });
+          this.$message({
+          message: '收藏成功',
+          type: 'success'
+          });
+        }
+        else {
+          var songId = row.Id
+          console.log("歌曲id：",songId)
           axios
           .post(`http://localhost:9091/cancelCollection?user=${this.currentName}&songId=${songId}`)
           .then(response => {
@@ -233,21 +356,30 @@ import { mapState, mapMutations, mapActions } from 'vuex'
         }
   
       },
-
     },
 
     mounted() {
       this.loading = true;
       axios
-      .get(`http://localhost:9091/popularList1`)
+      .get(`http://localhost:9091/popularList`)
       .then(response => {
           this.loading = false;
-          this.popularList1 = response.data
-          this.img = this.popularList1[0].img
-          console.log("DB数据:",this.popularList1)
+          this.popularList = response.data
+          this.img = this.popularList[0].data.img
+          console.log("酷狗音乐:",this.popularList)
       });
 
-    //网易云api
+      //酷狗DB
+      axios
+      .get(`http://localhost:9091/popularListDB`)
+      .then(response => {
+          this.loading = false;
+          this.popularListDB = response.data
+          console.log("酷狗音乐DB:",this.popularListDB)
+      });
+      
+
+   // 网易云api
       axios
       .get(`https://autumnfish.cn/personalized/newsong?limit=20`)
       .then(response => {
@@ -265,8 +397,15 @@ import { mapState, mapMutations, mapActions } from 'vuex'
           console.log("酷我:",this.kuwo.data.musicList)
       });
 
-
-
+    //qq音乐
+       axios
+       .get(`http://localhost:9091/qqPopularList`)
+      .then(response => {
+          this.loading = false;
+          this.qqMusic = response
+          this.qqMusicImg = response.data.topinfo.pic
+          console.log("qq音乐:",this.qqMusic)
+      });
 
      
     }
