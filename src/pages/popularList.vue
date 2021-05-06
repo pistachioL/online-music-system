@@ -87,12 +87,12 @@
       </el-row>
     </el-tab-pane>
 
-    <!-- qq音乐 -->
-    <el-tab-pane label="QQ音乐">
+    <!-- 酷我音乐 -->
+    <el-tab-pane label="酷我音乐">
        <el-row>
         <el-col>
           <el-table 
-            :data="qqMusic"
+            :data="kuwo"
             v-loading="loading" element-loading-text="努力加载飙升榜数据..." element-loading-spinner="el-icon-loading" 
             type="index" style="width: 100%">
             <el-table-column label="序号" > 
@@ -103,11 +103,11 @@
 
             <el-table-column label="歌曲" prop="name">  </el-table-column>
 
-            <el-table-column label="歌手"  prop="song.artists[0].name"> </el-table-column>
+            <el-table-column label="歌手"  prop="artist"> </el-table-column>
 
-            <el-table-column label="" prop="picUrl" > 
+            <el-table-column label="" prop="pic" > 
               <template slot-scope="scope">
-                <img width="50px" height="50px" :src="scope.row.picUrl" >
+                <img width="50px" height="50px" :src="scope.row.pic" >
               </template>
           </el-table-column>
         
@@ -149,7 +149,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
         tabPosition: 'left',
         netEase: this.netEase,
         popularList1: this.popularList1, //数据库的数据
-        qqMusic:this.qqMusic,//qq音乐
+        kuwo:this.kuwo,//酷我音乐
         loading: false, 
         img: '',
         tmpPlayingSong: {
@@ -261,8 +261,8 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       .get(`http://localhost:9091/kuwoPopularList`)
       .then(response => {
           this.loading = false;
-          this.qqMusic = response
-          console.log("酷我:",this.qqMusic)
+          this.kuwo = response.data.data.musicList
+          console.log("酷我:",this.kuwo.data.musicList)
       });
 
 
