@@ -1,9 +1,8 @@
 <template>
     <div>
-      <h1>海纳音乐</h1>
+      <h1 style="margin-top:-10px"> 海纳音乐</h1>
       <!-- 登录 -->
-      <div class="login">
-
+  <div class="login">
   <el-tabs type="border-card">
   <el-tab-pane label="登录">
     <el-card class="box-card">
@@ -32,10 +31,8 @@
     </el-card>
   </el-tab-pane>
   </el-tabs>
-
       </div>
-    </div>
-
+  </div>
 </template> 
 
 <script>
@@ -186,7 +183,7 @@ import axios from 'axios'
     display:flex;
     justify-content: center;
     align-items: center;
-    margin-top: 60px;
+    margin-top: 50px;
   }
   .text {
     font-size: 14px;

@@ -14,7 +14,7 @@
     <!-- 根据是否登录展示 -->
     <div class="login">
     <div v-if="userName"> 
-      <el-avatar src="https://avatars.githubusercontent.com/u/35989937?v=4"></el-avatar>
+      <el-avatar :src="this.avatar"></el-avatar>
       <el-dropdown> 
         <span class="el-dropdown-link">
           <a href="http://localhost:8080/user" >{{userName}}</a>
@@ -60,7 +60,7 @@ import Search from '../Search.vue';
             password: '',
           },
           
-  
+          avatar:require('../../assets/avatar.jpeg')
           
       };
     },

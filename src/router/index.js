@@ -10,7 +10,9 @@ import Song from '@/pages/searchSong.vue'  //引入根目录下的Hello.vue组�
 import UserHome from '@/pages/userHome.vue'  //引入根目录下的Hello.vue组件
 import EditProfile from '@/pages/editProfile.vue'  //引入根目录下的Hello.vue组件
 import Collection from '@/pages/collection.vue'  //引入根目录下的Hello.vue组件
-
+import Personalized from '@/pages/personalized.vue'  //引入根目录下的Hello.vue组件
+import Singers from '@/pages/singer.vue'  //引入根目录下的Hello.vue组件
+import Songlist from '@/pages/songlist.vue'  //引入根目录下的Hello.vue组件
 Vue.use(Router)
 
 const routes = [
@@ -96,6 +98,36 @@ const routes = [
             
         },
     },
+
+    {
+        path: '/user/songlist',
+        name: '个人歌单',
+        component: Songlist,
+        meta: {
+            requiresAuth:true,
+            navShow: true
+            
+        },
+    },
+    {
+        path: '/personalized',
+        name: '每日推荐',
+        component: Personalized,
+        meta: {
+            navShow: true
+            
+        },
+    },
+    {
+        path: '/singers',
+        name: '热门歌手',
+        component: Singers,
+        meta: {
+            navShow: true
+            
+        },
+    },
+  
 
   ]
 

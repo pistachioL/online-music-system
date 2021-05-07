@@ -2,9 +2,46 @@
   <div>
   <el-tabs :tab-position="tabPosition" style="height: 1700px; margin-top:0px" >
     
+
     <el-tab-pane label="酷狗音乐">
+      <el-row>
+        <el-col>
+          <el-table 
+            :data="popularListDB" v-loading="loading" element-loading-text="努力加载飙升榜数据..."
+            element-loading-spinner="el-icon-loading" type="index" style="width: 100%">
+              <el-table-column label="序号" > 
+                <template slot-scope="scope">
+                  {{scope.$index+1}}
+                </template>
+              </el-table-column>
+
+              <el-table-column label="歌曲" prop="song_name">  </el-table-column>
+
+              <el-table-column label="歌手"  prop="author_name"> </el-table-column>
+
+              <el-table-column label="专辑" prop="album_name" > </el-table-column>
+
+              <el-table-column label="时长" prop="timelength" :formatter="msToMinDB"> </el-table-column> 
+          
+              <el-table-column label="" >
+                  <template slot-scope="scope">
+                    <el-button type="text" size="medium" @click="playDB(scope.row)" icon="el-icon-video-play"></el-button>
+                  </template>
+              </el-table-column>
+
+              <el-table-column prop="like" label="">
+                  <template slot-scope="scope">
+                    <img width="24px" height="24px" @click="collecDB(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
+                  </template>
+              </el-table-column>
+          </el-table>
+        </el-col>
+      </el-row>
+    </el-tab-pane>
+
+    <el-tab-pane label="咪咕音乐">
       <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.img"> </el-image>
-      <h1 style="width:400px; margin:-200px 250px 230px"> 酷狗飙升榜 </h1>   
+      <h1 style="width:400px; margin:-200px 250px 230px"> 咪咕飙升榜 </h1>   
       <div style="width:400px; margin:-100px 250px 60px">
         <el-button type="primary" icon="el-icon-video-play" round>全部播放</el-button>
         <el-button type="primary" icon="el-icon-star-on" round>收藏</el-button>
@@ -47,41 +84,6 @@
     </el-tab-pane>
 
 
-    <el-tab-pane label="酷狗音乐1">
-      <el-row>
-        <el-col>
-          <el-table 
-            :data="popularListDB" v-loading="loading" element-loading-text="努力加载飙升榜数据..."
-            element-loading-spinner="el-icon-loading" type="index" style="width: 100%">
-              <el-table-column label="序号" > 
-                <template slot-scope="scope">
-                  {{scope.$index+1}}
-                </template>
-              </el-table-column>
-
-              <el-table-column label="歌曲" prop="song_name">  </el-table-column>
-
-              <el-table-column label="歌手"  prop="author_name"> </el-table-column>
-
-              <el-table-column label="专辑" prop="album_name" > </el-table-column>
-
-              <el-table-column label="时长" prop="timelength" :formatter="msToMinDB"> </el-table-column> 
-          
-              <el-table-column label="" >
-                  <template slot-scope="scope">
-                    <el-button type="text" size="medium" @click="playDB(scope.row)" icon="el-icon-video-play"></el-button>
-                  </template>
-              </el-table-column>
-
-              <el-table-column prop="like" label="">
-                  <template slot-scope="scope">
-                    <img width="24px" height="24px" @click="collecDB(scope.$index, scope.row)" :src="scope.row.like == true ? collected : uncollected" >
-                  </template>
-              </el-table-column>
-          </el-table>
-        </el-col>
-      </el-row>
-    </el-tab-pane>
 
 
       <!-- 网易云 -->
@@ -161,13 +163,18 @@
           </el-table>
         </el-col>
       </el-row>
-
     </el-tab-pane>
+
     <!-- qq音乐 -->
     <el-tab-pane label="qq音乐">
-        <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.qqMusicImg"> </el-image>
-       更新时间： {{this.qqMusic.data.date}}
-       <el-row>
+   
+      <el-row>
+        <el-col>
+          <el-image style="width: 200px; height: 200px" v-loading="loading" :src="this.qqMusicImg"> </el-image>
+          更新时间： {{this.qqMusic.data.date}}
+        </el-col>
+      </el-row>
+      <el-row>
         <el-col>
           <el-table 
             :data="qqMusic.data.songlist"
@@ -186,12 +193,14 @@
             <el-table-column label="">
                   <el-button type="text" size="medium" icon="el-icon-video-play"></el-button>
             </el-table-column>
+
             <el-table-column prop="like" label="">
                 <template slot-scope="scope">
                   <img width="24px" height="24px"  :src="scope.row.like == true ? collected : uncollected" >
                 </template>
             </el-table-column>
           </el-table>
+          
         </el-col>
       </el-row>
     </el-tab-pane>

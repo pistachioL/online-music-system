@@ -44,16 +44,40 @@
             </el-table-column>
         </el-table>
             ...... 
-
-  
-
     </el-card>
 
+
+<!-- 未开发 -->
     <el-card class="box-card">
-      <el-row>
-        <el-col>
-          我创建的歌单
-        </el-col>
+       <h1 style="display:inline"> 我的歌单 </h1>  <el-link type="primary" href='/user/songlist' :underline="false">更多☞</el-link>  
+      <el-row :gutter="12">
+            <el-col :span="6">
+              <el-card shadow="hover">
+                  <el-image style="width: 200px; height: 200px" :src="this.songlist[0].picUrl"> </el-image>
+                    {{this.songlist[0].name}}
+              </el-card>
+            </el-col>
+
+            <el-col :span="6">
+              <el-card shadow="hover">
+                  <el-image style="width: 200px; height: 200px" :src="this.songlist[1].picUrl" > </el-image>
+                   {{this.songlist[1].name}}
+              </el-card>
+            </el-col>
+
+          <el-col :span="6">
+              <el-card shadow="hover">
+                  <el-image style="width: 200px; height: 200px" :src="this.songlist[3].picUrl" > </el-image>
+                   {{this.songlist[2].name}}
+              </el-card>
+            </el-col>
+
+            <el-col :span="6">
+              <el-card shadow="hover">
+                  <el-image style="width: 200px; height: 200px" :src="this.songlist[4].picUrl"> </el-image>
+                   {{this.songlist[3].name}}
+              </el-card>
+            </el-col>
       </el-row>
     </el-card>
 
@@ -80,6 +104,7 @@ import {mapGetters,mapState } from 'vuex'
         collectList: [], //歌曲收藏记录
         collectImg: [], //收藏歌曲的封面
         collectName: [], //收藏歌曲的名字
+        songlist:[], //歌单
       };
     },
     methods: {
@@ -139,10 +164,14 @@ import {mapGetters,mapState } from 'vuex'
                 this.collectName.push(response.data[i].song_name)
             }
           }
-          
-
-          
         });
+      axios
+        .get(`https://autumnfish.cn/personalized/newsong?limit=30`)
+        .then(response => {
+          this.songlist = response.data.result
+            console.log("歌单",response.data.result)
+        });
+        
     },
 
       computed: {

@@ -4,7 +4,11 @@
         <el-main>
         <Carousel />
   <!-- 推荐 -->
-    <h2>天籁推荐 </h2>
+      <el-row>
+   <el-col :span="24"> <h2 style="display:inline"> 天籁推荐 </h2>
+      <el-link type="primary" href='/personalized' :underline="false">更多☞</el-link> 
+      </el-col>
+      </el-row>
     <el-row :gutter="12">
       <el-col :span="5">
         <el-card shadow="hover">
@@ -68,7 +72,10 @@
 
 
   <!-- 热门歌手 -->
-    <h2> 热门歌手 </h2>  
+    <el-row>
+      <el-col :span="24"> <h2 style="display:inline"> 热门歌手 </h2>  
+     <el-link type="primary" href='/singers' :underline="false">更多☞</el-link> </el-col>
+    </el-row>
     <el-row :gutter="12">
      <el-col :span="5">
         <el-card shadow="hover">
@@ -93,8 +100,8 @@
 
         <el-col :span="5">
         <el-card shadow="hover">
-            <el-image style="width: 200px; height: 200px" :src="this.topSinger[3].img1v1Url"> </el-image>
-            {{this.topSinger[3].name}}
+            <el-image style="width: 200px; height: 200px" :src="this.topSinger[4].img1v1Url"> </el-image>
+            {{this.topSinger[4].name}}
         </el-card>
       </el-col>
 
