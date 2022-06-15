@@ -1,5 +1,5 @@
 # 海纳音乐播放器
-前端界面，后台数据要配合启动
+该项目是用Vue实现的前端界面，后台数据要配合启动该项目：https://github.com/pistachioL/Music-Web-Crawler
 
 
 ### Project setup
